@@ -1,7 +1,6 @@
 name: simulate_reads
 channels:
   - conda-forge
-  - bioconda
   - nodefaults
 dependencies:
-  - dwgsim=1.1.14
+  - r-tidyverse=2.0

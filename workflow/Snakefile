@@ -6,7 +6,7 @@
 
 # load configuration
 # -----------------------------------------------------
-configfile: "config/config.yml"
+configfile: "config/config.yaml"
 
 # Due to licensing and the download being behind a registration, installation
 # of Cell Ranger cannot be fully automated. Please download the latest version

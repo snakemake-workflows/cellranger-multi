@@ -12,6 +12,8 @@ mkdir -p ${CONDA_LIB}
 cd ${CONDA_LIB}
 tar xzf ${CELLRANGER_TARBALL}
 CELLRANGER_DIR=$( ls -d cellranger* )
-""
 
 ln -S ${CONDA_LIB}/${CELLRANGER_DIR}/cellranger ${CONDA_BIN}/cellranger
+
+# check that the cellranger executable is available and works
+cellranger testrun --id=tiny

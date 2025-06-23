@@ -1,0 +1,12 @@
+$schema: "http://json-schema.org/draft-07/schema#"
+description: main configuration schema for the workflow
+properties:
+  sample_sheet:
+    type: string
+    description: path to sample sheet TSV file
+  ref_data:
+    type: string
+    description: path to ref_data folder
+
+required:
+  - sample_sheet
