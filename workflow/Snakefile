@@ -8,6 +8,18 @@
 # -----------------------------------------------------
 configfile: "config/config.yml"
 
+# Due to licensing and the download being behind a registration, installation
+# of Cell Ranger cannot be fully automated. Please download the latest version
+# from the Cell Ranger download page:
+# https://www.10xgenomics.com/support/software/cell-ranger/downloads
+# Then, before running the workflow, set the following shell environment
+# variable with (makes this permanent by including this line in your
+# ~/.bashrc file and making sure this is loaded from your ~/.bash_profile):
+# export CELLRANGER_TARBALL="/absolute/path/to/tarball"
+envvars:
+    "CELLRANGER_TARBALL",
+
+
 
 # load rules
 # -----------------------------------------------------
