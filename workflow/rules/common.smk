@@ -21,13 +21,13 @@ def get_input_files(wildcards, read_number):
     if "lane_number" in sample_sheet.columns:
         return lookup(
             within=sample_sheet,
-            query="sample == '{sample_name}' & lane_number = '{lane_number}'",
+            query="sample == '{sample}' & lane_number = '{lane_number}'",
             cols=read_number,
         )
     else:
         return lookup(
             within=sample_sheet,
-            query="sample == '{sample_name}'",
+            query="sample == '{sample}'",
             cols=read_number,
         )
 
