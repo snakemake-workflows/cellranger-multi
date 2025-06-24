@@ -5,5 +5,6 @@ name: cellranger
 # Supposedly, cellranger comes packaged with all of its
 # dependencies, so nothing should be needed here.
 channels:
+  - conda-forge
   - nodefaults
 dependencies: []
