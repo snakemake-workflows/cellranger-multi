@@ -12,8 +12,8 @@ rule follow_pedantic_cell_ranger_naming_scheme:
     log:
         "logs/input/{sample}_S1_L00{lane_number}_001.log",
     shell:
-        "( ln -S {input.fq1} {output.fq1}; "
-        "  ln -S {input.fq2} {output.fq2}; "
+        "( ln --symbolic {input.fq1} {output.fq1}; "
+        "  ln --symbolic {input.fq2} {output.fq2}; "
         ") 2>&1 >{log}"
 
 
