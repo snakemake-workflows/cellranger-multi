@@ -48,8 +48,8 @@ def get_all_sample_fastqs(wildcards):
         lane_number = 1 if not hasattr(row, "lane_number") else row.lane_number
         all_fastqs.extend(
             [
-                "results/input/{row.sample}_S1_L00{lane_number}_R1_001.fastq.gz",
-                "results/input/{row.sample}_S1_L00{lane_number}_R2_001.fastq.gz",
+                f"results/input/{row.sample}_S1_L00{lane_number}_R1_001.fastq.gz",
+                f"results/input/{row.sample}_S1_L00{lane_number}_R2_001.fastq.gz",
             ],
         )
     return all_fastqs
