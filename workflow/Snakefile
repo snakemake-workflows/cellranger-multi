@@ -24,7 +24,7 @@ envvars:
 # load rules
 # -----------------------------------------------------
 include: "rules/common.smk"
-include: "rules/process_reads.smk"
+include: "rules/cellranger.smk"
 
 
 # optional messages, log and error handling
