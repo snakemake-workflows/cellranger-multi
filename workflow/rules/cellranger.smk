@@ -9,8 +9,6 @@ rule follow_pedantic_cell_ranger_naming_scheme:
     output:
         fq1="results/input/{sample}_S1_L00{lane_number}_R1_001.fastq.gz",
         fq2="results/input/{sample}_S1_L00{lane_number}_R2_001.fastq.gz",
-    params:
-        ncbi_ftp=lookup(within=config, dpath="get_genome/ncbi_ftp"),
     log:
         "logs/input/{sample}_S1_L00{lane_number}_001.log",
     shell:
