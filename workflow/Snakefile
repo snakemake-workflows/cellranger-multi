@@ -45,5 +45,8 @@ onerror:
 # -----------------------------------------------------
 rule all:
     input:
-        "results/multiqc/multiqc_report.html",
+        expand(
+            "results/cellranger/{sample}/outs/metrics_summary.csv",
+            sample=sample_sheet['sample'].unique(),
+        )
     default_target: True
