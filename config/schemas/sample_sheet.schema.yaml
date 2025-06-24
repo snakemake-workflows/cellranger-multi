@@ -18,6 +18,6 @@ properties:
     description: path and name of fastq.gz files, read 2 (optional)
 
 required:
-  - sample_name
+  - sample
   - read1
   - read2
