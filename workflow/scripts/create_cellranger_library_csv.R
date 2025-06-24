@@ -10,7 +10,7 @@ library_table <- read_tsv(snakemake@input[["sample_sheet"]]) |>
   # add NA column if the sample sheet does not list library_type
   full_join(
     tibble(
-      library_type = NA_character
+      library_type = NA_character_
     )
   ) |>
   # provide useful default, if library_type is not specified
