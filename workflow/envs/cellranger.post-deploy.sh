@@ -4,6 +4,7 @@ set -euo pipefail
 # set all the necessary conda paths and
 # ensure they exist
 CONDA_BIN="${CONDA_PREFIX}/bin"
+mkdir -p ${CONDA_BIN}
 
 CONDA_LIB="${CONDA_PREFIX}/lib"
 mkdir -p ${CONDA_LIB}
