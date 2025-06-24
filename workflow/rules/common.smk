@@ -31,6 +31,15 @@ def get_input_files(wildcards, read_number):
             cols=read_number,
         )
 
+def get_sample_fastqs(wildcards, read_number):
+    sample_row = lookup(
+        within=sample_sheet,
+        query="sample == '{sample}'",
+        cols=sample,
+    )
+    lane_number = 1 if not hasattr(sample_row, "lane_number") else sample_row.lane_number
+    return f"results/input/{wildcards.sample}_S1_L00{lane_number}_{read_number}_001.fastq.gz",
+
 
 def get_all_sample_fastqs(wildcards):
     all_fastqs = []

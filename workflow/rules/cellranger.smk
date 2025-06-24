@@ -40,8 +40,8 @@ rule create_cellranger_library_csv:
 rule cellranger_count:
     input:
         library_csv="results/input/cell_ranger_library.csv",
-        fq1="results/input/{sample}_S1_L00{lane_number}_R1_001.fastq.gz",
-        fq2="results/input/{sample}_S1_L00{lane_number}_R2_001.fastq.gz",
+        fq1=lambda wc: get_sample_fastqs(wc, "R1")",
+        fq2=lambda wc: get_sample_fastqs(wc, "R2")",
         ref_data=lookup(within=config, dpath="ref_data"),
     output:
         "results/cellranger/{sample}/outs/cloupe.cloupe",
