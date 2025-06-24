@@ -62,8 +62,6 @@ rule cellranger_count:
         "results/simulate_reads/{sample}.log",
     conda:
         "../envs/cellranger.yaml"
-    params:
-        read_number=lookup(within=config, dpath="simulate_reads/read_number"),
     threads: 8
     resources:
         mem_mb=lambda wc, threads: threads * 4000,
