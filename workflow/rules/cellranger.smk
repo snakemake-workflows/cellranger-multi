@@ -4,8 +4,8 @@
 # -----------------------------------------------------
 rule follow_pedantic_cell_ranger_naming_scheme:
     input:
-        fq1=get_input_files("read1"),
-        fq2=get_input_files("read2"),
+        fq1=lambda wc: get_input_files(wc, "read1"),
+        fq2=lambda wc: get_input_files(wc, "read2"),
     output:
         fq1="results/input/{sample}_S1_L00{lane_number}_R1_001.fastq.gz",
         fq2="results/input/{sample}_S1_L00{lane_number}_R2_001.fastq.gz",
