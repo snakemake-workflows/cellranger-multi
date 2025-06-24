@@ -34,7 +34,7 @@ def get_input_files(wildcards, read_number):
 def get_sample_fastqs(wildcards, read_number):
     sample_row = lookup(
         within=sample_sheet,
-        query="sample == '{sample}'",
+        query="sample == '{wildcards.sample}'",
         cols=sample,
     )
     lane_number = 1 if not hasattr(sample_row, "lane_number") else sample_row.lane_number
