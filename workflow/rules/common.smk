@@ -16,8 +16,9 @@ sample_sheet = (
 validate(sample_sheet, schema="../../config/schemas/sample_sheet.schema.yaml")
 validate(config, schema="../../config/schemas/config.schema.yaml")
 
+
 def get_input_files(wildcards, read_number):
-    if 'lane_number' in samples.columns:
+    if "lane_number" in samples.columns:
         return lookup(
             within=sample_sheet,
             query="sample == '{sample_name}' & lane_number = '{lane_number}'",
@@ -30,11 +31,12 @@ def get_input_files(wildcards, read_number):
             cols=read_number,
         )
 
+
 def get_all_sample_fastqs(wildcards):
     all_fastqs = []
     for row in sample_sheet.itertuples():
         # provide default lane_number of 1, if no lane_number is specified in sample sheet
-        lane_number = 1 if not hasattr(row, 'lane_number') else row.lane_number
+        lane_number = 1 if not hasattr(row, "lane_number") else row.lane_number
         all_fastqs.extend(
             [
                 "results/input/{row.sample}_S1_L00{lane_number}_R1_001.fastq.gz",

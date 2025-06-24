@@ -32,7 +32,7 @@ rule create_cellranger_library_csv:
     conda:
         "../envs/tidyverse.yaml"
     params:
-        fastqs_dir=lambda wc, input: path.abspath(path.dirname(input.fastqs[0]))
+        fastqs_dir=lambda wc, input: path.abspath(path.dirname(input.fastqs[0])),
     script:
         "../scripts/create_cellranger_library_csv.R"
 
@@ -44,7 +44,7 @@ rule cellranger_count:
         library_csv="results/input/cell_ranger_library.csv",
         fq1="results/input/{sample}_S1_L00{lane_number}_R1_001.fastq.gz",
         fq2="results/input/{sample}_S1_L00{lane_number}_R2_001.fastq.gz",
-        ref_data=lookup(within=config, dpath="ref_data")
+        ref_data=lookup(within=config, dpath="ref_data"),
     output:
         multiext(
             "results/cellranger/{sample}/outs/",
@@ -74,14 +74,14 @@ rule cellranger_count:
         mem_mb=lambda wc, threads: threads * 4000,
     params:
         mem_gb=lambda wc, resources: resources.mem_mb / 1000,
-        out_dir=lambda wc, output: path.dirname(output[0]).removesuffix("outs/")
+        out_dir=lambda wc, output: path.dirname(output[0]).removesuffix("outs/"),
     shell:
         "(cellranger count "
         "  --id={wildcards.sample} "
         "  --output=dir={params.out_dir} "
         "  --transcriptome={input.ref_data} "
         "  --libraries={input.library_csv} "
-        "  --sample={wildcards.sample} ""
+        "  --sample={wildcards.sample} "
         "  --create-bam=true "
         "  --localcores={threads} "
         "  --localmem={params.mem_gb}; "

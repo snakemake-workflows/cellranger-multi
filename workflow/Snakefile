@@ -8,6 +8,7 @@
 # -----------------------------------------------------
 configfile: "config/config.yaml"
 
+
 # Due to licensing and the download being behind a registration, installation
 # of Cell Ranger cannot be fully automated. Please download the latest version
 # from the Cell Ranger download page:
@@ -18,7 +19,6 @@ configfile: "config/config.yaml"
 # export CELLRANGER_TARBALL="/absolute/path/to/tarball"
 envvars:
     "CELLRANGER_TARBALL",
-
 
 
 # load rules
@@ -47,6 +47,6 @@ rule all:
     input:
         expand(
             "results/cellranger/{sample}/outs/metrics_summary.csv",
-            sample=sample_sheet['sample'].unique(),
-        )
+            sample=sample_sheet["sample"].unique(),
+        ),
     default_target: True
