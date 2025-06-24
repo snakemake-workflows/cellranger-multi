@@ -21,7 +21,7 @@ rule follow_pedantic_cell_ranger_naming_scheme:
 # -----------------------------------------------------
 rule create_cellranger_library_csv:
     input:
-        sample_sheet=lookup(within=config, dpath="samplesheet"),
+        sample_sheet=lookup(within=config, dpath="sample_sheet"),
         fastqs=get_all_sample_fastqs,
     output:
         library_csv="results/input/cell_ranger_library.csv",
