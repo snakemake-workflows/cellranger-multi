@@ -71,7 +71,7 @@ rule cellranger_count:
     shell:
         "(cellranger count "
         "  --id={wildcards.sample} "
-        "  --output=dir={params.out_dir} "
+        "  --output-dir={params.out_dir} "
         "  --transcriptome={input.ref_data} "
         "  --libraries={input.library_csv} "
         "  --sample={wildcards.sample} "
