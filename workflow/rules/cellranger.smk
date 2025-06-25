@@ -14,7 +14,7 @@ rule follow_pedantic_cell_ranger_naming_scheme:
     shell:
         "( ln --symbolic {input.fq1} {output.fq1}; "
         "  ln --symbolic {input.fq2} {output.fq2}; "
-        ") 2>&1 >{log}"
+        ") >{log} 2>&1 "
 
 
 # Create a libary CSV file for Cell Ranger.
@@ -78,4 +78,4 @@ rule cellranger_count:
         "  --create-bam=true "
         "  --localcores={threads} "
         "  --localmem={params.mem_gb}; "
-        ") 2>&1 >{log} "
+        ") >{log} 2>&1 "
