@@ -39,7 +39,6 @@ rule create_cellranger_library_csv:
 # -----------------------------------------------------
 rule cellranger_count:
     input:
-        library_csv="results/input/cell_ranger_library.csv",
         fq1=lambda wc: get_sample_fastqs(wc, "R1"),
         fq2=lambda wc: get_sample_fastqs(wc, "R2"),
         ref_data=lookup(within=config, dpath="ref_data"),
@@ -67,13 +66,14 @@ rule cellranger_count:
         mem_mb=lambda wc, threads: threads * 4000,
     params:
         mem_gb=lambda wc, resources: int(resources.mem_mb / 1000),
-        out_dir=lambda wc, output: path.dirname(output[0]).removesuffix("outs/"),
+        out_dir=lambda wc, output: path.abspath(path.dirname(output[0]).removesuffix("outs/")),
+        fastqs_dir=lambda wc, input: path.dirname(input.fq1),
     shell:
         "(cellranger count "
         "  --id={wildcards.sample} "
         "  --output-dir={params.out_dir} "
+        "  --fastqs={params.fastqs_dir} "
         "  --transcriptome={input.ref_data} "
-        "  --libraries={input.library_csv} "
         "  --sample={wildcards.sample} "
         "  --create-bam=true "
         "  --localcores={threads} "
