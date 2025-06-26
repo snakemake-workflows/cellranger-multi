@@ -11,6 +11,7 @@ rule follow_pedantic_cell_ranger_naming_scheme:
         fq2="results/input/{sample}_S1_L00{lane_number}_R2_001.fastq.gz",
     log:
         "logs/input/{sample}_S1_L00{lane_number}_001.log",
+    localrule: True
     shell:
         "( ln --symbolic {input.fq1} {output.fq1}; "
         "  ln --symbolic {input.fq2} {output.fq2}; "
@@ -28,6 +29,7 @@ rule create_cellranger_library_csv:
         library_csv="results/input/{sample}.cell_ranger_library.csv",
     log:
         "logs/input/{sample}.cell_ranger_library.log",
+    localrule: True
     conda:
         "../envs/tidyverse.yaml"
     params:
