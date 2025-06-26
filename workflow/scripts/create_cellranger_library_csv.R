@@ -30,7 +30,8 @@ library_table <- read_tsv(snakemake@input[["sample_sheet"]]) |>
   ) |>
   # we might have multiple lanes per sample in the main sample
   # sheet, but only need one entry per sample here
-  distinct()
+  distinct() |>
+  drop_na(sample)
 
 write_csv(
   library_table,
