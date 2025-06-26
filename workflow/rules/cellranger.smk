@@ -29,7 +29,7 @@ rule create_cellranger_library_csv:
         library_csv="results/input/{sample}.cell_ranger_library.csv",
     log:
         "logs/input/{sample}.cell_ranger_library.log",
-    localrule: True
+#    localrule: True
     conda:
         "../envs/tidyverse.yaml"
     params:
