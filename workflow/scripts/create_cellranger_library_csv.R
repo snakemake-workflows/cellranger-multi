@@ -8,9 +8,9 @@ library(tidyverse)
 
 library_table <- read_tsv(snakemake@input[["sample_sheet"]]) |>
   # add NA column if the sample sheet does not list library_type
-  full_join(
+  bind_rows(
     tibble(
-      library_type = NA_character_
+      library_type = character()
     )
   ) |>
   filter(
@@ -31,8 +31,6 @@ library_table <- read_tsv(snakemake@input[["sample_sheet"]]) |>
   # we might have multiple lanes per sample in the main sample
   # sheet, but only need one entry per sample here
   distinct()
-
-library_table
 
 write_csv(
   library_table,
