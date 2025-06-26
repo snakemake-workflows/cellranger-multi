@@ -7,16 +7,15 @@ rlang::global_entrace()
 library(tidyverse)
 
 library_table <- read_tsv(snakemake@input[["sample_sheet"]]) |>
-  filter(
-    sample == snakemake@wildcards[["sample"]]
-  ) |>
   # add NA column if the sample sheet does not list library_type
   full_join(
     tibble(
       library_type = NA_character_
     )
   ) |>
-  drop_na(sample) |>
+  filter(
+    sample == snakemake@wildcards[["sample"]]
+  ) |>
   # provide useful default, if library_type is not specified
   mutate(
     library_type = replace_na(library_type, "Gene Expression")
