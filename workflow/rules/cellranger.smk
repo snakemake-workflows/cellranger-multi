@@ -29,11 +29,11 @@ rule create_cellranger_library_csv:
         library_csv="results/input/{sample}.cell_ranger_library.csv",
     log:
         "logs/input/{sample}.cell_ranger_library.log",
-#    localrule: True
+    localrule: True
     conda:
         "../envs/tidyverse.yaml"
     params:
-        fastqs_dir=lambda wc, input: path.abspath(path.dirname(input.fq1[0])),
+        fastqs_dir=lambda wc, input: path.abspath(path.dirname(input.fq1)),
     script:
         "../scripts/create_cellranger_library_csv.R"
 
