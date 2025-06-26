@@ -7,6 +7,9 @@ rlang::global_entrace()
 library(tidyverse)
 
 library_table <- read_tsv(snakemake@input[["sample_sheet"]]) |>
+  filter(
+    sample == snakemake@wildcards[["sample"]]
+  ) |>
   # add NA column if the sample sheet does not list library_type
   full_join(
     tibble(

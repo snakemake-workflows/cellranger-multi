@@ -22,15 +22,16 @@ rule follow_pedantic_cell_ranger_naming_scheme:
 rule create_cellranger_library_csv:
     input:
         sample_sheet=lookup(within=config, dpath="sample_sheet"),
-        fastqs=get_all_sample_fastqs,
+        fq1=lambda wc: get_sample_fastqs(wc, "R1"),
+        fq2=lambda wc: get_sample_fastqs(wc, "R2"),
     output:
-        library_csv="results/input/cell_ranger_library.csv",
+        library_csv="results/input/{sample}.cell_ranger_library.csv",
     log:
-        "logs/input/cell_ranger_library.log",
+        "logs/input/{sample}.cell_ranger_library.log",
     conda:
         "../envs/tidyverse.yaml"
     params:
-        fastqs_dir=lambda wc, input: path.abspath(path.dirname(input.fastqs[0])),
+        fastqs_dir=lambda wc, input: path.abspath(path.dirname(input.fq1[0])),
     script:
         "../scripts/create_cellranger_library_csv.R"
 
@@ -39,7 +40,7 @@ rule create_cellranger_library_csv:
 # -----------------------------------------------------
 rule cellranger_count:
     input:
-        library_csv="results/input/cell_ranger_library.csv",
+        library_csv="results/input/{sample}.cell_ranger_library.csv",
         fq1=lambda wc: get_sample_fastqs(wc, "R1"),
         fq2=lambda wc: get_sample_fastqs(wc, "R2"),
         ref_data=lookup(within=config, dpath="ref_data"),
@@ -74,7 +75,6 @@ rule cellranger_count:
         "  --output-dir={params.out_dir} "
         "  --transcriptome={input.ref_data} "
         "  --libraries={input.library_csv} "
-        "  --sample={wildcards.sample} "
         "  --create-bam=true "
         "  --localcores={threads} "
         "  --localmem={params.mem_gb}; "
