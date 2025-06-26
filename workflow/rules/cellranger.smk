@@ -72,7 +72,8 @@ rule cellranger_count:
         mem_gb=lambda wc, resources: int(resources.mem_mb / 1000),
         out_dir=lambda wc, output: path.abspath(path.dirname(output[0]).removesuffix("outs/")),
     shell:
-        "(cellranger count "
+        "(rm -r {params.outdir}; "
+        " cellranger count "
         "  --id={wildcards.sample} "
         "  --output-dir={params.out_dir} "
         "  --transcriptome={input.ref_data} "
