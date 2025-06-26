@@ -16,6 +16,7 @@ library_table <- read_tsv(snakemake@input[["sample_sheet"]]) |>
       library_type = NA_character_
     )
   ) |>
+  drop_na(sample) |>
   # provide useful default, if library_type is not specified
   mutate(
     library_type = replace_na(library_type, "Gene Expression")
@@ -30,8 +31,9 @@ library_table <- read_tsv(snakemake@input[["sample_sheet"]]) |>
   ) |>
   # we might have multiple lanes per sample in the main sample
   # sheet, but only need one entry per sample here
-  distinct() |>
-  drop_na(sample)
+  distinct()
+
+library_table
 
 write_csv(
   library_table,
