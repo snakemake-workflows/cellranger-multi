@@ -62,7 +62,7 @@ rule cellranger_count:
         "results/cellranger/{sample}/outs/raw_feature_bc_matrix.h5",
         "results/cellranger/{sample}/outs/web_summary.html",
     log:
-        "results/simulate_reads/{sample}.log",
+        "logs/cellranger/{sample}.log",
     conda:
         "../envs/cellranger.yaml"
     threads: 8
@@ -70,7 +70,7 @@ rule cellranger_count:
         mem_mb=lambda wc, threads: threads * 4000,
     params:
         mem_gb=lambda wc, resources: int(resources.mem_mb / 1000),
-        out_dir=lambda wc, output: path.abspath(path.dirname(output[0]).removesuffix("outs/")),
+        out_dir=lambda wc, output: path.abspath(path.dirname(output[0]).removesuffix("/outs")),
     shell:
         "(rm -r {params.out_dir}; "
         " cellranger count "
