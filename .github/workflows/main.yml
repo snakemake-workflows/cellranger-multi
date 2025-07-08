@@ -45,4 +45,5 @@ jobs:
         with:
           directory: .test
           snakefile: .test/Snakefile
+          stagein: 'export CELLRANGER_TARBALL="fake_this_absolute_path"'
           args: "--sdm conda --show-failed-logs --cores 2 --conda-cleanup-pkgs cache --all-temp --dryrun"
