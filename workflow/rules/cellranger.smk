@@ -60,7 +60,13 @@ rule cellranger_count:
         "results/cellranger/{sample}/outs/raw_feature_bc_matrix/features.tsv.gz",
         "results/cellranger/{sample}/outs/raw_feature_bc_matrix/matrix.mtx.gz",
         "results/cellranger/{sample}/outs/raw_feature_bc_matrix.h5",
-        "results/cellranger/{sample}/outs/web_summary.html",
+        report(
+            "results/cellranger/{sample}/outs/web_summary.html",
+            caption="../report/cellranger_count.rst",
+            category="cellranger",
+            subcategory="count report",
+            labels={"sample": "{sample}"},
+        ),
     log:
         "logs/cellranger/{sample}.log",
     conda:
