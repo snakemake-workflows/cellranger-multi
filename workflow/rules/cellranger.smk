@@ -78,6 +78,7 @@ rule cellranger_count:
         "  --output-dir={params.out_dir} "
         "  --transcriptome={input.ref_data} "
         "  --libraries={input.library_csv} "
+        "  --nosecondary "
         "  --create-bam=true "
         "  --localcores={threads} "
         "  --localmem={params.mem_gb}; "
