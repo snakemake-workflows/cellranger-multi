@@ -1,4 +1,4 @@
-name: simulate_reads
+name: tidyverse
 channels:
   - conda-forge
   - nodefaults
