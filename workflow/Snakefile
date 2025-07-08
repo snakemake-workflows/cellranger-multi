@@ -14,9 +14,9 @@ configfile: "config/config.yaml"
 # from the Cell Ranger download page:
 # https://www.10xgenomics.com/support/software/cell-ranger/downloads
 # Then, before running the workflow, set the following shell environment
-# variable with (makes this permanent by including this line in your
+# variable with (or make this permanent by including this line in your
 # ~/.bashrc file and making sure this is loaded from your ~/.bash_profile):
-# export CELLRANGER_TARBALL="/absolute/path/to/tarball"
+# export CELLRANGER_TARBALL="absolute_path_to_tarball"
 envvars:
     "CELLRANGER_TARBALL",
 
