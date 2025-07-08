@@ -76,7 +76,9 @@ rule cellranger_count:
         mem_mb=lambda wc, threads: threads * 4000,
     params:
         mem_gb=lambda wc, resources: int(resources.mem_mb / 1000),
-        out_dir=lambda wc, output: path.abspath(path.dirname(output[0]).removesuffix("/outs")),
+        out_dir=lambda wc, output: path.abspath(
+            path.dirname(output[0]).removesuffix("/outs")
+        ),
     shell:
         "(rm -r {params.out_dir}; "
         " cellranger count "
