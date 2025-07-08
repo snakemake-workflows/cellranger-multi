@@ -1,0 +1,41 @@
+configfile: "config/config.yaml"
+
+
+# declare main workflow as a module
+module test_cellranger_count_workflow:
+    snakefile:
+        "../workflow/Snakefile"
+    config:
+        config
+
+
+# use all rules from the main workflow
+use rule * from test_cellranger_count_workflow
+
+rule testing_all:
+    input:
+        rules.all.input,
+    default_target: True
+
+# add rules for testing setup
+
+rule download_test_data:
+    output:
+        expand(
+            "data/pbmc_1k_v3_fastqs/pbmc_1k_v3_S1_L00{lane_read}_001.fastq.gz",
+            lane_read=[
+                "1_R1",
+                "1_I1",
+                "1_R2",
+                "2_R1",
+                "2_I1",
+                "2_R2",
+            ],
+        ),
+    log:
+        "logs/data/download_pbmc_example_data.log",
+    shell:
+        "( cd data/; "
+        "  wget https://cf.10xgenomics.com/samples/cell-exp/3.0.0/pbmc_1k_v3/pbmc_1k_v3_fastqs.tar; "
+        "  tar -xvf pbmc_1k_v3_fastqs.tar; "
+        ") > {log} 2>&1"
