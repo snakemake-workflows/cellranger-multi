@@ -52,7 +52,7 @@ rule cellranger_count:
         fq2=lambda wc: get_sample_fastqs(wc, "R2"),
         ref_data=lookup(within=config, dpath="ref_data"),
     output:
-                "results/cellranger/{sample}/outs/filtered_feature_bc_matrix/barcodes.tsv.gz",
+        "results/cellranger/{sample}/outs/filtered_feature_bc_matrix/barcodes.tsv.gz",
         "results/cellranger/{sample}/outs/filtered_feature_bc_matrix/features.tsv.gz",
         "results/cellranger/{sample}/outs/filtered_feature_bc_matrix/matrix.mtx.gz",
         "results/cellranger/{sample}/outs/filtered_feature_bc_matrix.h5",
@@ -71,6 +71,7 @@ rule cellranger_count:
             subcategory="count report",
             labels={"sample": "{sample}"},
         ),
+        out_dir=directory("results/cellranger/{sample}/outs/"),
     log:
         "logs/cellranger/{sample}.log",
     conda:
@@ -81,7 +82,7 @@ rule cellranger_count:
     params:
         mem_gb=lambda wc, resources: int(resources.mem_mb / 1000),
         out_dir=lambda wc, output: path.abspath(
-            path.dirname(output[0]).removesuffix("outs")
+            path.dirname(output["out_dir"]).removesuffix("outs")
         ),
     shell:
         "(rm -r {params.out_dir}; "
