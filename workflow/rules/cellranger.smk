@@ -52,8 +52,7 @@ rule cellranger_count:
         fq2=lambda wc: get_sample_fastqs(wc, "R2"),
         ref_data=lookup(within=config, dpath="ref_data"),
     output:
-        "results/cellranger/{sample}/outs/cloupe.cloupe",
-        "results/cellranger/{sample}/outs/filtered_feature_bc_matrix/barcodes.tsv.gz",
+                "results/cellranger/{sample}/outs/filtered_feature_bc_matrix/barcodes.tsv.gz",
         "results/cellranger/{sample}/outs/filtered_feature_bc_matrix/features.tsv.gz",
         "results/cellranger/{sample}/outs/filtered_feature_bc_matrix/matrix.mtx.gz",
         "results/cellranger/{sample}/outs/filtered_feature_bc_matrix.h5",
