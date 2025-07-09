@@ -14,11 +14,11 @@ The workflow is built using [snakemake](https://snakemake.readthedocs.io/en/stab
 
 The sample sheet has the following layout:
 
-| sample  | lane | library_type    | read1                           | read2                           |
-| ------- | ---- | --------------- | ------------------------------- | ------------------------------- |
-| sample1 |    1 | Gene Expression | sample1.bwa.L001.read1.fastq.gz | sample1.bwa.L001.read2.fastq.gz |
-| sample1 |    2 | Gene Expression | sample1.bwa.L002.read1.fastq.gz | sample1.bwa.L002.read2.fastq.gz |
-| sample2 |    1 | Gene Expression | sample2.bwa.read1.fastq.gz      | sample2.bwa.read2.fastq.gz      |
+| sample  | lane_number | library_type    | read1                           | read2                           |
+| ------- | ----------- | --------------- | ------------------------------- | ------------------------------- |
+| sample1 |           1 | Gene Expression | sample1.bwa.L001.read1.fastq.gz | sample1.bwa.L001.read2.fastq.gz |
+| sample1 |           2 | Gene Expression | sample1.bwa.L002.read1.fastq.gz | sample1.bwa.L002.read2.fastq.gz |
+| sample2 |           1 | Gene Expression | sample2.bwa.read1.fastq.gz      | sample2.bwa.read2.fastq.gz      |
 
 The `lane` column is optional, and only necessary if a single sample is sequenced across multiple lanes.
 All other columns are required.
