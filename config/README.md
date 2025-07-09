@@ -22,6 +22,7 @@ The sample sheet has the following layout:
 
 The `lane` column is optional, and only necessary if a single sample is sequenced across multiple lanes.
 All other columns are required.
+`read1` and `read2` require relative paths to the main workflow directory (where you run the `snakemake` command).
 
 ### Parameters
 

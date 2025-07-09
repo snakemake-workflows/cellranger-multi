@@ -4,8 +4,8 @@
 # -----------------------------------------------------
 rule follow_pedantic_cell_ranger_naming_scheme:
     input:
-        fq1=lambda wc: get_input_files(wc, "read1"),
-        fq2=lambda wc: get_input_files(wc, "read2"),
+        fq1=lambda wc: get_input_file(wc, "read1"),
+        fq2=lambda wc: get_input_file(wc, "read2"),
     output:
         fq1="results/input/{sample}_S1_L00{lane_number}_R1_001.fastq.gz",
         fq2="results/input/{sample}_S1_L00{lane_number}_R2_001.fastq.gz",
@@ -14,9 +14,12 @@ rule follow_pedantic_cell_ranger_naming_scheme:
     localrule: True
     conda:
         "../envs/coreutils.yaml"
+    params:
+        fq1=lambda wc, input, output: path.relpath(str(input.fq1), start=path.dirname(output.fq1)),
+        fq2=lambda wc, input, output: path.relpath(str(input.fq2), start=path.dirname(output.fq2)),
     shell:
-        "( ln --symbolic {input.fq1} {output.fq1}; "
-        "  ln --symbolic {input.fq2} {output.fq2}; "
+        "( ln --symbolic {params.fq1} {output.fq1}; "
+        "  ln --symbolic {params.fq2} {output.fq2}; "
         ") >{log} 2>&1 "
 
 
@@ -35,7 +38,7 @@ rule create_cellranger_library_csv:
     conda:
         "../envs/tidyverse.yaml"
     params:
-        fastqs_dir=lambda wc, input: path.abspath(path.dirname(input.fq1)),
+        fastqs_dir=lambda wc, input: path.abspath(path.dirname(input.fq1[0])),
     script:
         "../scripts/create_cellranger_library_csv.R"
 
