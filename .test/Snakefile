@@ -19,6 +19,14 @@ rule testing_all:
     default_target: True
 
 
+rule test_without_cellranger:
+    input:
+        expand(
+            "results/input/{sample}.cell_ranger_library.csv",
+            sample=sample_sheet["sample"],
+        ),
+
+
 # add rules for testing setup
 
 

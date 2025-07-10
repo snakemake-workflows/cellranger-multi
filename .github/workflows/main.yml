@@ -71,7 +71,7 @@ jobs:
           snakefile: .test/Snakefile
           stagein: 'export CELLRANGER_TARBALL="fake_this_absolute_path"'
           args: >
-            create_cellranger_library_csv
+            test_without_cellranger
             --sdm conda --conda-cleanup-pkgs cache --all-temp
             --show-failed-logs --cores 2
 
@@ -82,7 +82,7 @@ jobs:
           snakefile: .test/Snakefile
           stagein: 'export CELLRANGER_TARBALL="fake_this_absolute_path"'
           args: >
-            create_cellranger_library_csv
+            test_without_cellranger
             --configfile .test/config/config_no_lane.yaml
             --sdm conda --conda-cleanup-pkgs cache --all-temp
             --show-failed-logs --cores 2
