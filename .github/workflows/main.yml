@@ -50,7 +50,7 @@ jobs:
           args: >
             --sdm conda --conda-cleanup-pkgs cache --all-temp
             --show-failed-logs --cores 2
-            --dryrun 
+            --dryrun
 
       - name: Test no_lane_sample workflow dryrun
         uses: snakemake/snakemake-github-action@v2
@@ -62,7 +62,7 @@ jobs:
             --configfile .test/config/config_no_lane.yaml
             --sdm conda --conda-cleanup-pkgs cache --all-temp
             --show-failed-logs --cores 2
-            --dryrun 
+            --dryrun
 
       - name: Test multi_lane_sample workflow without cellranger
         uses: snakemake/snakemake-github-action@v2
@@ -86,4 +86,3 @@ jobs:
             --configfile .test/config/config_no_lane.yaml
             --sdm conda --conda-cleanup-pkgs cache --all-temp
             --show-failed-logs --cores 2
-

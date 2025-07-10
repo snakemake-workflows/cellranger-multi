@@ -1,6 +1,6 @@
 name: cellranger
 # This environment is generated with the accompanying
-# cellranger.post-deploy.sh file, as it has to be 
+# cellranger.post-deploy.sh file, as it has to be
 # installed from a manually downloaded tar.gz archive.
 # Supposedly, cellranger comes packaged with all of its
 # dependencies, so nothing should be needed here.
