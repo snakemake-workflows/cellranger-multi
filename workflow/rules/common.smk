@@ -34,7 +34,9 @@ def get_input_file(wildcards, read_number):
 
 def get_sample_fastqs(wildcards, read_number):
     # default value to use, if no lane number specified
-    lane_numbers = [ "1", ]
+    lane_numbers = [
+        "1",
+    ]
     if "lane_number" in sample_sheet.columns:
         lane_numbers = lookup(
             within=sample_sheet,
