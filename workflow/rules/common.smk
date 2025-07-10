@@ -33,12 +33,14 @@ def get_input_file(wildcards, read_number):
 
 
 def get_sample_fastqs(wildcards, read_number):
-    lane_numbers = lookup(
-        within=sample_sheet,
-        query="sample == '{wildcards.sample}'",
-        cols="lane_number",
-    )
-    lane_number = 1 if not lane_numbers else lane_numbers
+    # default value to use, if no lane number specified
+    lane_numbers = [ "1", ]
+    if "lane_number" in sample_sheet.columns:
+        lane_numbers = lookup(
+            within=sample_sheet,
+            query="sample == '{wildcards.sample}'",
+            cols="lane_number",
+        )
     return expand(
         "results/input/{sample}_S1_L00{lane_number}_{read_number}_001.fastq.gz",
         sample=wildcards.sample,
