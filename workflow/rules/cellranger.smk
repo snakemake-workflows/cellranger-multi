@@ -15,8 +15,12 @@ rule follow_pedantic_cell_ranger_naming_scheme:
     conda:
         "../envs/coreutils.yaml"
     params:
-        fq1=lambda wc, input, output: path.relpath(str(input.fq1), start=path.dirname(output.fq1)),
-        fq2=lambda wc, input, output: path.relpath(str(input.fq2), start=path.dirname(output.fq2)),
+        fq1=lambda wc, input, output: path.relpath(
+            str(input.fq1), start=path.dirname(output.fq1)
+        ),
+        fq2=lambda wc, input, output: path.relpath(
+            str(input.fq2), start=path.dirname(output.fq2)
+        ),
     shell:
         "( ln --symbolic {params.fq1} {output.fq1}; "
         "  ln --symbolic {params.fq2} {output.fq2}; "

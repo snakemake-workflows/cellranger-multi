@@ -38,12 +38,10 @@ def get_sample_fastqs(wildcards, read_number):
         query="sample == '{wildcards.sample}'",
         cols="lane_number",
     )
-    lane_number = (
-        1 if not lane_numbers else lane_numbers
-    )
+    lane_number = 1 if not lane_numbers else lane_numbers
     return expand(
-            "results/input/{sample}_S1_L00{lane_number}_{read_number}_001.fastq.gz",
-            sample=wildcards.sample,
-            lane_number=lane_numbers,
-            read_number=read_number,
+        "results/input/{sample}_S1_L00{lane_number}_{read_number}_001.fastq.gz",
+        sample=wildcards.sample,
+        lane_number=lane_numbers,
+        read_number=read_number,
     )
