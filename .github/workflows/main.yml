@@ -86,7 +86,6 @@ jobs:
             --sdm conda
             --report report.zip
 
-
       - name: Test no_lane_sample workflow without cellranger
         uses: snakemake/snakemake-github-action@v2
         with:
