@@ -12,7 +12,6 @@ A Snakemake workflow for counting single cell RNAseq (scRNA-seq) data with Cell 
   - [Deployment options](#deployment-options)
   - [Authors](#authors)
   - [References](#references)
-  - [TODO](#todo)
 
 ## Usage
 
@@ -37,25 +36,17 @@ Before running the complete workflow, you can perform a dry run using:
 snakemake --dry-run
 ```
 
-To run the workflow with test files using **conda**:
+To run the workflow with test files using **conda** (this will download several GB of example data):
 
 ```bash
-snakemake --cores 2 --sdm conda --directory .test
-```
-
-To run the workflow with **apptainer** / **singularity**, add a link to a container registry in the `Snakefile`, for example `container: "oras://ghcr.io/<user>/<repository>:<version>"` for Github's container registry.
-Run the workflow with:
-
-```bash
-snakemake --cores 2 --sdm conda apptainer --directory .test
+snakemake --cores 2 --sdm conda --directory .test/ --snakefile .test/Snakefile
 ```
 
 ## Authors
 
-- Firstname Lastname
-  - Affiliation
-  - ORCID profile
-  - home page
+- David Lähnemann
+  - German Cancer Consortium (DKTK), partner site Essen-Düsseldorf, A partnership between DKFZ and University Hospital Essen
+  - https://orcid.org/0000-0002-9138-4112
 
 ## References
 
