@@ -72,7 +72,7 @@ jobs:
           stagein: 'export CELLRANGER_TARBALL="fake_this_absolute_path"'
           args: >
             test_without_cellranger
-            --sdm conda --conda-cleanup-pkgs cache --all-temp
+            --sdm conda --conda-cleanup-pkgs cache
             --show-failed-logs --cores 2
 
       - name: Test no_lane_sample workflow without cellranger
@@ -84,5 +84,5 @@ jobs:
           args: >
             test_without_cellranger
             --configfile .test/config/config_no_lane.yaml
-            --sdm conda --conda-cleanup-pkgs cache --all-temp
+            --sdm conda --conda-cleanup-pkgs cache
             --show-failed-logs --cores 2
