@@ -75,6 +75,18 @@ jobs:
             --sdm conda --conda-cleanup-pkgs cache
             --show-failed-logs --cores 2
 
+      - name: Test multi_lane_sample workflow without cellranger, report
+        uses: snakemake/snakemake-github-action@v2
+        with:
+          directory: .test/
+          snakefile: .test/Snakefile
+          stagein: 'export CELLRANGER_TARBALL="fake_this_absolute_path"'
+          args: >
+            test_without_cellranger
+            --sdm conda
+            --report report.zip
+
+
       - name: Test no_lane_sample workflow without cellranger
         uses: snakemake/snakemake-github-action@v2
         with:
