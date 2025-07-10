@@ -23,7 +23,7 @@ rule test_without_cellranger:
     input:
         expand(
             "results/input/{sample}.cell_ranger_library.csv",
-            sample=sample_sheet["sample"],
+            sample=test_cellranger_count_workflow.sample_sheet["sample"],
         ),
 
 
