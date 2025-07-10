@@ -37,15 +37,53 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - Formatting
+      - Linting
     steps:
       - uses: actions/checkout@v4
 
-      - name: Test workflow dryrun
+      - name: Test multi_lane_sample workflow dryrun
         uses: snakemake/snakemake-github-action@v2
         with:
-          directory: .test
+          directory: .test/
           snakefile: .test/Snakefile
           stagein: 'export CELLRANGER_TARBALL="fake_this_absolute_path"'
           args: >
             --sdm conda --conda-cleanup-pkgs cache --all-temp
-            --dryrun --show-failed-logs --cores 2
+            --show-failed-logs --cores 2
+            --dryrun 
+
+      - name: Test no_lane_sample workflow dryrun
+        uses: snakemake/snakemake-github-action@v2
+        with:
+          directory: .test/
+          snakefile: .test/Snakefile
+          stagein: 'export CELLRANGER_TARBALL="fake_this_absolute_path"'
+          args: >
+            --configfile .test/config/config_no_lane.yaml
+            --sdm conda --conda-cleanup-pkgs cache --all-temp
+            --show-failed-logs --cores 2
+            --dryrun 
+
+      - name: Test multi_lane_sample workflow without cellranger
+        uses: snakemake/snakemake-github-action@v2
+        with:
+          directory: .test/
+          snakefile: .test/Snakefile
+          stagein: 'export CELLRANGER_TARBALL="fake_this_absolute_path"'
+          args: >
+            create_cellranger_library_csv
+            --sdm conda --conda-cleanup-pkgs cache --all-temp
+            --show-failed-logs --cores 2
+
+      - name: Test no_lane_sample workflow without cellranger
+        uses: snakemake/snakemake-github-action@v2
+        with:
+          directory: .test/
+          snakefile: .test/Snakefile
+          stagein: 'export CELLRANGER_TARBALL="fake_this_absolute_path"'
+          args: >
+            create_cellranger_library_csv
+            --configfile .test/config/config_no_lane.yaml
+            --sdm conda --conda-cleanup-pkgs cache --all-temp
+            --show-failed-logs --cores 2
+

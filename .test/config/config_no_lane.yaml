@@ -1,0 +1,7 @@
+sample_sheet: "config/samples_no_lane.tsv"
+
+# You have to manually download and extract the reference
+# data that you need and provide the path where you extracted
+# this to right here. Usually, the folder after extraction
+# will be named something like: refdata-gex-GRCh38-2024-A/
+ref_data: "resources/refdata/"
