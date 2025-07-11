@@ -47,6 +47,9 @@ snakemake --cores 2 --sdm conda --directory .test/ --snakefile .test/Snakefile
 - David Lähnemann
   - German Cancer Consortium (DKTK), partner site Essen-Düsseldorf, A partnership between DKFZ and University Hospital Essen
   - https://orcid.org/0000-0002-9138-4112
+- Smiths Sengkwawoh Lueong
+  - German Cancer Consortium (DKTK), partner site Essen-Düsseldorf, A partnership between DKFZ and University Hospital Essen
+  - https://orcid.org/0000-0002-2776-6706
 
 ## References
 
