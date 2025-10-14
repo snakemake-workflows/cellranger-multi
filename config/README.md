@@ -1,11 +1,14 @@
 ## Workflow overview
 
 This workflow is a best-practice workflow for systematically running `cellranger count` on one or more samples.
+See the [10X documentation choosing a pipeline](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/running-pipelines/cr-choosing-a-pipeline) to see whether this is the preprocessing you need.
+If your assay setup suggests `cellranger multi`, have a look at the [standardised workflow for `cellranger multi` instead](https://snakemake.github.io/snakemake-workflow-catalog/docs/workflows/snakemake-workflows/cellranger-multi).
+
 The workflow is built using [snakemake](https://snakemake.readthedocs.io/en/stable/) and consists of the following steps:
 
 1. Link in files to a new file name that follows cellranger requirements.
 2. Create a per-sample cellranger library CSV sheet.
-3. Run cellranger count, parallelizing over samples.
+3. Run `cellranger count`, parallelizing over samples.
 4. Create a snakemake report with the Web Summaries.
 
 ## Running the workflow
@@ -27,15 +30,17 @@ With this environment variable set, the workflow will automatically install `cel
 
 The sample sheet has the following layout:
 
-| sample  | lane_number | library_type    | read1                           | read2                           |
-| ------- | ----------- | --------------- | ------------------------------- | ------------------------------- |
-| sample1 |           1 | Gene Expression | sample1.bwa.L001.read1.fastq.gz | sample1.bwa.L001.read2.fastq.gz |
-| sample1 |           2 | Gene Expression | sample1.bwa.L002.read1.fastq.gz | sample1.bwa.L002.read2.fastq.gz |
-| sample2 |           1 | Gene Expression | sample2.bwa.read1.fastq.gz      | sample2.bwa.read2.fastq.gz      |
+| sample  | lane_number | library_type    | read1                                   | read2                                   |
+| ------- | ----------- | --------------- | --------------------------------------- | --------------------------------------- |
+| sample1 |           1 | Gene Expression | ../data/sample1.bwa.L001.read1.fastq.gz | ../data/sample1.bwa.L001.read2.fastq.gz |
+| sample1 |           2 | Gene Expression | ../data/sample1.bwa.L002.read1.fastq.gz | ../data/sample1.bwa.L002.read2.fastq.gz |
+| sample2 |           1 | Gene Expression | ../data/sample2.bwa.read1.fastq.gz      | ../data/sample2.bwa.read2.fastq.gz      |
 
-The `lane_number` column is optional, and only necessary if a any sample is sequenced across multiple lanes.
-All other columns are required.
-`read1` and `read2` require relative paths to the main workflow directory (where you run the `snakemake` command).
+The `lane_number` column is optional, and only necessary if a single sample is sequenced across multiple lanes.
+All other columns are required:
+
+* `library_type` can be any of the [values listed in the `cellranger count` documentation on Library CSVs](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/inputs/cr-libraries-csv).
+* `read1` and `read2` require file names with paths relative to the main workflow directory (where you run the `snakemake` command).
 
 ### Parameters
 
