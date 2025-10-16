@@ -7,7 +7,7 @@ properties:
   lane_number:
     type: string
     description: number of the lane that files originate from. If multiple lanes per sample exist, please provide one sample sheet line per lane, with a read1 and read2 entry each. Will default to a dummy value of "1", if none is provided in the sample sheet.
-  library_type:
+  feature_types:
     type: string
     description: 'Defaults to "Gene Expression" if none is provided in the sample sheet. Otherwise, specify one of the 10X genomics library types, either "Gene Expression" or one of those listed here: https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/inputs/cr-libraries-csv#library-types'
   read1:
@@ -19,5 +19,6 @@ properties:
 
 required:
   - sample
+  - feature_types
   - read1
   - read2

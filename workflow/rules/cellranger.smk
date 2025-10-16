@@ -7,10 +7,10 @@ rule follow_pedantic_cell_ranger_naming_scheme:
         fq1=lambda wc: get_input_file(wc, "read1"),
         fq2=lambda wc: get_input_file(wc, "read2"),
     output:
-        fq1="results/input/{sample}_S1_L00{lane_number}_R1_001.fastq.gz",
-        fq2="results/input/{sample}_S1_L00{lane_number}_R2_001.fastq.gz",
+        fq1="results/input/{sample}_{feature_type}/{sample}_{feature_type}_S1_L00{lane_number}_R1_001.fastq.gz",
+        fq2="results/input/{sample}_{feature_type}/{sample}_{feature_type}_S1_L00{lane_number}_R2_001.fastq.gz",
     log:
-        "logs/input/{sample}_S1_L00{lane_number}_001.log",
+        "logs/input/{sample}_{feature_type}/{sample}_{feature_type}_S1_L00{lane_number}_001.log",
     localrule: True
     conda:
         "../envs/coreutils.yaml"
@@ -27,27 +27,27 @@ rule follow_pedantic_cell_ranger_naming_scheme:
         ") >{log} 2>&1 "
 
 
-# Create a libary CSV file for Cell Ranger.
+# Create a multi config CSV file for Cell Ranger.
 # -----------------------------------------------------
-rule create_cellranger_library_csv:
+rule create_cellranger_multi_config_csv:
     input:
         sample_sheet=lookup(within=config, dpath="sample_sheet"),
         fq1=lambda wc: get_sample_fastqs(wc, "R1"),
         fq2=lambda wc: get_sample_fastqs(wc, "R2"),
     output:
-        library_csv="results/input/{sample}.cell_ranger_library.csv",
+        library_csv="results/input/{sample}.cell_ranger_multi_config.csv",
     log:
-        "logs/input/{sample}.cell_ranger_library.log",
+        "logs/input/{sample}.cell_ranger_multi_config.log",
     localrule: True
     conda:
         "../envs/tidyverse.yaml"
     params:
         fastqs_dir=lambda wc, input: path.abspath(path.dirname(input.fq1[0])),
     script:
-        "../scripts/create_cellranger_library_csv.R"
+        "../scripts/create_cellranger_multi_config_csv.R"
 
 
-# Run cellranger count on one sample.
+# Run cellranger multi on one sample.
 # -----------------------------------------------------
 rule cellranger_count:
     input:
@@ -90,7 +90,7 @@ rule cellranger_count:
         ),
     shell:
         "(rm -r {params.out_dir}; "
-        " cellranger count "
+        " cellranger multi "
         "  --id={wildcards.sample} "
         "  --output-dir={params.out_dir} "
         "  --transcriptome={input.ref_data} "

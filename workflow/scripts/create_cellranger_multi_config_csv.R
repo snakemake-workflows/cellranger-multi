@@ -1,12 +1,13 @@
-log <- file(snakemake@log[[1]], open="wt")
+log <- file(snakemake@log[[1]], open = "wt")
 sink(log)
-sink(log, type="message")
+sink(log, type = "message")
 
 rlang::global_entrace()
 
 library(tidyverse)
 
-library_table <- read_tsv(snakemake@input[["sample_sheet"]]) |>
+
+libraries_table <- read_tsv(snakemake@input[["sample_sheet"]]) |>
   # add NA column if the sample sheet does not list library_type
   bind_rows(
     tibble(
@@ -32,7 +33,23 @@ library_table <- read_tsv(snakemake@input[["sample_sheet"]]) |>
   # sheet, but only need one entry per sample here
   distinct()
 
+# Only start writing anything after we have done all the parsing.
+
+write_lines(
+  "[gene-expression]",
+  file = snakemake@output[["multi_config_csv"]],
+  append = FALSE # ensure that the file gets overwritten with every script execution
+)
+
+
+write_lines(
+  "[libraries]",
+  file = snakemake@output[["multi_config_csv"]],
+  append = TRUE
+)
+
 write_csv(
-  library_table,
-  file = snakemake@output[["library_csv"]]
+  libraries_table,
+  file = snakemake@output[["multi_config_csv"]],
+  append = TRUE
 )

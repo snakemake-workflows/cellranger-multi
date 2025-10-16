@@ -1,7 +1,110 @@
 sample_sheet: "config/samples.tsv"
 
-# You have to manually download and extract the reference
-# data that you need and provide the path where you extracted
-# this to right here. Usually, the folder after extraction
-# will be named something like: refdata-gex-GRCh38-2024-A/
-ref_data: "/absolute/path/to/ref_data/folder/refdata-gex-GRCh38-2024-A/"
+## MULTI CONFIG CSV file configuration ##
+# This entry specifies all of the global multi config CSV file options, so
+# all those that are not set per sample in the sample_sheet specified above.
+# Or to put it in terms of the sections of the resulting multi config csv
+# file, the sample_sheet defines the `[libraries]` sectian (and the optional
+# `[samples]` section), and the entry below defines the other (optional)
+# sections.
+#
+# For details on all options, please see the 10X genomics documentation of
+# the multi config CSV file at:
+# https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/inputs/cr-multi-config-csv-opts
+# Here, we set all options to their default values and only add further
+# information in comments wherever this goes beyond the above linked
+# documentation. If you leave an option as an empty string (""), it will not
+# get added to the multi config CSV file section.
+multi_config_csv_sections:
+  # Options for the [gene-expression] section.
+  # These will only be copied into the multi config CSV file if any samples in
+  # the `sample_sheet:` specified above have the `feature_types` set to:
+  # * `Gene Expression`
+  # For details on the options, see:
+  # https://www.10xgenomics.com/support/software/cell-ranger/latest/advanced/cr-multi-config-csv-opts#gene-expression
+  gene-expression: 
+    # You have to manually download the wanted reference data version from:
+    # https://www.10xgenomics.com/support/software/cell-ranger/downloads#reference-downloads
+    # After download, extract the tar file into a directory and provide the
+    # directory's path under `reference:`. The folder will be named something
+    # like: refdata-gex-GRCh38-2024-A/
+    reference: "/absolute/path/to/ref_data/folder/refdata-gex-GRCh38-2024-A/"
+    create-bam: "true"
+    tenx-cloud-token-path: ""
+    cell-annotation-model: "auto"
+    r1-length: ""
+    r2-length: ""
+    chemistry: "auto"
+    expect-cells: ""
+    force-cells: ""
+    include-introns: ""
+    no-secondary: ""
+    check-library-compatibility: ""
+    emptydrops-minimum-umis: ""
+    # The following three gene-expression options are only applicable for
+    # 3' Cell Multiplexing data.
+    min-assignment-confidence: ""
+    cmo-sets: ""
+    barcode-sample-assignment: ""
+    # The following three gene-expression options are only applicable for
+    # Flex data.
+    probe-set: ""
+    filter-proves: ""
+
+  # Options for the [vdj] section.
+  # These will only be copied into the multi config CSV file if any samples in
+  # the `sample_sheet:` specified above have the `feature_types` set to any of:
+  # * `VDJ`
+  # * `VDJ-T`
+  # * `VDJ-T-GD`
+  # *`VDJ-B`
+  # For details on the options, see:
+  # https://www.10xgenomics.com/support/software/cell-ranger/latest/advanced/cr-multi-config-csv-opts#vdj
+  vdj:
+    # You have to manually download the wanted reference data version from:
+    # https://www.10xgenomics.com/support/software/cell-ranger/downloads#reference-downloads
+    # After download, extract the tar file into a directory and provide the
+    # directory's path under `reference:`. The folder will be named something
+    # like: refdata-cellranger-vdj-GRCh38-alts-ensembl-7.1.0/
+    reference: "/absolute/path/to/ref_data/folder/refdata-cellranger-vdj-GRCh38-alts-ensembl-7.1.0/"
+    inner-enrichment-primers: ""
+    r1-length: ""
+    r2-length: ""
+
+  # Options for the [feature] section.
+  # These will only be copied into the multi config CSV file if any samples in
+  # the `sample_sheet:` specified above have the `feature_types` set to any of:
+  # * `Antibody Capture`
+  # * `Antigen Capture`
+  # * `CRISPR Guide Capture`
+  # For details on the options, see:
+  # https://www.10xgenomics.com/support/software/cell-ranger/latest/advanced/cr-multi-config-csv-opts#feature
+  feature:
+    # You have to manually get or create the required Feature Reference CSV
+    # file, for details see:
+    # https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/inputs/cr-feature-ref-csv
+    # As these will be rather small and analysis-specific, we suggest to place
+    # them in the `config/` directory and provide the relative path here:
+    reference: "config/feature_barcode_reference.csv"
+    r1-length: ""
+    r2-length: ""
+    min-cripsr-umi: ""
+
+  # Options for the [antigen-specificity] section.
+  # These will only be copied into the multi config CSV file if any samples in
+  # the `sample_sheet:` specified above have the `feature_types` set to:
+  # * `Antigen Capture`
+  # For details on Antigen Capture / Barcode Enabled Antigen Mapping (BEAM)
+  # data analysis, see:
+  # https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/running-pipelines/cr-5p-antigen
+  antigen-specificity:
+    # This list of name-value pairs gets parsed into the
+    # `[antigen-specificity]` section as a table with the name in the required
+    # `control_id` column, and the value in the optional `mhc_allele` column.
+    # If you don't have have MHC alleles (for example in BCR analyses), leave
+    # the value empty (for example: `neg_control01: ""`). The name in each pair
+    # needs to match an entry in the `reference:` CSV file specified in the
+    # `feature:` section above.
+    control_ids:
+      neg_control01: "A*01"
+      neg_control02: "A*02"

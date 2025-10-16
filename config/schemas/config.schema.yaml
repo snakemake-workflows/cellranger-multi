@@ -4,7 +4,7 @@ properties:
   sample_sheet:
     type: string
     description: path to sample sheet TSV file
-  ref_data:
+  gene_expression:
     type: string
     description: path to ref_data folder
 
