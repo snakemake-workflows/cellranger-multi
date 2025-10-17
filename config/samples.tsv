@@ -1,5 +1,9 @@
 sample	feature_types	read1	read2	lane_number	subsample_rate
-sample1	Gene Expression	sample1.bwa.lane1.read1.fastq.gz	sample1.bwa.lane1.read2.fastq.gz	1	
-sample1	Gene Expression	sample1.bwa.lane2.read1.fastq.gz	sample1.bwa.lane2.read2.fastq.gz	2	
-sample2	Gene Expression	sample2.bwa.lane1.read1.fastq.gz	sample2.bwa.lane1.read2.fastq.gz	1	
-sample2	Gene Expression	sample2.bwa.lane2.read1.fastq.gz	sample2.bwa.lane2.read2.fastq.gz	2	
+sample1	Gene Expression	../data/sample1_gex/sample1_gex.lane1.read1.fastq.gz	../data/sample1_gex/sample1_gex.lane1.read2.fastq.gz	1	
+sample1	Gene Expression	../data/sample1_gex/sample1_gex.lane2.read1.fastq.gz	../data/sample1_gex/sample1_gex.lane2.read2.fastq.gz	2	
+sample1	VDJ-T	../data/sample1_vdjt/sample1_vdjt.lane1.read1.fastq.gz	../data/sample1_vdjt/sample1_vdjt.lane1.read2.fastq.gz	1	
+sample1	Antigen Capture	../data/sample1_antigen_capture/sample1_antigen_capture.lane1.read1.fastq.gz	../data/sample1_antigen_capture/sample1_antigen_capture.lane1.read2.fastq.gz	1	
+sample2	Gene Expression	../data/sample2_gex/sample2_gex.lane1.read1.fastq.gz	../data/sample2_gex/sample2_gex.lane1.read2.fastq.gz	1	
+sample2	Gene Expression	../data/sample2_gex/sample2_gex.lane2.read1.fastq.gz	../data/sample2_gex/sample2_gex.lane2.read2.fastq.gz	2	
+sample2	CRISPR Guide Capture	../data/sample2_crispr_guide_capture/sample2_crispr_guide_capture.lane1.read1.fastq.gz	../data/sample2_crispr_guide_capture/sample2_crispr_guide_capture.lane1.read2.fastq.gz	1	
+sample2	Antibody Capture	../data/sample2_antibody_capture/sample2_antibody_capture.lane1.read1.fastq.gz	../data/sample2_antibody_capture/sample2_antibody_capture.lane1.read2.fastq.gz	1	
