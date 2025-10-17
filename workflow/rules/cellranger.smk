@@ -43,18 +43,25 @@ rule create_cellranger_multi_config_csv:
         "../envs/tidyverse.yaml"
     params:
         fastqs_dir=lambda wc, input: path.abspath(path.dirname(input.fq1[0])),
+        multi_config_csv_sections=lookup(within=config, dpath="multi_config_csv_sections"),
     script:
         "../scripts/create_cellranger_multi_config_csv.R"
 
 
 # Run cellranger multi on one sample.
 # -----------------------------------------------------
-rule cellranger_count:
+rule cellranger_multi:
     input:
         library_csv="results/input/{sample}.cell_ranger_library.csv",
         fq1=lambda wc: get_sample_fastqs(wc, "R1"),
         fq2=lambda wc: get_sample_fastqs(wc, "R2"),
-        ref_data=lookup(within=config, dpath="ref_data"),
+        # use the library_csv as an existing replacement, in case no reference
+        # is needed here (if no Gene Expression samples present)
+        reference=lookup(
+            within=config,
+            dpath="multi_config_csv_sections/gene-expression/reference",
+            default="results/input/{sample}.cell_ranger_library.csv",
+        ),
     output:
         "results/cellranger/{sample}/outs/filtered_feature_bc_matrix/barcodes.tsv.gz",
         "results/cellranger/{sample}/outs/filtered_feature_bc_matrix/features.tsv.gz",
@@ -84,7 +91,7 @@ rule cellranger_count:
     resources:
         mem_mb=lambda wc, threads: threads * 4000,
     params:
-        mem_gb=lambda wc, resources: int(resources.mem_mb / 1000),
+        mem_gb=lambda wc, resources: math.floor(resources.mem_mb / 1000),
         out_dir=lambda wc, output: path.abspath(
             path.dirname(output["out_dir"]).removesuffix("outs")
         ),
@@ -93,10 +100,7 @@ rule cellranger_count:
         " cellranger multi "
         "  --id={wildcards.sample} "
         "  --output-dir={params.out_dir} "
-        "  --transcriptome={input.ref_data} "
-        "  --libraries={input.library_csv} "
-        "  --nosecondary "
-        "  --create-bam=true "
+        "  --csv={input.library_csv} "
         "  --localcores={threads} "
         "  --localmem={params.mem_gb}; "
         ") >{log} 2>&1 "
