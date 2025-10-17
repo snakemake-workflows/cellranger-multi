@@ -57,7 +57,7 @@ multi_config_csv_sections:
   # * `VDJ`
   # * `VDJ-T`
   # * `VDJ-T-GD`
-  # *`VDJ-B`
+  # * `VDJ-B`
   # For details on the options, see:
   # https://www.10xgenomics.com/support/software/cell-ranger/latest/advanced/cr-multi-config-csv-opts#vdj
   vdj:
