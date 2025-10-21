@@ -34,6 +34,13 @@ rule create_cellranger_multi_config_csv:
         sample_sheet=lookup(within=config, dpath="sample_sheet"),
         fq1=lambda wc: get_sample_fastqs(wc, "R1"),
         fq2=lambda wc: get_sample_fastqs(wc, "R2"),
+        # use the sample_sheet as an existing dummy placeholder, in case no
+        # feature reference file is specified for this analysis
+        feature_reference=lookup(
+            within=config,
+            dpath="multi_config_csv_sections/feature/reference",
+            default="sample_sheet",
+        ),
     output:
         library_csv="results/input/{sample}.cell_ranger_multi_config.csv",
     log:
@@ -55,8 +62,8 @@ rule cellranger_multi:
         library_csv="results/input/{sample}.cell_ranger_library.csv",
         fq1=lambda wc: get_sample_fastqs(wc, "R1"),
         fq2=lambda wc: get_sample_fastqs(wc, "R2"),
-        # use the library_csv as an existing replacement, in case no reference
-        # is needed here (if no Gene Expression samples present)
+        # use the library_csv as an existing dummy placeholder, in case no
+        # reference is needed here (if no Gene Expression samples present)
         reference=lookup(
             within=config,
             dpath="multi_config_csv_sections/gene-expression/reference",

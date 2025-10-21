@@ -107,24 +107,55 @@ parse_and_write_section_if_required(
 # parsing for antigen-specificity section is different, so we do it without the helper
 
 if ("Antigen Capture" %in% feature_types) {
+  # needed for matching up negative control ids with MHC alleles
+  feature_reference <- read_csv(
+    snakemake@input[["feature_reference"]]
+  ) |>
+  select(
+    any_of(
+      c(
+        "id",
+        "mhc_allele"
+      )
+    )
+  )
+
   antigen_specificity_table <- enframe(
     snakemake@params[["multi_config_csv_sections"]][["antigen-specificity"]][[
       "control_ids"
     ]],
     name = "control_id",
-    value = "mhc_allele"
+  ) |> select(
+    -value
+  ) |> left_join(
+    feature_reference,
+    by = join_by(control_id == id)
+  ) |> bind_rows( # ensure the mhc_allele column exists
+    tibble(mhc_allele=character())
+  ) |> mutate( # make sure any unavailable value is ""
+    mhc_allele = replace_na(mhc_allele, "")
   )
+
+  end_of_line = "\n"
   if (all(antigen_specificity_table |> pull(mhc_allele) == "")) {
-    antigen_specificity_table <- antigen_specificity_table |> select(-mhc_allele)
+    # remove the mhc_allele column, if no sample has an entry in it
+    antigen_specificity_table |> select(-mhc_allele)
+    # make sure we get trailing commas after the header and sample lines, for
+    # an example multi config csv, see:
+    # https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/running-pipelines/cr-5p-antigen#bcr
+    end_of_line = ",\n"
   }
+
   write_lines(
     c("", str_c("[antigen-specificity]"))
     file = snakemake@output[["multi_config_csv"]],
     append = TRUE
   )
+
   write_csv(
     antigen_specificity_table,
     file = snakemake@output[["multi_config_csv"]],
+    eol = end_of_line,
     append = TRUE
   )
 }
