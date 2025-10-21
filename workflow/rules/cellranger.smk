@@ -39,7 +39,7 @@ rule create_cellranger_multi_config_csv:
         feature_reference=lookup(
             within=config,
             dpath="multi_config_csv_sections/feature/reference",
-            default="sample_sheet",
+            default=lookup(within=config, dpath="sample_sheet"),
         ),
     output:
         library_csv="results/input/{sample}.cell_ranger_multi_config.csv",
