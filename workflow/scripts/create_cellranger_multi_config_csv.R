@@ -68,6 +68,9 @@ parse_and_write_section_if_required <- function(
     section_table <- enframe(
       snakemake@params[["multi_config_csv_sections"]][[section_heading]]
     ) |>
+      mutate(
+        value = unlist(value)
+      ) |>
       filter(value != "") # remove any empty entries, to keep csv succinct
     write_lines(
       c("", str_c("[", section_heading, "]")),
