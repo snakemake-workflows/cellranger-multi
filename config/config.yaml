@@ -106,5 +106,6 @@ multi_config_csv_sections:
     # the feature reference csv does not specify MHC alleles. If such an allele
     # is specified for the negative control, the multi config csv section will
     # also contain the `mhc_allele` column.
-    - neg_control01
-    - neg_control02
+    control_ids:
+      - neg_control01
+      - neg_control02
