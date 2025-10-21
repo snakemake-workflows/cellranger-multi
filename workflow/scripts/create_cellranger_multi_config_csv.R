@@ -64,7 +64,7 @@ parse_and_write_section_if_required <- function(
   feature_types,
   section_heading
 ) {
-  if (any(feature_types) %in% specified_feature_types) {
+  if (any(feature_types %in% specified_feature_types)) {
     section_table <- enframe(
       snakemake@params[["multi_config_csv_sections"]][[section_heading]]
     ) |>
