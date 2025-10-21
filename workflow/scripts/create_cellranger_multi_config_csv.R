@@ -111,7 +111,7 @@ parse_and_write_section_if_required(
 
 # parsing for antigen-specificity section is different, so we do it without the helper
 
-if ("Antigen Capture" %in% feature_types) {
+if ("Antigen Capture" %in% specified_feature_types) {
   # needed for matching up negative control ids with MHC alleles
   feature_reference <- read_csv(
     snakemake@input[["feature_reference"]]
@@ -121,7 +121,8 @@ if ("Antigen Capture" %in% feature_types) {
         c(
           "id",
           "mhc_allele"
-        )
+        ) /
+          Antigen
       )
     )
 
