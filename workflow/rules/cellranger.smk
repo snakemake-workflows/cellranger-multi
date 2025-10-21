@@ -42,7 +42,7 @@ rule create_cellranger_multi_config_csv:
             default=lookup(within=config, dpath="sample_sheet"),
         ),
     output:
-        library_csv="results/input/{sample}.cell_ranger_multi_config.csv",
+        multi_config_csv="results/input/{sample}.cell_ranger_multi_config.csv",
     log:
         "logs/input/{sample}.cell_ranger_multi_config.log",
     localrule: True
@@ -64,7 +64,7 @@ rule cellranger_multi:
         multi_config_csv="results/input/{sample}.cell_ranger_multi_config.csv",
         fq1=lambda wc: get_sample_fastqs(wc, "R1"),
         fq2=lambda wc: get_sample_fastqs(wc, "R2"),
-        # use the library_csv as an existing dummy placeholder, in case no
+        # use the multi_config_csv as an existing dummy placeholder, in case no
         # reference is needed here (if no Gene Expression samples present)
         reference=lookup(
             within=config,
