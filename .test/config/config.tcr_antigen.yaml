@@ -1,7 +1,7 @@
 sample_sheet: "config/samples.tcr_antigen.tsv"
 
 multi_config_csv_sections:
-  gene-expression: 
+  gene-expression:
     reference: "resources/refdata/"
     create-bam: "true"
     expect-cells: ""

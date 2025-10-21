@@ -6,8 +6,7 @@
 sample_sheet: "config/samples.gex_vdj_antibody.tsv"
 
 multi_config_csv_sections:
-
-  gene-expression: 
+  gene-expression:
     reference: "resources/refdata/"
     create-bam: "true"
     tenx-cloud-token-path: ""
