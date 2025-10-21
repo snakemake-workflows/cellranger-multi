@@ -20,7 +20,7 @@ validate(config, schema="../../config/schemas/config.schema.yaml")
 
 wildcard_constraints:
     sample="|".join(sample_sheet["sample"]),
-    feature_types="|".join(sample_sheet["feature_types"].replace(" ","_")),
+    feature_types="|".join(sample_sheet["feature_types"].replace(" ", "_")),
 
 
 def get_input_file(wildcards, read_number):
