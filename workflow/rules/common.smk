@@ -34,7 +34,9 @@ def get_input_file(wildcards, read_number):
 
 
 def get_sample_fastqs(wildcards, read_number):
-    feature_types = sample_sheet.loc[sample_sheet["sample"] == wildcards.sample, "feature_types"]
+    feature_types = sample_sheet.loc[
+        sample_sheet["sample"] == wildcards.sample, "feature_types"
+    ]
     files = []
     for ft in feature_types:
         # default value to use, if no lane number specified
@@ -42,7 +44,11 @@ def get_sample_fastqs(wildcards, read_number):
             "1",
         ]
         if "lane_number" in sample_sheet.columns:
-            sample_sheet.loc[(sample_sheet["sample"] == wildcards.sample) & (sample_sheet["feature_types"] == ft), "lane_number" ]
+            lane_numbers = sample_sheet.loc[
+                (sample_sheet["sample"] == wildcards.sample)
+                & (sample_sheet["feature_types"] == ft),
+                "lane_number",
+            ]
         files.extend(
             expand(
                 "results/input/{sample}_{feature_type}/{sample}_{feature_type}_S1_L00{lane_number}_{read_number}_001.fastq.gz",
