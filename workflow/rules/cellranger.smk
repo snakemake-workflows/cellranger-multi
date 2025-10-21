@@ -61,7 +61,7 @@ rule create_cellranger_multi_config_csv:
 # -----------------------------------------------------
 rule cellranger_multi:
     input:
-        library_csv="results/input/{sample}.cell_ranger_library.csv",
+        multi_config_csv="results/input/{sample}.cell_ranger_multi_config.csv",
         fq1=lambda wc: get_sample_fastqs(wc, "R1"),
         fq2=lambda wc: get_sample_fastqs(wc, "R2"),
         # use the library_csv as an existing dummy placeholder, in case no
@@ -69,7 +69,7 @@ rule cellranger_multi:
         reference=lookup(
             within=config,
             dpath="multi_config_csv_sections/gene-expression/reference",
-            default="results/input/{sample}.cell_ranger_library.csv",
+            default="results/input/{sample}.cell_ranger_multi_config.csv",
         ),
     output:
         "results/cellranger/{sample}/outs/filtered_feature_bc_matrix/barcodes.tsv.gz",
@@ -109,7 +109,7 @@ rule cellranger_multi:
         " cellranger multi "
         "  --id={wildcards.sample} "
         "  --output-dir={params.out_dir} "
-        "  --csv={input.library_csv} "
+        "  --csv={input.multi_config_csv} "
         "  --localcores={threads} "
         "  --localmem={params.mem_gb}; "
         ") >{log} 2>&1 "
