@@ -46,6 +46,16 @@ libraries_table <- read_tsv(snakemake@input[["sample_sheet"]]) |>
         "chemistry"
       )
     )
+  ) |>
+  mutate(
+    across(
+      everything(),
+      ~ as.character(.x)
+    ),
+    across(
+      everything(),
+      ~ replace_na(.x, "")
+    )
   )
 
 specified_feature_types <- libraries_table |> pull(feature_types)
