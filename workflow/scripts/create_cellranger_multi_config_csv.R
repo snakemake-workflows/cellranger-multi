@@ -50,7 +50,7 @@ libraries_table <- read_tsv(snakemake@input[["sample_sheet"]]) |>
 
 specified_feature_types <- libraries_table |> pull(feature_types)
 
-# Only start writing anything after we have done the libraries parsing. 
+# Only start writing anything after we have done the libraries parsing.
 # Otherwise, we need to debug the sample sheet, anyways.
 
 write_lines(
@@ -92,14 +92,19 @@ parse_and_write_section_if_required(
 
 parse_and_write_section_if_required(
   c(
-    "VDJ", "VDJ-T", "VDJ-T-GD", "VDJ-B"
+    "VDJ",
+    "VDJ-T",
+    "VDJ-T-GD",
+    "VDJ-B"
   ),
   "vdj"
 )
 
 parse_and_write_section_if_required(
   c(
-    "Antibody Capture", "Antigen Capture", "CRISPR Guide Capture"
+    "Antibody Capture",
+    "Antigen Capture",
+    "CRISPR Guide Capture"
   ),
   "feature"
 )
@@ -111,30 +116,36 @@ if ("Antigen Capture" %in% feature_types) {
   feature_reference <- read_csv(
     snakemake@input[["feature_reference"]]
   ) |>
-  select(
-    any_of(
-      c(
-        "id",
-        "mhc_allele"
+    select(
+      any_of(
+        c(
+          "id",
+          "mhc_allele"
+        )
       )
     )
-  )
 
   antigen_specificity_table <- enframe(
     snakemake@params[["multi_config_csv_sections"]][["antigen-specificity"]][[
       "control_ids"
     ]],
     name = "control_id",
-  ) |> select(
-    -value
-  ) |> left_join(
-    feature_reference,
-    by = join_by(control_id == id)
-  ) |> bind_rows( # ensure the mhc_allele column exists
-    tibble(mhc_allele=character())
-  ) |> mutate( # make sure any unavailable value is ""
-    mhc_allele = replace_na(mhc_allele, "")
-  )
+  ) |>
+    select(
+      -value
+    ) |>
+    left_join(
+      feature_reference,
+      by = join_by(control_id == id)
+    ) |>
+    bind_rows(
+      # ensure the mhc_allele column exists
+      tibble(mhc_allele = character())
+    ) |>
+    mutate(
+      # make sure any unavailable value is ""
+      mhc_allele = replace_na(mhc_allele, "")
+    )
 
   end_of_line = "\n"
   if (all(antigen_specificity_table |> pull(mhc_allele) == "")) {
@@ -147,7 +158,7 @@ if ("Antigen Capture" %in% feature_types) {
   }
 
   write_lines(
-    c("", str_c("[antigen-specificity]"))
+    c("", str_c("[antigen-specificity]")),
     file = snakemake@output[["multi_config_csv"]],
     append = TRUE
   )
