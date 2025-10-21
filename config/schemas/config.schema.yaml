@@ -4,9 +4,10 @@ properties:
   sample_sheet:
     type: string
     description: path to sample sheet TSV file
-  gene_expression:
-    type: string
-    description: path to ref_data folder
+  multi_config_csv_sections:
+    type: object
+    description: configuration options for the multi config csv file
 
 required:
   - sample_sheet
+  - multi_config_csv_sections

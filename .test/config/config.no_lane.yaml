@@ -1,0 +1,6 @@
+sample_sheet: "config/samples.no_lane.tsv"
+
+multi_config_csv_sections:
+  gene-expression: 
+    reference: "resource/refdata/"
+    create-bam: "true"

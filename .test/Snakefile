@@ -2,7 +2,7 @@ configfile: "config/config.yaml"
 
 
 # declare main workflow as a module
-module test_cellranger_count_workflow:
+module test_cellranger_multi_workflow:
     snakefile:
         "../workflow/Snakefile"
     config:
@@ -10,7 +10,7 @@ module test_cellranger_count_workflow:
 
 
 # use all rules from the main workflow
-use rule * from test_cellranger_count_workflow
+use rule * from test_cellranger_multi_workflow
 
 
 rule testing_all:
@@ -22,15 +22,15 @@ rule testing_all:
 rule test_without_cellranger:
     input:
         expand(
-            "results/input/{sample}.cell_ranger_library.csv",
-            sample=test_cellranger_count_workflow.sample_sheet["sample"],
+            "results/input/{sample}.cell_ranger_multi_config.csv",
+            sample=test_cellranger_multi_workflow.sample_sheet["sample"],
         ),
 
 
 # add rules for testing setup
 
 
-rule download_test_data:
+rule download_gex_vdj_antibody_test_data:
     output:
         expand(
             "data/pbmc_1k_v3_fastqs/pbmc_1k_v3_S1_L00{lane_read}_001.fastq.gz",

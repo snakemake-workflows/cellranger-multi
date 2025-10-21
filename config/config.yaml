@@ -98,13 +98,13 @@ multi_config_csv_sections:
   # data analysis, see:
   # https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/running-pipelines/cr-5p-antigen
   antigen-specificity:
-    # This list of name-value pairs gets parsed into the
-    # `[antigen-specificity]` section as a table with the name in the required
-    # `control_id` column, and the value in the optional `mhc_allele` column.
-    # If you don't have have MHC alleles (for example in BCR analyses), leave
-    # the value empty (for example: `neg_control01: ""`). The name in each pair
-    # needs to match an entry in the `reference:` CSV file specified in the
-    # `feature:` section above.
-    control_ids:
-      neg_control01: "A*01"
-      neg_control02: "A*02"
+    # List the negative control samples here, as they are named in the `id`
+    # column of the `reference:` CSV file specified in the `feature:` section
+    # above. The script for the multi config csv creation looks up these
+    # samples and fills the `[antigen-specificity]` section with the
+    # appropriate table. This table will only contain a `control_id` column if
+    # the feature reference csv does not specify MHC alleles. If such an allele
+    # is specified for the negative control, the multi config csv section will
+    # also contain the `mhc_allele` column.
+    - neg_control01
+    - neg_control02

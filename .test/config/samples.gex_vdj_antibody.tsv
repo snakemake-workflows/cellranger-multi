@@ -1,0 +1,9 @@
+sample	feature_types	read1	read2	lane_number	subsample_rate
+pbmc_1k_v32	Gene Expression	dummy_data/gex_vdj_antibody/gex/gex_lane1_R1.fq.gz	dummy_data/gex_vdj_antibody/gex/gex_lane1_R2.fq.gz	1	
+pbmc_1k_v32	Gene Expression	dummy_data/gex_vdj_antibody/gex/gex_lane2_R1.fq.gz	dummy_data/gex_vdj_antibody/gex/gex_lane2_R2.fq.gz	2	
+pbmc_1k_v32	Antibody Capture	dummy_data/gex_vdj_antibody/antibody/antibody_lane1_R1.fq.gz	dummy_data/gex_vdj_antibody/antibody/antibody_lane1_R2.fq.gz	1	
+pbmc_1k_v32	Antibody Capture	dummy_data/gex_vdj_antibody/antibody/antibody_lane2_R1.fq.gz	dummy_data/gex_vdj_antibody/antibody/antibody_lane2_R2.fq.gz	2	
+pbmc_1k_v32	VDJ-B	dummy_data/gex_vdj_antibody/vdj/vdj_b_lane1_R1.fq.gz	dummy_data/gex_vdj_antibody/vdj/vdj_b_lane1_R2.fq.gz	1	
+pbmc_1k_v32	VDJ-B	dummy_data/gex_vdj_antibody/vdj/vdj_b_lane2_R1.fq.gz	dummy_data/gex_vdj_antibody/vdj/vdj_b_lane2_R2.fq.gz	2	
+pbmc_1k_v32	VDJ-T	dummy_data/gex_vdj_antibody/vdj/vdj_t_lane1_R1.fq.gz	dummy_data/gex_vdj_antibody/vdj/vdj_t_lane1_R2.fq.gz	1	
+pbmc_1k_v32	VDJ-T	dummy_data/gex_vdj_antibody/vdj/vdj_t_lane2_R1.fq.gz	dummy_data/gex_vdj_antibody/vdj/vdj_t_lane2_R2.fq.gz	2	

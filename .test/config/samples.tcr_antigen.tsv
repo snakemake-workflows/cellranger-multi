@@ -1,0 +1,6 @@
+sample	feature_types	read1	read2	lane_number	subsample_rate
+pbmc_1k_v32	Gene Expression	dummy_data/tcr_antigen/gex/gex_lane1_R1.fq.gz	dummy_data/tcr_antigen/gex/gex_lane1_R2.fq.gz	1	
+pbmc_1k_v32	Antigen Capture	dummy_data/tcr_antigen/antigen/antigen_lane1_R1.fq.gz	dummy_data/tcr_antigen/antigen/antigen_lane1_R2.fq.gz	1	
+pbmc_1k_v32	Antigen Capture	dummy_data/tcr_antigen/antigen/antigen_lane2_R1.fq.gz	dummy_data/tcr_antigen/antigen/antigen_lane2_R2.fq.gz	2	
+pbmc_1k_v32	VDJ-T	dummy_data/tcr_antigen/vdj/vdj_t_lane1_R1.fq.gz	dummy_data/tcr_antigen/vdj/vdj_t_lane1_R2.fq.gz	1	
+pbmc_1k_v32	VDJ-T	dummy_data/tcr_antigen/vdj/vdj_t_lane2_R1.fq.gz	dummy_data/tcr_antigen/vdj/vdj_t_lane2_R2.fq.gz	2	

@@ -1,0 +1,8 @@
+id,name,read,pattern,sequence,feature_type,mhc_allele
+ag1,ag1,R2,^(BC),CGATGCCGGACGATC,Antigen Capture,A*01
+ag2,ag2,R2,^(BC),CCGTCTCACCGATAT,Antigen Capture,A*01
+neg_control01,neg_control01,R2,^(BC),GATTGGCTACTCAAT,Antigen Capture,A*01
+ag4,ag4,R2,^(BC),CGGCTCACCGCGTCT,Antigen Capture,A*02
+ag5,ag5,R2,^(BC),CTATCTACCGGCTCG,Antigen Capture,A*02
+neg_control02,neg_control02,R2,^(BC),CATGTCTACGTTAAG,Antigen Capture,A*02
+ab1,ab1,R2,^(BC),GAGGTACACCAATCA,Antibody Capture,

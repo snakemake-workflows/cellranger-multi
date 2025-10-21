@@ -1,0 +1,24 @@
+# sample setup and configuration according to the dataset linked here:
+# https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/running-pipelines/cr-5p-multi#all-libs
+# Note: the actual data does not seem to contain any CRISPR Guide Capture data,
+# so this is omitted in the sample sheet here.
+
+sample_sheet: "config/samples.gex_vdj_antibody.tsv"
+
+multi_config_csv_sections:
+
+  gene-expression: 
+    reference: "resource/refdata/"
+    create-bam: "true"
+    tenx-cloud-token-path: ""
+    cell-annotation-model: ""
+    expect-cells: "10000"
+
+  vdj:
+    reference: "resources/refdata/"
+    r1-length: ""
+    r2-length: ""
+
+  feature:
+    reference: "config/feature_ref.gex_vdj_antibody.csv"
+    min-cripsr-umi: ""

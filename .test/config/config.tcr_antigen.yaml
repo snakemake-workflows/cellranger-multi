@@ -1,0 +1,20 @@
+sample_sheet: "config/samples.tcr_antigen.tsv"
+
+multi_config_csv_sections:
+  gene-expression: 
+    reference: "resource/refdata/"
+    create-bam: "true"
+    expect-cells: ""
+
+  vdj:
+    reference: "resource/refdata/"
+    inner-enrichment-primers: ""
+
+  feature:
+    reference: "config/feature_ref.tcr_antigen.csv"
+    r1-length: ""
+    r2-length: ""
+
+  antigen-specificity:
+    - neg_control01
+    - neg_control02
