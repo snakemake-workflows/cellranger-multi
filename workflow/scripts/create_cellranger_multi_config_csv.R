@@ -134,8 +134,7 @@ if ("Antigen Capture" %in% specified_feature_types) {
         c(
           "id",
           "mhc_allele"
-        ) /
-          Antigen
+        )
       )
     )
 
