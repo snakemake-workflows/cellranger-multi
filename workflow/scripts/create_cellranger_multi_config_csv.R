@@ -70,7 +70,7 @@ parse_and_write_section_if_required <- function(
     ) |>
       filter(value != "") # remove any empty entries, to keep csv succinct
     write_lines(
-      c("", str_c("[", section_heading, "]"))
+      c("", str_c("[", section_heading, "]")),
       file = snakemake@output[["multi_config_csv"]],
       append = TRUE
     )
