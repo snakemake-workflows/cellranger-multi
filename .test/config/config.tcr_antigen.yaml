@@ -2,12 +2,12 @@ sample_sheet: "config/samples.tcr_antigen.tsv"
 
 multi_config_csv_sections:
   gene-expression: 
-    reference: "resource/refdata/"
+    reference: "resources/refdata/"
     create-bam: "true"
     expect-cells: ""
 
   vdj:
-    reference: "resource/refdata/"
+    reference: "resources/refdata/"
     inner-enrichment-primers: ""
 
   feature:
