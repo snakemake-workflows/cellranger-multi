@@ -171,7 +171,8 @@ if ("Antigen Capture" %in% specified_feature_types) {
     antigen_specificity_table,
     file = snakemake@output[["multi_config_csv"]],
     eol = end_of_line,
-    append = TRUE
+    append = TRUE,
+    col_names = TRUE
   )
 }
 
@@ -186,5 +187,6 @@ write_lines(
 write_csv(
   libraries_table,
   file = snakemake@output[["multi_config_csv"]],
-  append = TRUE
+  append = TRUE,
+  col_names = TRUE
 )
