@@ -1,0 +1,9 @@
+id,name,read,pattern,sequence,feature_type
+ag1,ag1,R2,^(BC),CGATGCCGGACGATC,Antigen Capture
+ag2,ag2,R2,^(BC),CCGTCTCACCGATAT,Antigen Capture
+ag4,ag4,R2,^(BC),CGGCTCACCGCGTCT,Antigen Capture
+ag5,ag5,R2,^(BC),CTATCTACCGGCTCG,Antigen Capture
+ag6,ag6,R2,^(BC),CATGTCTACGTTAAG,Antigen Capture
+ag7,ag7,R2,^(BC),GAGGTACACCAATCA,Antigen Capture
+ag8,ag8,R2,^(BC),AGCACGACCTTGGTT,Antigen Capture
+neg_control01,neg_control01,R2,^(BC),GATTGGCTACTCAAT,Antigen Capture

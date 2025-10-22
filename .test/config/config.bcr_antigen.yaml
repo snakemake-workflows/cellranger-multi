@@ -1,0 +1,20 @@
+sample_sheet: "config/samples.bcr_antigen.tsv"
+
+multi_config_csv_sections:
+  gene-expression:
+    reference: "resources/refdata/"
+    create-bam: "true"
+    expect-cells: ""
+
+  vdj:
+    reference: "resources/refdata/"
+    inner-enrichment-primers: ""
+
+  feature:
+    reference: "config/feature_ref.bcr_antigen.csv"
+    r1-length: ""
+    r2-length: ""
+
+  antigen-specificity:
+    control_ids:
+      - neg_control01
