@@ -1,3 +1,6 @@
+# Test case setup inspired by:
+# https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/running-pipelines/cr-5p-antigen#tcr
+
 sample_sheet: "config/samples.tcr_antigen.tsv"
 
 multi_config_csv_sections:
@@ -11,6 +14,8 @@ multi_config_csv_sections:
     inner-enrichment-primers: ""
 
   feature:
+    # Feature reference file downloaded from:
+    # https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/running-pipelines/cr-5p-antigen#feature-ref-tcr-example
     reference: "config/feature_ref.tcr_antigen.csv"
     r1-length: ""
     r2-length: ""

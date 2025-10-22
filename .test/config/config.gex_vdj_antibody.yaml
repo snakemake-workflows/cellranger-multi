@@ -19,5 +19,7 @@ multi_config_csv_sections:
     r2-length: ""
 
   feature:
+    # Feature reference csv downloaded from:
+    # https://cf.10xgenomics.com/samples/cell-vdj/5.0.0/sc5p_v2_hs_PBMC_10k_multi_5gex_5fb_b_t/sc5p_v2_hs_PBMC_10k_multi_5gex_5fb_b_t_feature_ref.csv
     reference: "config/feature_ref.gex_vdj_antibody.csv"
     min-cripsr-umi: ""
