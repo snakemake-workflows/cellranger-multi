@@ -16,6 +16,10 @@ libraries_table <- read_tsv(snakemake@input[["sample_sheet"]]) |>
   rename(
     fastq_id = sample
   ) |>
+  bind_rows(
+    # ensure the lane_number column exists
+    tibble(lane_number = "1")
+  ) |>
   # we might have multiple lanes per sample in the main sample
   # sheet, but only need one entry per sample here
   summarize(
