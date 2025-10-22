@@ -175,7 +175,8 @@ if ("Antigen Capture" %in% specified_feature_types) {
   end_of_line = "\n"
   if (all(antigen_specificity_table |> pull(mhc_allele) == "")) {
     # remove the mhc_allele column, if no sample has an entry in it
-    antigen_specificity_table |> select(-mhc_allele)
+    antigen_specificity_table <- antigen_specificity_table |>
+      select(-mhc_allele)
     # make sure we get trailing commas after the header and sample lines, for
     # an example multi config csv, see:
     # https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/running-pipelines/cr-5p-antigen#bcr
