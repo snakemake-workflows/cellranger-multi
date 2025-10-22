@@ -44,8 +44,8 @@ We also provide specific subsection links wherever available.
 
 These are **required columns**:
 
-* `sample` can be any sample name you want to assign, where one sample name groups all of the sequencing data generated from one biological sample.
-  Thus, the same name should be used across all lanes for which fastq pairs were generated, and across all assays that were performed on a particular biological sample.
+* `sample` is an arbitrary name assigned to represent one biological sample.
+  The same name should be used across all lanes used and all assays performed for that sample, grouping all sequencing data generated from that biological sample.
 * `feature_types` can be any of the [values listed in the `cellranger multi` documentation on multi config CSVs](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/inputs/cr-multi-config-csv-opts#feature-types).
 * `read1` and `read2` require file names with paths relative to the main workflow directory (where you run the `snakemake` command).
   From these (and the `lane_number` column), the raw read data files are linked into the folder and file name structure that cellranger expects, and the `fastq_id` and `fastqs` columns of the multi config CSV file are set up accordingly.
