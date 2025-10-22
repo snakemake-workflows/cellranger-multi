@@ -89,7 +89,7 @@ parse_and_write_section_if_required <- function(
       ) |>
       filter(value != "") # remove any empty entries, to keep csv succinct
     write_lines(
-      c("", str_c("[", section_heading, "]")),
+      str_c("[", section_heading, "]"),
       file = snakemake@output[["multi_config_csv"]],
       append = TRUE
     )
@@ -97,6 +97,11 @@ parse_and_write_section_if_required <- function(
       section_table,
       file = snakemake@output[["multi_config_csv"]],
       col_names = FALSE,
+      append = TRUE
+    )
+    write_lines(
+      "",
+      file = snakemake@output[["multi_config_csv"]],
       append = TRUE
     )
   }
@@ -178,7 +183,7 @@ if ("Antigen Capture" %in% specified_feature_types) {
   }
 
   write_lines(
-    c("", str_c("[antigen-specificity]")),
+    str_c("[antigen-specificity]"),
     file = snakemake@output[["multi_config_csv"]],
     append = TRUE
   )
@@ -190,12 +195,18 @@ if ("Antigen Capture" %in% specified_feature_types) {
     append = TRUE,
     col_names = TRUE
   )
+
+  write_lines(
+    "",
+    file = snakemake@output[["multi_config_csv"]],
+    append = TRUE
+  )
 }
 
 # parsing for the libraries section is different, so we write without the helper
 
 write_lines(
-  c("", "[libraries]"),
+  "[libraries]",
   file = snakemake@output[["multi_config_csv"]],
   append = TRUE
 )
