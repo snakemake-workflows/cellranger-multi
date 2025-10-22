@@ -142,10 +142,11 @@ if ("Antigen Capture" %in% specified_feature_types) {
     snakemake@params[["multi_config_csv_sections"]][["antigen-specificity"]][[
       "control_ids"
     ]],
-    name = "control_id",
+    name = NULL,
+    value = "control_id"
   ) |>
-    select(
-      -value
+    mutate(
+      control_id = as.character(unlist(control_id))
     ) |>
     left_join(
       feature_reference,
