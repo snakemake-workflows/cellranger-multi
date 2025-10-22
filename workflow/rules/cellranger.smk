@@ -39,10 +39,10 @@ rule create_cellranger_multi_config_csv:
         feature_reference=lookup(
             within=config,
             dpath="multi_config_csv_sections/feature/reference",
-            default="sample_sheet",
+            default=lookup(within=config, dpath="sample_sheet"),
         ),
     output:
-        library_csv="results/input/{sample}.cell_ranger_multi_config.csv",
+        multi_config_csv="results/input/{sample}.cell_ranger_multi_config.csv",
     log:
         "logs/input/{sample}.cell_ranger_multi_config.log",
     localrule: True
@@ -50,7 +50,9 @@ rule create_cellranger_multi_config_csv:
         "../envs/tidyverse.yaml"
     params:
         fastqs_dir=lambda wc, input: path.abspath(path.dirname(input.fq1[0])),
-        multi_config_csv_sections=lookup(within=config, dpath="multi_config_csv_sections"),
+        multi_config_csv_sections=lookup(
+            within=config, dpath="multi_config_csv_sections"
+        ),
     script:
         "../scripts/create_cellranger_multi_config_csv.R"
 
@@ -59,15 +61,15 @@ rule create_cellranger_multi_config_csv:
 # -----------------------------------------------------
 rule cellranger_multi:
     input:
-        library_csv="results/input/{sample}.cell_ranger_library.csv",
+        multi_config_csv="results/input/{sample}.cell_ranger_multi_config.csv",
         fq1=lambda wc: get_sample_fastqs(wc, "R1"),
         fq2=lambda wc: get_sample_fastqs(wc, "R2"),
-        # use the library_csv as an existing dummy placeholder, in case no
+        # use the multi_config_csv as an existing dummy placeholder, in case no
         # reference is needed here (if no Gene Expression samples present)
         reference=lookup(
             within=config,
             dpath="multi_config_csv_sections/gene-expression/reference",
-            default="results/input/{sample}.cell_ranger_library.csv",
+            default="results/input/{sample}.cell_ranger_multi_config.csv",
         ),
     output:
         "results/cellranger/{sample}/outs/filtered_feature_bc_matrix/barcodes.tsv.gz",
@@ -107,7 +109,7 @@ rule cellranger_multi:
         " cellranger multi "
         "  --id={wildcards.sample} "
         "  --output-dir={params.out_dir} "
-        "  --csv={input.library_csv} "
+        "  --csv={input.multi_config_csv} "
         "  --localcores={threads} "
         "  --localmem={params.mem_gb}; "
         ") >{log} 2>&1 "

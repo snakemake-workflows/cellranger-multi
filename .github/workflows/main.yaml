@@ -65,6 +65,18 @@ jobs:
             --show-failed-logs --cores 2
             --dryrun
 
+      - name: Test bcr_antigen workflow dryrun
+        uses: snakemake/snakemake-github-action@v2
+        with:
+          directory: .test/
+          snakefile: .test/Snakefile
+          stagein: 'export CELLRANGER_TARBALL="fake_this_absolute_path"'
+          args: >
+            --configfile .test/config/config.bcr_antigen.yaml
+            --sdm conda --conda-cleanup-pkgs cache --all-temp
+            --show-failed-logs --cores 2
+            --dryrun
+
       - name: Test no_lane_sample workflow dryrun
         uses: snakemake/snakemake-github-action@v2
         with:
@@ -101,6 +113,18 @@ jobs:
             --sdm conda --conda-cleanup-pkgs cache
             --show-failed-logs --cores 2
 
+      - name: Test bcr_antigen workflow without cellranger
+        uses: snakemake/snakemake-github-action@v2
+        with:
+          directory: .test/
+          snakefile: .test/Snakefile
+          stagein: 'export CELLRANGER_TARBALL="fake_this_absolute_path"'
+          args: >
+            test_without_cellranger
+            --configfile .test/config/config.bcr_antigen.yaml
+            --sdm conda --conda-cleanup-pkgs cache
+            --show-failed-logs --cores 2
+
       - name: Test no_lane_sample workflow without cellranger
         uses: snakemake/snakemake-github-action@v2
         with:
@@ -124,4 +148,3 @@ jobs:
             --configfile .test/config/config.no_lane.yaml
             --sdm conda --conda-cleanup-pkgs cache
             --report report.zip
-

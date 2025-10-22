@@ -6,7 +6,10 @@ rlang::global_entrace()
 
 library(tidyverse)
 
-libraries_table <- read_tsv(snakemake@input[["sample_sheet"]]) |>
+libraries_table <- read_tsv(
+  snakemake@input[["sample_sheet"]],
+  col_types = cols(.default = col_character())
+) |>
   filter(
     sample == snakemake@wildcards[["sample"]]
   ) |>
@@ -15,6 +18,13 @@ libraries_table <- read_tsv(snakemake@input[["sample_sheet"]]) |>
   ) |>
   rename(
     fastq_id = sample
+  ) |>
+  bind_rows(
+    # ensure the lane_number column exists
+    tibble(lane_number = character())
+  ) |>
+  replace_na(
+    list(lane_number = "1")
   ) |>
   # we might have multiple lanes per sample in the main sample
   # sheet, but only need one entry per sample here
@@ -46,11 +56,17 @@ libraries_table <- read_tsv(snakemake@input[["sample_sheet"]]) |>
         "chemistry"
       )
     )
+  ) |>
+  mutate(
+    across(
+      everything(),
+      ~ replace_na(.x, "")
+    )
   )
 
 specified_feature_types <- libraries_table |> pull(feature_types)
 
-# Only start writing anything after we have done the libraries parsing. 
+# Only start writing anything after we have done the libraries parsing.
 # Otherwise, we need to debug the sample sheet, anyways.
 
 write_lines(
@@ -64,13 +80,16 @@ parse_and_write_section_if_required <- function(
   feature_types,
   section_heading
 ) {
-  if (any(feature_types) %in% specified_feature_types) {
+  if (any(feature_types %in% specified_feature_types)) {
     section_table <- enframe(
       snakemake@params[["multi_config_csv_sections"]][[section_heading]]
     ) |>
+      mutate(
+        value = unlist(value)
+      ) |>
       filter(value != "") # remove any empty entries, to keep csv succinct
     write_lines(
-      c("", str_c("[", section_heading, "]"))
+      str_c("[", section_heading, "]"),
       file = snakemake@output[["multi_config_csv"]],
       append = TRUE
     )
@@ -78,6 +97,11 @@ parse_and_write_section_if_required <- function(
       section_table,
       file = snakemake@output[["multi_config_csv"]],
       col_names = FALSE,
+      append = TRUE
+    )
+    write_lines(
+      "",
+      file = snakemake@output[["multi_config_csv"]],
       append = TRUE
     )
   }
@@ -92,54 +116,67 @@ parse_and_write_section_if_required(
 
 parse_and_write_section_if_required(
   c(
-    "VDJ", "VDJ-T", "VDJ-T-GD", "VDJ-B"
+    "VDJ",
+    "VDJ-T",
+    "VDJ-T-GD",
+    "VDJ-B"
   ),
   "vdj"
 )
 
 parse_and_write_section_if_required(
   c(
-    "Antibody Capture", "Antigen Capture", "CRISPR Guide Capture"
+    "Antibody Capture",
+    "Antigen Capture",
+    "CRISPR Guide Capture"
   ),
   "feature"
 )
 
 # parsing for antigen-specificity section is different, so we do it without the helper
 
-if ("Antigen Capture" %in% feature_types) {
+if ("Antigen Capture" %in% specified_feature_types) {
   # needed for matching up negative control ids with MHC alleles
   feature_reference <- read_csv(
     snakemake@input[["feature_reference"]]
   ) |>
-  select(
-    any_of(
-      c(
-        "id",
-        "mhc_allele"
+    select(
+      any_of(
+        c(
+          "id",
+          "mhc_allele"
+        )
       )
     )
-  )
 
   antigen_specificity_table <- enframe(
     snakemake@params[["multi_config_csv_sections"]][["antigen-specificity"]][[
       "control_ids"
     ]],
-    name = "control_id",
-  ) |> select(
-    -value
-  ) |> left_join(
-    feature_reference,
-    by = join_by(control_id == id)
-  ) |> bind_rows( # ensure the mhc_allele column exists
-    tibble(mhc_allele=character())
-  ) |> mutate( # make sure any unavailable value is ""
-    mhc_allele = replace_na(mhc_allele, "")
-  )
+    name = NULL,
+    value = "control_id"
+  ) |>
+    mutate(
+      control_id = as.character(unlist(control_id))
+    ) |>
+    left_join(
+      feature_reference,
+      by = join_by(control_id == id)
+    ) |>
+    bind_rows(
+      # ensure the mhc_allele column exists
+      tibble(mhc_allele = character())
+    ) |>
+    mutate(
+      # make sure any unavailable value is ""
+      mhc_allele = replace_na(mhc_allele, "")
+    )
 
   end_of_line = "\n"
   if (all(antigen_specificity_table |> pull(mhc_allele) == "")) {
     # remove the mhc_allele column, if no sample has an entry in it
-    antigen_specificity_table |> select(-mhc_allele)
+    antigen_specificity_table <- antigen_specificity_table |>
+      select(-mhc_allele)
     # make sure we get trailing commas after the header and sample lines, for
     # an example multi config csv, see:
     # https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/running-pipelines/cr-5p-antigen#bcr
@@ -147,7 +184,7 @@ if ("Antigen Capture" %in% feature_types) {
   }
 
   write_lines(
-    c("", str_c("[antigen-specificity]"))
+    str_c("[antigen-specificity]"),
     file = snakemake@output[["multi_config_csv"]],
     append = TRUE
   )
@@ -156,6 +193,13 @@ if ("Antigen Capture" %in% feature_types) {
     antigen_specificity_table,
     file = snakemake@output[["multi_config_csv"]],
     eol = end_of_line,
+    append = TRUE,
+    col_names = TRUE
+  )
+
+  write_lines(
+    "",
+    file = snakemake@output[["multi_config_csv"]],
     append = TRUE
   )
 }
@@ -163,7 +207,7 @@ if ("Antigen Capture" %in% feature_types) {
 # parsing for the libraries section is different, so we write without the helper
 
 write_lines(
-  c("", "[libraries]"),
+  "[libraries]",
   file = snakemake@output[["multi_config_csv"]],
   append = TRUE
 )
@@ -171,5 +215,6 @@ write_lines(
 write_csv(
   libraries_table,
   file = snakemake@output[["multi_config_csv"]],
-  append = TRUE
+  append = TRUE,
+  col_names = TRUE
 )

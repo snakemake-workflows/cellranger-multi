@@ -22,7 +22,7 @@ multi_config_csv_sections:
   # * `Gene Expression`
   # For details on the options, see:
   # https://www.10xgenomics.com/support/software/cell-ranger/latest/advanced/cr-multi-config-csv-opts#gene-expression
-  gene-expression: 
+  gene-expression:
     # You have to manually download the wanted reference data version from:
     # https://www.10xgenomics.com/support/software/cell-ranger/downloads#reference-downloads
     # After download, extract the tar file into a directory and provide the
@@ -106,5 +106,6 @@ multi_config_csv_sections:
     # the feature reference csv does not specify MHC alleles. If such an allele
     # is specified for the negative control, the multi config csv section will
     # also contain the `mhc_allele` column.
-    - neg_control01
-    - neg_control02
+    control_ids:
+      - neg_control01
+      - neg_control02
