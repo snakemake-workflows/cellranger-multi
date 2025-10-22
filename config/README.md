@@ -39,14 +39,13 @@ The sample sheet configures all the possible [columns for the `[libraries]` sect
 | sample2 | Gene Expression | ../data/sample2_gex/sample2_gex.bwa.L001.read1.fastq.gz   | ../data/sample2_gex/sample2_gex.bwa.L001.read2.fastq.gz   |           1 |
 | sample2 | Gene Expression | ../data/sample2_gex/sample2_gex.bwa.L002.read1.fastq.gz   | ../data/sample2_gex/sample2_gex.bwa.L002.read2.fastq.gz   |           2 |
 
-
 For more details on these columns, refer to the [10X documentation for the `[libraries]` section of the multi config CSV file](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/inputs/cr-multi-config-csv-opts#libraries).
 We also provide specific subsection links wherever available.
 
 These are **required columns**:
 
-* `sample` can be any sample name you want to assign, where one sample groups all of the lane fastq pairs per assay that was performed on a particular biological sample.
-  Thus, the name should usually contain an identifier for the biological sample and for the assay type, for example `replicate_1_5gex`.
+* `sample` can be any sample name you want to assign, where one sample name groups all of the sequencing data generated from one biological sample.
+  Thus, the same name should be used across all lanes for which fastq pairs were generated, and across all assays that were performed on a particular biological sample.
 * `feature_types` can be any of the [values listed in the `cellranger multi` documentation on multi config CSVs](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/inputs/cr-multi-config-csv-opts#feature-types).
 * `read1` and `read2` require file names with paths relative to the main workflow directory (where you run the `snakemake` command).
   From these (and the `lane_number` column), the raw read data files are linked into the folder and file name structure that cellranger expects, and the `fastq_id` and `fastqs` columns of the multi config CSV file are set up accordingly.
