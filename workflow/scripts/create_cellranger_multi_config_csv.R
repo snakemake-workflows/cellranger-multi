@@ -6,7 +6,10 @@ rlang::global_entrace()
 
 library(tidyverse)
 
-libraries_table <- read_tsv(snakemake@input[["sample_sheet"]]) |>
+libraries_table <- read_tsv(
+  snakemake@input[["sample_sheet"]],
+  col_types = cols(.default = col_character())
+) |>
   filter(
     sample == snakemake@wildcards[["sample"]]
   ) |>
@@ -18,7 +21,10 @@ libraries_table <- read_tsv(snakemake@input[["sample_sheet"]]) |>
   ) |>
   bind_rows(
     # ensure the lane_number column exists
-    tibble(lane_number = "1")
+    tibble(lane_number = character())
+  ) |>
+  replace_na(
+    list(lane_number = "1")
   ) |>
   # we might have multiple lanes per sample in the main sample
   # sheet, but only need one entry per sample here
@@ -52,10 +58,6 @@ libraries_table <- read_tsv(snakemake@input[["sample_sheet"]]) |>
     )
   ) |>
   mutate(
-    across(
-      everything(),
-      ~ as.character(.x)
-    ),
     across(
       everything(),
       ~ replace_na(.x, "")
