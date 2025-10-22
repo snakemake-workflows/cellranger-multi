@@ -77,7 +77,7 @@ jobs:
             --show-failed-logs --cores 2
             --dryrun
 
-       - name: Test no_lane_sample workflow dryrun
+      - name: Test no_lane_sample workflow dryrun
         uses: snakemake/snakemake-github-action@v2
         with:
           directory: .test/
