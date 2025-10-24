@@ -26,8 +26,8 @@ multi_config_csv_sections:
     # You have to manually download the wanted reference data version from:
     # https://www.10xgenomics.com/support/software/cell-ranger/downloads#reference-downloads
     # After download, extract the tar file into a directory and provide the
-    # directory's path under `reference:`. The folder will be named something
-    # like: refdata-gex-GRCh38-2024-A/
+    # directory's absolute path under `reference:`, starting with `/`. The
+    # folder will be named something like: refdata-gex-GRCh38-2024-A/
     reference: "/absolute/path/to/ref_data/folder/refdata-gex-GRCh38-2024-A/"
     create-bam: "true"
     tenx-cloud-token-path: ""
@@ -64,9 +64,12 @@ multi_config_csv_sections:
     # You have to manually download the wanted reference data version from:
     # https://www.10xgenomics.com/support/software/cell-ranger/downloads#reference-downloads
     # After download, extract the tar file into a directory and provide the
-    # directory's path under `reference:`. The folder will be named something
-    # like: refdata-cellranger-vdj-GRCh38-alts-ensembl-7.1.0/
-    reference: "/absolute/path/to/ref_data/folder/refdata-cellranger-vdj-GRCh38-alts-ensembl-7.1.0/"
+    # directory's absolute path under `reference:`, starting with `/`. The
+    # folder will be named something like:
+    # refdata-cellranger-vdj-GRCh38-alts-ensembl-7.1.0/
+    # Note: only uncomment the below line with an existing folder specified.
+    # Otherwise, the workflow will error with a MissingInputException.
+#    reference: "/absolute/path/to/ref_data/folder/refdata-cellranger-vdj-GRCh38-alts-ensembl-7.1.0/"
     inner-enrichment-primers: ""
     r1-length: ""
     r2-length: ""
@@ -85,7 +88,9 @@ multi_config_csv_sections:
     # https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/inputs/cr-feature-ref-csv
     # As these will be rather small and analysis-specific, we suggest to place
     # them in the `config/` directory and provide the relative path here:
-    reference: "config/feature_barcode_reference.csv"
+    # Note: only uncomment the below line with an existing folder specified.
+    # Otherwise, the workflow will error with a MissingInputException.
+#    reference: "config/feature_barcode_reference.csv"
     r1-length: ""
     r2-length: ""
     min-cripsr-umi: ""
