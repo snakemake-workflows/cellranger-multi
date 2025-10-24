@@ -49,7 +49,6 @@ rule create_cellranger_multi_config_csv:
     conda:
         "../envs/tidyverse.yaml"
     params:
-        fastqs_dir=lambda wc, input: path.abspath(path.dirname(input.fq1[0])),
         multi_config_csv_sections=lookup(
             within=config, dpath="multi_config_csv_sections"
         ),

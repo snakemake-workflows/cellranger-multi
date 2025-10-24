@@ -6,6 +6,38 @@ rlang::global_entrace()
 
 library(tidyverse)
 
+cellranger_fastq_dirs <- enframe(
+  snakemake@input[["fq1"]],
+  name = NULL,
+  value = "filename"
+) |>
+  separate_wider_regex(
+    filename,
+    c(
+      "results/input/",
+      snakemake@wildcards[["sample"]],
+      "_",
+      feature_types = "[^/]+",
+      "/",
+      snakemake@wildcards[["sample"]],
+      "_.+_R1_001.fastq.gz"
+    ),
+    cols_remove = FALSE
+  ) |>
+  add_column(
+    sample = snakemake@wildcards[["sample"]]
+  ) |>
+  mutate(
+    fastqs = dirname(filename),
+    feature_types = str_replace(feature_types, "_", " ")
+  ) |>
+  select(
+    sample,
+    feature_types,
+    fastqs
+  ) |>
+  distinct()
+
 libraries_table <- read_tsv(
   snakemake@input[["sample_sheet"]],
   col_types = cols(.default = col_character())
@@ -13,8 +45,9 @@ libraries_table <- read_tsv(
   filter(
     sample == snakemake@wildcards[["sample"]]
   ) |>
-  add_column(
-    fastqs = snakemake@params[["fastqs_dir"]]
+  left_join(
+    cellranger_fastq_dirs,
+    by = c("sample", "feature_types")
   ) |>
   rename(
     fastq_id = sample
