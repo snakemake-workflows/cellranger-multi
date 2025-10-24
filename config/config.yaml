@@ -69,7 +69,7 @@ multi_config_csv_sections:
     # refdata-cellranger-vdj-GRCh38-alts-ensembl-7.1.0/
     # Note: only uncomment the below line with an existing folder specified.
     # Otherwise, the workflow will error with a MissingInputException.
-#    reference: "/absolute/path/to/ref_data/folder/refdata-cellranger-vdj-GRCh38-alts-ensembl-7.1.0/"
+    #    reference: "/absolute/path/to/ref_data/folder/refdata-cellranger-vdj-GRCh38-alts-ensembl-7.1.0/"
     inner-enrichment-primers: ""
     r1-length: ""
     r2-length: ""
@@ -90,7 +90,7 @@ multi_config_csv_sections:
     # them in the `config/` directory and provide the relative path here:
     # Note: only uncomment the below line with an existing folder specified.
     # Otherwise, the workflow will error with a MissingInputException.
-#    reference: "config/feature_barcode_reference.csv"
+    #    reference: "config/feature_barcode_reference.csv"
     r1-length: ""
     r2-length: ""
     min-cripsr-umi: ""
