@@ -28,7 +28,7 @@ cellranger_fastq_dirs <- enframe(
     sample = snakemake@wildcards[["sample"]]
   ) |>
   mutate(
-    fastqs = dirname(filename),
+    fastqs = normalizePath(dirname(filename)),
     feature_types = str_replace(feature_types, "_", " ")
   ) |>
   select(
