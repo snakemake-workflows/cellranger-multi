@@ -7,8 +7,8 @@ rule follow_pedantic_cell_ranger_naming_scheme:
         fq1=lambda wc: get_input_file(wc, "read1"),
         fq2=lambda wc: get_input_file(wc, "read2"),
     output:
-        fq1="results/input/{sample}_{feature_type}/{sample}_{feature_type}_S1_L00{lane_number}_R1_001.fastq.gz",
-        fq2="results/input/{sample}_{feature_type}/{sample}_{feature_type}_S1_L00{lane_number}_R2_001.fastq.gz",
+        fq1="results/input/{sample}_{feature_type}/{sample}_S1_L00{lane_number}_R1_001.fastq.gz",
+        fq2="results/input/{sample}_{feature_type}/{sample}_S1_L00{lane_number}_R2_001.fastq.gz",
     log:
         "logs/input/{sample}_{feature_type}/{sample}_{feature_type}_S1_L00{lane_number}_001.log",
     localrule: True

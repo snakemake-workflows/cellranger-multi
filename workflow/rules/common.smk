@@ -57,7 +57,7 @@ def get_sample_fastqs(wildcards, read_number):
             ]
         files.extend(
             expand(
-                "results/input/{sample}_{feature_type}/{sample}_{feature_type}_S1_L00{lane_number}_{read_number}_001.fastq.gz",
+                "results/input/{sample}_{feature_type}/{sample}_S1_L00{lane_number}_{read_number}_001.fastq.gz",
                 sample=wildcards.sample,
                 feature_type=ft,
                 lane_number=lane_numbers,
