@@ -30,8 +30,13 @@ multi_config_csv_sections:
     # folder will be named something like: refdata-gex-GRCh38-2024-A/
     reference: "/absolute/path/to/ref_data/folder/refdata-gex-GRCh38-2024-A/"
     create-bam: "true"
-    tenx-cloud-token-path: ""
-    cell-annotation-model: "auto"
+    # Only uncomment the following two entries together, and if you have
+    # successfully set up 10X cloud authentication, and if you want to have
+    # cell annotations. For more info see:
+    # * https://www.10xgenomics.com/support/software/cell-ranger/latest/getting-started/cr-what-is-cell-annotation
+    # * https://www.10xgenomics.com/support/software/cell-ranger/latest/resources/cr-command-line-arguments#cloud-auth-setup
+    # tenx-cloud-token-path: ""
+    # cell-annotation-model: "auto"
     r1-length: ""
     r2-length: ""
     chemistry: "auto"
