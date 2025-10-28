@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.1](https://github.com/snakemake-workflows/cellranger-multi/compare/v1.0.0...v1.0.1) (2025-10-28)
+
+
+### Bug Fixes
+
+* absolute sample folder paths ([41c7ac6](https://github.com/snakemake-workflows/cellranger-multi/commit/41c7ac671d0603eff45f6c40ae5f5b72e053baed))
+* comment out `cell-annotation-model: auto` in example `config/config.yaml`, to avoid an unintended 10X cloud authentication requirement ([62f375b](https://github.com/snakemake-workflows/cellranger-multi/commit/62f375bf8e94661605a79c1eb5df107adc7aa143))
+* fastqs folder parsing and vdj reference path docs ([ebba69a](https://github.com/snakemake-workflows/cellranger-multi/commit/ebba69a3dda07b27ef327646b8551873cbfdbe2a))
+* fastqs folder parsing from input files ([b678734](https://github.com/snakemake-workflows/cellranger-multi/commit/b6787348e6a2b1f3f45840aabd72a7c9943ceb26))
+* filename for cellranger without assay type ([98ff5e3](https://github.com/snakemake-workflows/cellranger-multi/commit/98ff5e3166d889ecca4eac0542a6c35543e1e78f))
+
 ## 1.0.0 (2025-10-22)
 
 
