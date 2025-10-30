@@ -41,6 +41,13 @@ rule create_cellranger_multi_config_csv:
             dpath="multi_config_csv_sections/feature/reference",
             default=lookup(within=config, dpath="sample_sheet"),
         ),
+        # use the sample_sheet as an existing dummy placeholder, in case no
+        # multiplexing TSV file is specified for this analysis
+        multiplexing=lookup(
+            within=config,
+            dpath="multi_config_csv_sections/multiplexing",
+            default=lookup(within=config, dpath="sample_sheet"),
+        ),
     output:
         multi_config_csv="results/input/{pool_id}.cell_ranger_multi_config.csv",
     log:

@@ -15,24 +15,24 @@ cellranger_fastq_dirs <- enframe(
     filename,
     c(
       "results/input/",
-      snakemake@wildcards[["sample"]],
+      snakemake@wildcards[["pool_id"]],
       "_",
       feature_types = "[^/]+",
       "/",
-      snakemake@wildcards[["sample"]],
+      snakemake@wildcards[["pool_id"]],
       "_.+_R1_001.fastq.gz"
     ),
     cols_remove = FALSE
   ) |>
   add_column(
-    sample = snakemake@wildcards[["sample"]]
+    id = snakemake@wildcards[["pool_id"]]
   ) |>
   mutate(
     fastqs = normalizePath(dirname(filename)),
     feature_types = str_replace(feature_types, "_", " ")
   ) |>
   select(
-    sample,
+    id,
     feature_types,
     fastqs
   ) |>
@@ -43,14 +43,14 @@ libraries_table <- read_tsv(
   col_types = cols(.default = col_character())
 ) |>
   filter(
-    sample == snakemake@wildcards[["sample"]]
+    id == snakemake@wildcards[["pool_id"]]
   ) |>
   left_join(
     cellranger_fastq_dirs,
-    by = c("sample", "feature_types")
+    by = c("id", "feature_types")
   ) |>
   rename(
-    fastq_id = sample
+    fastq_id = id
   ) |>
   bind_rows(
     # ensure the lane_number column exists
@@ -97,7 +97,10 @@ libraries_table <- read_tsv(
     )
   )
 
-specified_feature_types <- libraries_table |> pull(feature_types)
+specified_feature_types <- libraries_table |>
+  select(-sample) |>
+  distinct() |>
+  pull(feature_types)
 
 # Only start writing anything after we have done the libraries parsing.
 # Otherwise, we need to debug the sample sheet, anyways.
@@ -251,3 +254,31 @@ write_csv(
   append = TRUE,
   col_names = TRUE
 )
+
+# parsing for the samples section is different, so we write without the helper
+
+n_samples <- libraries_table |>
+  select(sample) |>
+  distinct() |>
+  count() |>
+  pull(n)
+
+if (n_samples > 1) {
+  multiplexing_barcodes <- read_tsv(
+    snakemake@input[["multiplexing"]],
+    col_types = cols(.default = col_character())
+  )
+
+  write_lines(
+    c("", "[samples]"),
+    file = snakemake@output[["multi_config_csv"]],
+    append = TRUE
+  )
+
+  write_csv(
+    multiplexing_barcodes,
+    file = snakemake@output[["multi_config_csv"]],
+    append = TRUE,
+    col_names = TRUE
+  )
+}
