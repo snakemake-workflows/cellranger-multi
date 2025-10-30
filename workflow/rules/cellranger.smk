@@ -120,7 +120,8 @@ rule cellranger_multi_files_gene_expression_global:
     input:
         csv_copy="results/cellranger/{sample}/outs/config.csv",
     output:
-       "results/cellranger/{sample}/outs/multi/count/raw_feature_bc_matrix/barcodes.tsv.gz",
+        "results/cellranger/{sample}/outs/multi/count/raw_molecule_info.h5",
+        "results/cellranger/{sample}/outs/multi/count/raw_feature_bc_matrix/barcodes.tsv.gz",
         "results/cellranger/{sample}/outs/multi/count/raw_feature_bc_matrix/features.tsv.gz",
         "results/cellranger/{sample}/outs/multi/count/raw_feature_bc_matrix/matrix.mtx.gz",
         "results/cellranger/{sample}/outs/multi/count/raw_feature_bc_matrix.h5",
@@ -138,7 +139,6 @@ rule cellranger_multi_files_gene_expression_per_sample:
     input:
         csv_copy="results/cellranger/{sample}/outs/config.csv",
     output:
-        "results/cellranger/{sample}/outs/per_sample_outs/{multiplex_sample}/count/sample_cloupe.cloupe",
         "results/cellranger/{sample}/outs/per_sample_outs/{multiplex_sample}/count/sample_filtered_barcodes.csv",
         "results/cellranger/{sample}/outs/per_sample_outs/{multiplex_sample}/count/sample_alignments.bam",
         "results/cellranger/{sample}/outs/per_sample_outs/{multiplex_sample}/count/sample_alignments.bam.bai",
@@ -160,7 +160,6 @@ rule cellranger_multi_files_vdj_reference:
         csv_copy="results/cellranger/{sample}/outs/config.csv",
     output:
        "results/cellranger/{sample}/outs/vdj_reference/reference.json",
-       "results/cellranger/{sample}/outs/vdj_reference/fasta/donor_regions.fa",
        "results/cellranger/{sample}/outs/vdj_reference/fasta/regions.fa",
     log:
         "logs/cellranger/multi/vdj_reference_files_{sample}.log",
@@ -205,6 +204,8 @@ rule cellranger_multi_files_gene_expression_per_sample:
         "results/cellranger/{sample}/outs/per_sample_outs/{multiplex_sample}/{vdj_type}/consensus.bam.bai",
         "results/cellranger/{sample}/outs/per_sample_outs/{multiplex_sample}/{vdj_type}/consensus.fasta",
         "results/cellranger/{sample}/outs/per_sample_outs/{multiplex_sample}/{vdj_type}/consensus.fasta.fai",
+        "results/cellranger/{sample}/outs/per_sample_outs/{multiplex_sample}/{vdj_type}/consensus_annotations.csv",
+        "results/cellranger/{sample}/outs/per_sample_outs/{multiplex_sample}/{vdj_type}/donor_regions.fa",
         "results/cellranger/{sample}/outs/per_sample_outs/{multiplex_sample}/{vdj_type}/filtered_contig_annotations.csv",
         "results/cellranger/{sample}/outs/per_sample_outs/{multiplex_sample}/{vdj_type}/filtered_contig.fasta",
         "results/cellranger/{sample}/outs/per_sample_outs/{multiplex_sample}/{vdj_type}/filtered_contig.fastq",
