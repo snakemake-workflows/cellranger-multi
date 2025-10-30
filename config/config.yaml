@@ -56,6 +56,10 @@ multi_config_csv_sections:
     probe-set: ""
     filter-proves: ""
 
+  # multiplexing TSV file
+  # Note: only uncomment the below line with an existing file specified.
+  # multiplexing: "config/multiplexing.tsv"
+
   # Options for the [vdj] section.
   # These will only be copied into the multi config CSV file if any samples in
   # the `sample_sheet:` specified above have the `feature_types` set to any of:

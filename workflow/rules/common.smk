@@ -26,23 +26,25 @@ wildcard_constraints:
 def get_input_file(wildcards, read_number):
     ft = wildcards.feature_type.replace("_", " ")
     if "lane_number" in sample_sheet.columns:
-        return lookup(
-            within=sample_sheet,
-            query=f"sample == '{wildcards.sample}' & feature_types == '{ft}' & lane_number == '{wildcards.lane_number}'",
-            cols=read_number,
-        )
+        return sample_sheet.loc[
+            (sample_sheet["id"] == wildcards.pool_id)
+            & (sample_sheet["feature_types"] == ft)
+            & (sample_sheet["lane_number"] == wildcards.lane_number),
+            read_number
+        ].unique()
     else:
-        return lookup(
-            within=sample_sheet,
-            query=f"sample == '{wildcards.sample}' & feature_types == '{ft}'",
-            cols=read_number,
-        )
+        return sample_sheet.loc[
+            (sample_sheet["id"] == wildcards.pool_id)
+            & (sample_sheet["feature_types"] == ft),
+            read_number
+        ].unique()
+
 
 
 def get_sample_fastqs(wildcards, read_number):
     feature_types = sample_sheet.loc[
-        sample_sheet["sample"] == wildcards.sample, "feature_types"
-    ].str.replace(" ", "_")
+        sample_sheet["id"] == wildcards.pool_id, "feature_types"
+    ].unique().str.replace(" ", "_")
     files = []
     for ft in feature_types:
         # default value to use, if no lane number specified
@@ -51,14 +53,14 @@ def get_sample_fastqs(wildcards, read_number):
         ]
         if "lane_number" in sample_sheet.columns:
             lane_numbers = sample_sheet.loc[
-                (sample_sheet["sample"] == wildcards.sample)
+                (sample_sheet["id"] == wildcards.pool_id)
                 & (sample_sheet["feature_types"] == ft.replace("_", " ")),
                 "lane_number",
-            ]
+            ].unique()
         files.extend(
             expand(
-                "results/input/{sample}_{feature_type}/{sample}_S1_L00{lane_number}_{read_number}_001.fastq.gz",
-                sample=wildcards.sample,
+                "results/input/{pool_id}_{feature_type}/{pool_id}_S1_L00{lane_number}_{read_number}_001.fastq.gz",
+                sample=wildcards.pool_id,
                 feature_type=ft,
                 lane_number=lane_numbers,
                 read_number=read_number,

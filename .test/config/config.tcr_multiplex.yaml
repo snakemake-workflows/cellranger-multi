@@ -1,7 +1,7 @@
 # Test case setup inspired by:
 # https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/running-pipelines/cr-5p-antigen#tcr
 
-sample_sheet: "config/samples.tcr_antigen.tsv"
+sample_sheet: "config/samples.tcr_multiplex.tsv"
 
 multi_config_csv_sections:
   gene-expression:
@@ -20,7 +20,4 @@ multi_config_csv_sections:
     r1-length: ""
     r2-length: ""
 
-  antigen-specificity:
-    control_ids:
-      - neg_control01
-      - neg_control02
+  multiplexing: "config/multiplexing.tcr_multiplex.tsv"
