@@ -16,7 +16,7 @@ multi_config_csv_sections:
   feature:
     # Feature reference file downloaded from:
     # https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/running-pipelines/cr-5p-antigen#feature-ref-tcr-example
-    reference: "config/feature_ref.tcr_antigen.csv"
+    reference: "config/feature_ref.tcr_multiplex.csv"
     r1-length: ""
     r2-length: ""
 

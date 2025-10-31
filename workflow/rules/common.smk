@@ -54,6 +54,11 @@ def determine_final_output(wildcards):
             )
         )
 
+        # handle feature_types defined for this pool of samples
+        feature_types = sample_sheet.loc[
+            sample_sheet["id"] == pool, "feature_types"
+        ].unique()
+
         # request multiplexing output, if any has been done
         if len(samples) > 1:
             final_output.extend(
@@ -98,11 +103,6 @@ def determine_final_output(wildcards):
                         pool_id=pool,
                     )
                 )
-
-        # handle feature_types defined for this pool of samples
-        feature_types = sample_sheet.loc[
-            sample_sheet["id"] == pool, "feature_types"
-        ].unique()
 
         for ft in feature_types:
 
