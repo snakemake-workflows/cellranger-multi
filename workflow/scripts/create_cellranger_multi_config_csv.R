@@ -38,7 +38,7 @@ cellranger_fastq_dirs <- enframe(
   ) |>
   distinct()
 
-libraries_table <- read_tsv(
+all_samples_libraries_table <- read_tsv(
   snakemake@input[["sample_sheet"]],
   col_types = cols(.default = col_character())
 ) |>
@@ -68,6 +68,7 @@ libraries_table <- read_tsv(
     ),
     .by = any_of(
       c(
+        "sample",
         "fastq_id",
         "fastqs",
         "feature_types",
@@ -80,6 +81,7 @@ libraries_table <- read_tsv(
   select(
     any_of(
       c(
+        "sample",
         "fastq_id",
         "fastqs",
         "feature_types",
@@ -97,9 +99,11 @@ libraries_table <- read_tsv(
     )
   )
 
-specified_feature_types <- libraries_table |>
+libraries_table <- all_samples_libraries_table |>
   select(-sample) |>
-  distinct() |>
+  distinct()
+
+specified_feature_types <- libraries_table |>
   pull(feature_types)
 
 # Only start writing anything after we have done the libraries parsing.
@@ -257,7 +261,7 @@ write_csv(
 
 # parsing for the samples section is different, so we write without the helper
 
-n_samples <- libraries_table |>
+n_samples <- all_samples_libraries_table |>
   select(sample) |>
   distinct() |>
   count() |>
