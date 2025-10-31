@@ -79,7 +79,7 @@ rule cellranger_multi_run:
         ),
     output:
         "results/cellranger/{pool_id}/outs/config.csv",
-        directory("results/cellranger/{pool_id}/outs/"),
+        out_dir=directory("results/cellranger/{pool_id}/outs/"),
     log:
         "logs/cellranger/multi/multi_run_{pool_id}.log",
     conda:
