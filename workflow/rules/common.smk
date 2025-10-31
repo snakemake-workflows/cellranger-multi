@@ -35,10 +35,10 @@ def determine_final_output(wildcards):
         pool_id=ALL_IDS,
     )
 
-    for pool in pool_id:
+    for pool in ALL_IDS:
 
         samples = sample_sheet.loc[
-            sample_sheet["id"] == wildcards.pool_id, "sample"
+            sample_sheet["id"] == pool, "sample"
         ].unique()
 
         # request per-sample summaries, which are the only consistent per-sample
@@ -101,7 +101,7 @@ def determine_final_output(wildcards):
 
         # handle feature_types defined for this pool of samples
         feature_types = sample_sheet.loc[
-            sample_sheet["id"] == wildcards.pool_id, "feature_types"
+            sample_sheet["id"] == pool, "feature_types"
         ].unique()
 
         for ft in feature_types:
@@ -193,8 +193,8 @@ def get_input_file(wildcards, read_number):
 def get_sample_fastqs(wildcards, read_number):
     feature_types = (
         sample_sheet.loc[sample_sheet["id"] == wildcards.pool_id, "feature_types"]
-        .unique()
         .str.replace(" ", "_")
+        .unique()
     )
     files = []
     for ft in feature_types:
@@ -211,7 +211,7 @@ def get_sample_fastqs(wildcards, read_number):
         files.extend(
             expand(
                 "results/input/{pool_id}_{feature_type}/{pool_id}_S1_L00{lane_number}_{read_number}_001.fastq.gz",
-                sample=wildcards.pool_id,
+                pool_id=wildcards.pool_id,
                 feature_type=ft,
                 lane_number=lane_numbers,
                 read_number=read_number,

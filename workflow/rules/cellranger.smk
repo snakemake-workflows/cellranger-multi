@@ -95,7 +95,7 @@ rule cellranger_multi_run:
     shell:
         "(rm -r {params.out_dir}; "
         " cellranger multi "
-        "  --id={wildcards.sample} "
+        "  --id={wildcards.pool_id} "
         "  --output-dir={params.out_dir} "
         "  --csv={input.multi_config_csv} "
         "  --localcores={threads} "
