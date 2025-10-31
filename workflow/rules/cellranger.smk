@@ -123,6 +123,10 @@ rule cellranger_multi_files_summaries:
         ") >{log} 2>&1 "
 
 
+# multiplexing outputs, according to:
+# https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/outputs/cr-3p-outputs-cellplex
+
+
 rule cellranger_multi_files_multiplexing_global:
     input:
         csv_copy="results/cellranger/{pool_id}/outs/config.csv",
@@ -135,6 +139,19 @@ rule cellranger_multi_files_multiplexing_global:
         "results/cellranger/{pool_id}/outs/multi/multiplexing_analysis/tag_calls_summary.csv",
     log:
         "logs/cellranger/multi/multiplexing_files/multiplexing_global_{pool_id}.log",
+    threads: 1
+    shell:
+        "( touch {output} "
+        ") >{log} 2>&1 "
+
+
+rule cellranger_multi_files_multiplexing_per_sample:
+    input:
+        csv_copy="results/cellranger/{pool_id}/outs/config.csv",
+    output:
+        "results/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/count/feature_reference.csv",
+    log:
+        "logs/cellranger/multi/multiplexing_files/multiplexing_per_sample_{pool_id}_{sample_id}.log",
     threads: 1
     shell:
         "( touch {output} "
@@ -176,17 +193,7 @@ rule cellranger_multi_files_multiplexing_crispr_global:
         ") >{log} 2>&1 "
 
 
-rule cellranger_multi_files_multiplexing_per_sample:
-    input:
-        csv_copy="results/cellranger/{pool_id}/outs/config.csv",
-    output:
-        "results/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/count/feature_reference.csv",
-    log:
-        "logs/cellranger/multi/multiplexing_files/multiplexing_per_sample_{pool_id}_{sample_id}.log",
-    threads: 1
-    shell:
-        "( touch {output} "
-        ") >{log} 2>&1 "
+# "Gene Expression" output files
 
 
 rule cellranger_multi_files_gene_expression_global:
@@ -228,12 +235,15 @@ rule cellranger_multi_files_gene_expression_per_sample:
         ") >{log} 2>&1 "
 
 
+# VDJ output files
+
+
 rule cellranger_multi_files_vdj_reference:
     input:
         csv_copy="results/cellranger/{pool_id}/outs/config.csv",
     output:
-       "results/cellranger/{pool_id}/outs/vdj_reference/reference.json",
-       "results/cellranger/{pool_id}/outs/vdj_reference/fasta/regions.fa",
+        "results/cellranger/{pool_id}/outs/vdj_reference/reference.json",
+        "results/cellranger/{pool_id}/outs/vdj_reference/fasta/regions.fa",
     log:
         "logs/cellranger/multi/vdj_reference_files_{pool_id}.log",
     threads: 1
@@ -246,14 +256,14 @@ rule cellranger_multi_files_vdj_global:
     input:
         csv_copy="results/cellranger/{pool_id}/outs/config.csv",
     output:
-       "results/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig_annotations.bed",
-       "results/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig_annotations.csv",
-       "results/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig_annotations.json",
-       "results/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig.bam",
-       "results/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig.bam.bai",
-       "results/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig.fasta",
-       "results/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig.fasta.fai",
-       "results/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig.fastq",
+        "results/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig_annotations.bed",
+        "results/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig_annotations.csv",
+        "results/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig_annotations.json",
+        "results/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig.bam",
+        "results/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig.bam.bai",
+        "results/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig.fasta",
+        "results/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig.fasta.fai",
+        "results/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig.fastq",
     log:
         "logs/cellranger/multi/{vdj_type}_files/{vdj_type}_global_{pool_id}.log",
     threads: 1
@@ -262,7 +272,7 @@ rule cellranger_multi_files_vdj_global:
         ") >{log} 2>&1 "
 
 
-rule cellranger_multi_files_gene_expression_per_sample:
+rule cellranger_multi_files_vdj_per_sample:
     input:
         csv_copy="results/cellranger/{pool_id}/outs/config.csv",
     output:

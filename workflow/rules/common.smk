@@ -17,10 +17,160 @@ sample_sheet = (
 validate(sample_sheet, schema="../../config/schemas/sample_sheet.schema.yaml")
 validate(config, schema="../../config/schemas/config.schema.yaml")
 
+# set global variables
+
+ALL_IDS = sample_sheet["id"].unique()
+
 
 wildcard_constraints:
     sample="|".join(sample_sheet["sample"]),
     feature_types="|".join(sample_sheet["feature_types"].replace(" ", "_")),
+
+
+def determine_final_output(wildcards):
+    # automatically generated copy of the multi config CSV, which is the only
+    # consistent global output of cellranger  (independent of assay types)
+    final_output = expand(
+        "results/cellranger/{pool_id}/outs/config.csv",
+        pool_id=ALL_IDS,
+    )
+
+    for pool in pool_id:
+
+        samples = sample_sheet.loc[
+            sample_sheet["id"] == wildcards.pool_id, "sample"
+        ].unique()
+
+        # request per-sample summaries, which are the only consistent per-sample
+        # output of cellranger  (independent of assay types)
+        final_output.extend(
+            expand(
+                [
+                    "results/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/metrics_summary.csv",
+                    "results/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/web_summary.html",
+                ],
+                pool_id=pool,
+                sample_id=samples,
+            )
+        )
+
+        # request multiplexing output, if any has been done
+        if len(samples) > 1:
+            final_output.extend(
+                expand(
+                    [
+                        "results/cellranger/{pool_id}/outs/multi/count/feature_reference.csv",
+                        "results/cellranger/{pool_id}/outs/multi/count/raw_cloupe.cloupe",
+                        "results/cellranger/{pool_id}/outs/multi/multiplexing_analysis/assignment_confidence_table.csv",
+                        "results/cellranger/{pool_id}/outs/multi/multiplexing_analysis/cells_per_tag.json",
+                        "results/cellranger/{pool_id}/outs/multi/multiplexing_analysis/tag_calls_per_cell.csv",
+                        "results/cellranger/{pool_id}/outs/multi/multiplexing_analysis/tag_calls_summary.csv",
+                        "results/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/count/feature_reference.csv",
+                    ],
+                    pool_id=pool,
+                    sample_id=samples,
+                )
+            )
+            if "Antibody Capture" in feature_types:
+                final_output.extend(
+                    expand(
+                        [
+                            "results/cellranger/{pool_id}/outs/multi/count/antibody_analysis/aggregate_barcodes.csv",
+                        ],
+                        pool_id=pool,
+                    )
+                )
+            if "CRISPR Guide Capture" in feature_types:
+                final_output.extend(
+                    expand(
+                        [
+                            "results/cellranger/{pool_id}/outs/multi/count/crispr_analysis/cells_per_protospacer.json",
+                            "results/cellranger/{pool_id}/outs/multi/count/crispr_analysis/feature_reference.csv",
+                            "results/cellranger/{pool_id}/outs/multi/count/crispr_analysis/perturbation_effects_by_feature",
+                            "results/cellranger/{pool_id}/outs/multi/count/crispr_analysis/perturbation_effects_by_target",
+                            "results/cellranger/{pool_id}/outs/multi/count/crispr_analysis/perturbation_efficiencies_by_feature.csv",
+                            "results/cellranger/{pool_id}/outs/multi/count/crispr_analysis/perturbation_efficiencies_by_target.csv",
+                            "results/cellranger/{pool_id}/outs/multi/count/crispr_analysis/protospacer_calls_per_cell.csv",
+                            "results/cellranger/{pool_id}/outs/multi/count/crispr_analysis/protospacer_calls_summary.csv",
+                            "results/cellranger/{pool_id}/outs/multi/count/crispr_analysis/protospacer_umi_thresholds.csv",
+                            "results/cellranger/{pool_id}/outs/multi/count/crispr_analysis/protospacer_umi_thresholds.json",
+                        ],
+                        pool_id=pool,
+                    )
+                )
+
+        # handle feature_types defined for this pool of samples
+        feature_types = sample_sheet.loc[
+            sample_sheet["id"] == wildcards.pool_id, "feature_types"
+        ].unique()
+
+        for ft in feature_types:
+
+            if ft == "Gene Expression":
+                final_output.extend(
+                    expand(
+                        [
+                            "results/cellranger/{pool_id}/outs/multi/count/raw_molecule_info.h5",
+                            "results/cellranger/{pool_id}/outs/multi/count/raw_feature_bc_matrix/barcodes.tsv.gz",
+                            "results/cellranger/{pool_id}/outs/multi/count/raw_feature_bc_matrix/features.tsv.gz",
+                            "results/cellranger/{pool_id}/outs/multi/count/raw_feature_bc_matrix/matrix.mtx.gz",
+                            "results/cellranger/{pool_id}/outs/multi/count/raw_feature_bc_matrix.h5",
+                            "results/cellranger/{pool_id}/outs/multi/count/unassigned_alignments.bam",
+                            "results/cellranger/{pool_id}/outs/multi/count/unassigned_alignments.bam.bai",
+                            "results/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/count/sample_filtered_barcodes.csv",
+                            "results/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/count/sample_alignments.bam",
+                            "results/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/count/sample_alignments.bam.bai",
+                            "results/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/count/sample_filtered_feature_bc_matrix/barcodes.tsv.gz",
+                            "results/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/count/sample_filtered_feature_bc_matrix/features.tsv.gz",
+                            "results/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/count/sample_filtered_feature_bc_matrix/matrix.mtx.gz",
+                            "results/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/count/sample_filtered_feature_bc_matrix.h5",
+                            "results/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/count/sample_molecule_info.h5",
+                        ],
+                        pool_id=pool,
+                        sample_id=samples,
+                    )
+                )
+
+            if ft in ["VDJ-B", "VDJ-T", "VDJ-T-GD"]:
+                final_output.extend(
+                    expand(
+                        [
+                            "results/cellranger/{pool_id}/outs/vdj_reference/reference.json",
+                            "results/cellranger/{pool_id}/outs/vdj_reference/fasta/regions.fa",
+                            "results/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig_annotations.bed",
+                            "results/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig_annotations.csv",
+                            "results/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig_annotations.json",
+                            "results/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig.bam",
+                            "results/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig.bam.bai",
+                            "results/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig.fasta",
+                            "results/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig.fasta.fai",
+                            "results/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig.fastq",
+                            "results/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/{vdj_type}/airr_rearrangement.tsv",
+                            "results/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/{vdj_type}/cell_barcodes.json",
+                            "results/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/{vdj_type}/clonotypes.csv",
+                            "results/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/{vdj_type}/concat_ref.bam",
+                            "results/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/{vdj_type}/concat_ref.bam.bai",
+                            "results/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/{vdj_type}/concat_ref.fasta",
+                            "results/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/{vdj_type}/concat_ref.fasta.fai",
+                            "results/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/{vdj_type}/consensus.bam",
+                            "results/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/{vdj_type}/consensus.bam.bai",
+                            "results/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/{vdj_type}/consensus.fasta",
+                            "results/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/{vdj_type}/consensus.fasta.fai",
+                            "results/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/{vdj_type}/consensus_annotations.csv",
+                            "results/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/{vdj_type}/donor_regions.fa",
+                            "results/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/{vdj_type}/filtered_contig_annotations.csv",
+                            "results/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/{vdj_type}/filtered_contig.fasta",
+                            "results/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/{vdj_type}/filtered_contig.fastq",
+                            "results/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/{vdj_type}/vdj_contig_info.pb",
+                            "results/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/{vdj_type}/vloupe.vloupe",
+                        ],
+                        pool_id=pool,
+                        vdj_type=ft.lower().replace("-", "_"),
+                        sample_id=samples,
+                    )
+                )
+
+    return final_output
 
 
 def get_input_file(wildcards, read_number):
@@ -30,21 +180,22 @@ def get_input_file(wildcards, read_number):
             (sample_sheet["id"] == wildcards.pool_id)
             & (sample_sheet["feature_types"] == ft)
             & (sample_sheet["lane_number"] == wildcards.lane_number),
-            read_number
+            read_number,
         ].unique()
     else:
         return sample_sheet.loc[
             (sample_sheet["id"] == wildcards.pool_id)
             & (sample_sheet["feature_types"] == ft),
-            read_number
+            read_number,
         ].unique()
 
 
-
 def get_sample_fastqs(wildcards, read_number):
-    feature_types = sample_sheet.loc[
-        sample_sheet["id"] == wildcards.pool_id, "feature_types"
-    ].unique().str.replace(" ", "_")
+    feature_types = (
+        sample_sheet.loc[sample_sheet["id"] == wildcards.pool_id, "feature_types"]
+        .unique()
+        .str.replace(" ", "_")
+    )
     files = []
     for ft in feature_types:
         # default value to use, if no lane number specified

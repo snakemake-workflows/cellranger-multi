@@ -60,6 +60,7 @@ These are **required columns**:
   For multiplexed experiments, you have to provide a [`multiplexing TSV` file (see below)](#multiplexing-tsv) that provides a barcode or id for each sample in a multiplexed pool.
   As multiple samples were sequenced from the same pool, you will repeat each the same set of fastq files and lane number for each sample.
 * `feature_types` can be any of the [values listed in the `cellranger multi` documentation on multi config CSVs](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/inputs/cr-multi-config-csv-opts#feature-types).
+  The only disallowed the feature type `VDJ`, as this results in auto-detection of the actual `VDJ-` feature type and thus to unpredictable folder names in the output.
 * `read1` and `read2` require file names with paths relative to the main workflow directory (the directory, where you run the `snakemake` command).
   From these (and the optional `lane_number` column), the raw read data files are linked into the folder and file name structure that cellranger expects, and the `fastq_id` and `fastqs` columns of the multi config CSV file are set up accordingly.
 
