@@ -71,7 +71,7 @@ def determine_final_output(wildcards):
                     sample_id=samples,
                 )
             )
-            if "Antibody Capture" in feature_types:
+            if "Antibody Capture" in feature_types or "Antigen Capture" in feature_types:
                 final_output.extend(
                     expand(
                         [
