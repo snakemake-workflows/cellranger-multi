@@ -37,9 +37,7 @@ def determine_final_output(wildcards):
 
     for pool in ALL_IDS:
 
-        samples = sample_sheet.loc[
-            sample_sheet["id"] == pool, "sample"
-        ].unique()
+        samples = sample_sheet.loc[sample_sheet["id"] == pool, "sample"].unique()
 
         # request per-sample summaries, which are the only consistent per-sample
         # output of cellranger  (independent of assay types)
@@ -76,7 +74,10 @@ def determine_final_output(wildcards):
                     sample_id=samples,
                 )
             )
-            if "Antibody Capture" in feature_types or "Antigen Capture" in feature_types:
+            if (
+                "Antibody Capture" in feature_types
+                or "Antigen Capture" in feature_types
+            ):
                 final_output.extend(
                     expand(
                         [
