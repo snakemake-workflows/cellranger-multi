@@ -60,7 +60,7 @@ These are **required columns**:
   For multiplexed experiments, you have to provide a [`multiplexing TSV` file (see below)](#multiplexing-tsv) that provides a barcode or id for each sample in a multiplexed pool.
   As multiple samples were sequenced from the same pool, you will repeat each the same set of fastq files and lane number for each sample.
 * `feature_types` can be any of the [values listed in the `cellranger multi` documentation on multi config CSVs](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/inputs/cr-multi-config-csv-opts#feature-types).
-  The only disallowed the feature type `VDJ`, as this results in auto-detection of the actual `VDJ-` feature type and thus to unpredictable folder names in the output.
+  The only disallowed feature type is `VDJ`, as this results in auto-detection of the actual `VDJ-` feature type and thus to unpredictable folder names in the output.
 * `read1` and `read2` require file names with paths relative to the main workflow directory (the directory, where you run the `snakemake` command).
   From these (and the optional `lane_number` column), the raw read data files are linked into the folder and file name structure that cellranger expects, and the `fastq_id` and `fastqs` columns of the multi config CSV file are set up accordingly.
 
@@ -88,7 +88,7 @@ It specifies which sample used which `ocm_barcode_ids` (or `hashtag_ids` or `cmo
 
 The `sample_id` column is required in every multiplexing TSV file.
 The entries in this column need to match the entries in the `sample` column of the [sample sheet TSV file](#sample-sheet-tsv).
-Which barcode column to use (`ocm_barcode_ids`, `hashtag_ids`, `cmo_ids` or  or `probe_barcode_ids`) depends on your multiplexing setup.
+Which barcode column to use (`ocm_barcode_ids`, `hashtag_ids`, `cmo_ids`,  or `probe_barcode_ids`) depends on your multiplexing setup.
 You can read the [cellranger documentation on multiplexing setups](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/running-pipelines/cr-3p-multi) to determine which column to use.
 In addition, the [samples section of the multi config csv file documentation](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/inputs/cr-multi-config-csv-opts#samples) explains which values you can use there and which additional columns may be available.
 
