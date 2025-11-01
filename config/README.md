@@ -83,8 +83,8 @@ It specifies which sample used which `ocm_barcode_ids` (or `hashtag_ids` or `cmo
 
 | sample_id | ocm_barcode_ids |
 | --------- | --------------- |
-| sample_1  | OB1|OB2         |
-| sample_2  | OB3|OB4         |
+| sample_1  | OB1\|OB2        |
+| sample_2  | OB3\|OB4        |
 
 The `sample_id` column is required in every multiplexing TSV file.
 The entries in this column need to match the entries in the `sample` column of the [sample sheet TSV file](#sample-sheet-tsv).
