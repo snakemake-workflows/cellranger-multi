@@ -93,7 +93,7 @@ rule cellranger_multi_run:
             path.dirname(output["out_dir"]).removesuffix("outs")
         ),
     shell:
-        "(rm -r {params.out_dir}; "
+        "(rm -rf {params.out_dir}; "
         " cellranger multi "
         "  --id={wildcards.pool_id} "
         "  --output-dir={params.out_dir} "
