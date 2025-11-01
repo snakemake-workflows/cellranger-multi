@@ -117,6 +117,8 @@ rule cellranger_multi_files_summaries:
         ),
     log:
         "logs/cellranger/multi/summary_files/summaries_{pool_id}_{sample_id}.log",
+    conda:
+        "../envs/coreutils.yaml"
     threads: 1
     shell:
         "( touch {output} "
@@ -139,6 +141,8 @@ rule cellranger_multi_files_multiplexing_global:
         "results/cellranger/{pool_id}/outs/multi/multiplexing_analysis/tag_calls_summary.csv",
     log:
         "logs/cellranger/multi/multiplexing_files/multiplexing_global_{pool_id}.log",
+    conda:
+        "../envs/coreutils.yaml"
     threads: 1
     shell:
         "( touch {output} "
@@ -152,6 +156,8 @@ rule cellranger_multi_files_multiplexing_per_sample:
         "results/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/count/feature_reference.csv",
     log:
         "logs/cellranger/multi/multiplexing_files/multiplexing_per_sample_{pool_id}_{sample_id}.log",
+    conda:
+        "../envs/coreutils.yaml"
     threads: 1
     shell:
         "( touch {output} "
@@ -165,6 +171,8 @@ rule cellranger_multi_files_multiplexing_antibody_global:
         "results/cellranger/{pool_id}/outs/multi/count/antibody_analysis/aggregate_barcodes.csv",
     log:
         "logs/cellranger/multi/multiplexing_files/multiplexing_antibody_global_{pool_id}.log",
+    conda:
+        "../envs/coreutils.yaml"
     threads: 1
     shell:
         "( touch {output} "
@@ -187,6 +195,8 @@ rule cellranger_multi_files_multiplexing_crispr_global:
         "results/cellranger/{pool_id}/outs/multi/count/crispr_analysis/protospacer_umi_thresholds.json",
     log:
         "logs/cellranger/multi/multiplexing_files/multiplexing_crispr_global_{pool_id}.log",
+    conda:
+        "../envs/coreutils.yaml"
     threads: 1
     shell:
         "( touch {output} "
@@ -209,6 +219,8 @@ rule cellranger_multi_files_gene_expression_global:
         "results/cellranger/{pool_id}/outs/multi/count/unassigned_alignments.bam.bai",
     log:
         "logs/cellranger/multi/gene_expression_files/gex_global_{pool_id}.log",
+    conda:
+        "../envs/coreutils.yaml"
     threads: 1
     shell:
         "( touch {output} "
@@ -229,6 +241,8 @@ rule cellranger_multi_files_gene_expression_per_sample:
         "results/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/count/sample_molecule_info.h5",
     log:
         "logs/cellranger/multi/gene_expression_files/gex_per_sample_{pool_id}_{sample_id}.log",
+    conda:
+        "../envs/coreutils.yaml"
     threads: 1
     shell:
         "( touch {output} "
@@ -246,6 +260,8 @@ rule cellranger_multi_files_vdj_reference:
         "results/cellranger/{pool_id}/outs/vdj_reference/fasta/regions.fa",
     log:
         "logs/cellranger/multi/vdj_reference_files_{pool_id}.log",
+    conda:
+        "../envs/coreutils.yaml"
     threads: 1
     shell:
         "( touch {output} "
@@ -266,6 +282,8 @@ rule cellranger_multi_files_vdj_global:
         "results/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig.fastq",
     log:
         "logs/cellranger/multi/{vdj_type}_files/{vdj_type}_global_{pool_id}.log",
+    conda:
+        "../envs/coreutils.yaml"
     threads: 1
     shell:
         "( touch {output} "
@@ -296,6 +314,8 @@ rule cellranger_multi_files_vdj_per_sample:
         "results/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/{vdj_type}/vloupe.vloupe",
     log:
         "logs/cellranger/multi/{vdj_type}_files/{vdj_type}_per_sample_{pool_id}_{sample_id}.log",
+    conda:
+        "../envs/coreutils.yaml"
     threads: 1
     shell:
         "( touch {output} "
