@@ -1,4 +1,4 @@
-pool_sheet: "config/samples.tsv"
+pool_sheet: "config/pools.tsv"
 
 ## MULTI CONFIG CSV file configuration ##
 # This entry specifies all of the global multi config CSV file options, so

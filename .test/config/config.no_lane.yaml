@@ -1,6 +1,9 @@
-pool_sheet: "config/samples.no_lane.tsv"
+pool_sheet: "config/pools.no_lane.tsv"
 
 multi_config_csv_sections:
   gene-expression:
     reference: "resources/refdata/"
     create-bam: "true"
+  
+  multiplexing:
+    activate: false

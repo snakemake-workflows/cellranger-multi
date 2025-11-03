@@ -3,7 +3,7 @@
 # Note: the actual data does not seem to contain any CRISPR Guide Capture data,
 # so this is omitted in the sample sheet here.
 
-pool_sheet: "config/samples.gex_vdj_antibody.tsv"
+pool_sheet: "config/pools.gex_vdj_antibody.tsv"
 
 multi_config_csv_sections:
   gene-expression:
@@ -12,6 +12,9 @@ multi_config_csv_sections:
     tenx-cloud-token-path: ""
     cell-annotation-model: ""
     expect-cells: "10000"
+  
+  multiplexing:
+    activate: false
 
   vdj:
     reference: "resources/refdata/"

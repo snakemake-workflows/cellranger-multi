@@ -1,7 +1,7 @@
 # Test case setup inspired by:
 # https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/running-pipelines/cr-5p-antigen#tcr
 
-pool_sheet: "config/samples.tcr_multiplex.tsv"
+pool_sheet: "config/pools.tcr_multiplex.tsv"
 
 multi_config_csv_sections:
   gene-expression:
@@ -20,4 +20,6 @@ multi_config_csv_sections:
     r1-length: ""
     r2-length: ""
 
-  multiplexing: "config/multiplexing.tcr_multiplex.tsv"
+  multiplexing:
+    activate: true
+    tsv: "config/multiplexing.tcr_multiplex.tsv"

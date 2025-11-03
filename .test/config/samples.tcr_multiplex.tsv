@@ -1,7 +1,0 @@
-sample	id	feature_types	read1	read2	lane_number	subsample_rate
-tcr_1	tcr_antigen_pool	Gene Expression	dummy_data/antigen/gex/gex_lane1_R1.fq.gz	dummy_data/antigen/gex/gex_lane1_R2.fq.gz	1	
-tcr_1	tcr_antigen_pool	VDJ-T	dummy_data/antigen/vdj/vdj_lane1_R1.fq.gz	dummy_data/antigen/vdj/vdj_lane1_R2.fq.gz	1	
-tcr_1	tcr_antigen_pool	VDJ-T	dummy_data/antigen/vdj/vdj_lane2_R1.fq.gz	dummy_data/antigen/vdj/vdj_lane2_R2.fq.gz	2	
-tcr_2	tcr_antigen_pool	Gene Expression	dummy_data/antigen/gex/gex_lane1_R1.fq.gz	dummy_data/antigen/gex/gex_lane1_R2.fq.gz	1	
-tcr_2	tcr_antigen_pool	VDJ-T	dummy_data/antigen/vdj/vdj_lane1_R1.fq.gz	dummy_data/antigen/vdj/vdj_lane1_R2.fq.gz	1	
-tcr_2	tcr_antigen_pool	VDJ-T	dummy_data/antigen/vdj/vdj_lane2_R1.fq.gz	dummy_data/antigen/vdj/vdj_lane2_R2.fq.gz	2	
