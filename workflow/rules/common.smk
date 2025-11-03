@@ -6,25 +6,25 @@ from snakemake.utils import validate
 
 
 # read sample sheet
-sample_sheet = (
-    pd.read_csv(config["sample_sheet"], sep="\t", dtype=str)
+pool_sheet = (
+    pd.read_csv(config["pool_sheet"], sep="\t", dtype=str)
     .set_index("sample", drop=False)
     .sort_index()
 )
 
 
 # validate sample sheet and config file
-validate(sample_sheet, schema="../../config/schemas/sample_sheet.schema.yaml")
+validate(pool_sheet, schema="../../config/schemas/pool_sheet.schema.yaml")
 validate(config, schema="../../config/schemas/config.schema.yaml")
 
 # set global variables
 
-ALL_IDS = sample_sheet["id"].unique()
+ALL_IDS = pool_sheet["id"].unique()
 
 
 wildcard_constraints:
-    sample="|".join(sample_sheet["sample"]),
-    feature_types="|".join(sample_sheet["feature_types"].replace(" ", "_")),
+    sample="|".join(pool_sheet["sample"]),
+    feature_types="|".join(pool_sheet["feature_types"].replace(" ", "_")),
 
 
 def determine_final_output(wildcards):
@@ -37,7 +37,7 @@ def determine_final_output(wildcards):
 
     for pool in ALL_IDS:
 
-        samples = sample_sheet.loc[sample_sheet["id"] == pool, "sample"].unique()
+        samples = pool_sheet.loc[pool_sheet["id"] == pool, "sample"].unique()
 
         # request per-sample summaries, which are the only consistent per-sample
         # output of cellranger  (independent of assay types)
@@ -53,8 +53,8 @@ def determine_final_output(wildcards):
         )
 
         # handle feature_types defined for this pool of samples
-        feature_types = sample_sheet.loc[
-            sample_sheet["id"] == pool, "feature_types"
+        feature_types = pool_sheet.loc[
+            pool_sheet["id"] == pool, "feature_types"
         ].unique()
 
         # request multiplexing output, if any has been done
@@ -176,24 +176,24 @@ def determine_final_output(wildcards):
 
 def get_input_file(wildcards, read_number):
     ft = wildcards.feature_type.replace("_", " ")
-    if "lane_number" in sample_sheet.columns:
-        return sample_sheet.loc[
-            (sample_sheet["id"] == wildcards.pool_id)
-            & (sample_sheet["feature_types"] == ft)
-            & (sample_sheet["lane_number"] == wildcards.lane_number),
+    if "lane_number" in pool_sheet.columns:
+        return pool_sheet.loc[
+            (pool_sheet["id"] == wildcards.pool_id)
+            & (pool_sheet["feature_types"] == ft)
+            & (pool_sheet["lane_number"] == wildcards.lane_number),
             read_number,
         ].unique()
     else:
-        return sample_sheet.loc[
-            (sample_sheet["id"] == wildcards.pool_id)
-            & (sample_sheet["feature_types"] == ft),
+        return pool_sheet.loc[
+            (pool_sheet["id"] == wildcards.pool_id)
+            & (pool_sheet["feature_types"] == ft),
             read_number,
         ].unique()
 
 
 def get_sample_fastqs(wildcards, read_number):
     feature_types = (
-        sample_sheet.loc[sample_sheet["id"] == wildcards.pool_id, "feature_types"]
+        pool_sheet.loc[pool_sheet["id"] == wildcards.pool_id, "feature_types"]
         .str.replace(" ", "_")
         .unique()
     )
@@ -203,10 +203,10 @@ def get_sample_fastqs(wildcards, read_number):
         lane_numbers = [
             "1",
         ]
-        if "lane_number" in sample_sheet.columns:
-            lane_numbers = sample_sheet.loc[
-                (sample_sheet["id"] == wildcards.pool_id)
-                & (sample_sheet["feature_types"] == ft.replace("_", " ")),
+        if "lane_number" in pool_sheet.columns:
+            lane_numbers = pool_sheet.loc[
+                (pool_sheet["id"] == wildcards.pool_id)
+                & (pool_sheet["feature_types"] == ft.replace("_", " ")),
                 "lane_number",
             ].unique()
         files.extend(

@@ -1,10 +1,10 @@
-sample_sheet: "config/samples.tsv"
+pool_sheet: "config/samples.tsv"
 
 ## MULTI CONFIG CSV file configuration ##
 # This entry specifies all of the global multi config CSV file options, so
-# all those that are not set per sample in the sample_sheet specified above.
+# all those that are not set per sample in the pool_sheet specified above.
 # Or to put it in terms of the sections of the resulting multi config csv
-# file, the sample_sheet defines the `[libraries]` sectian (and the optional
+# file, the pool_sheet defines the `[libraries]` sectian (and the optional
 # `[samples]` section), and the entry below defines the other (optional)
 # sections.
 #
@@ -18,7 +18,7 @@ sample_sheet: "config/samples.tsv"
 multi_config_csv_sections:
   # Options for the [gene-expression] section.
   # These will only be copied into the multi config CSV file if any samples in
-  # the `sample_sheet:` specified above have the `feature_types` set to:
+  # the `pool_sheet:` specified above have the `feature_types` set to:
   # * `Gene Expression`
   # For details on the options, see:
   # https://www.10xgenomics.com/support/software/cell-ranger/latest/advanced/cr-multi-config-csv-opts#gene-expression
@@ -56,13 +56,16 @@ multi_config_csv_sections:
     probe-set: ""
     filter-proves: ""
 
-  # multiplexing TSV file
-  # Note: only uncomment the below line with an existing file specified.
-  # multiplexing: "config/multiplexing.tsv"
+  multiplexing:
+    # set to true, if you have a multiplexing TSV file that maps barcodes to
+    # samples within a sample pool (`id` column in the pool TSV file)
+    activate: false
+    # multiplexing TSV file
+    tsv: "config/multiplexing.tsv"
 
   # Options for the [vdj] section.
   # These will only be copied into the multi config CSV file if any samples in
-  # the `sample_sheet:` specified above have the `feature_types` set to any of:
+  # the `pool_sheet:` specified above have the `feature_types` set to any of:
   # * `VDJ`
   # * `VDJ-T`
   # * `VDJ-T-GD`
@@ -85,7 +88,7 @@ multi_config_csv_sections:
 
   # Options for the [feature] section.
   # These will only be copied into the multi config CSV file if any samples in
-  # the `sample_sheet:` specified above have the `feature_types` set to any of:
+  # the `pool_sheet:` specified above have the `feature_types` set to any of:
   # * `Antibody Capture`
   # * `Antigen Capture`
   # * `CRISPR Guide Capture`
@@ -106,7 +109,7 @@ multi_config_csv_sections:
 
   # Options for the [antigen-specificity] section.
   # These will only be copied into the multi config CSV file if any samples in
-  # the `sample_sheet:` specified above have the `feature_types` set to:
+  # the `pool_sheet:` specified above have the `feature_types` set to:
   # * `Antigen Capture`
   # For details on Antigen Capture / Barcode Enabled Antigen Mapping (BEAM)
   # data analysis, see:

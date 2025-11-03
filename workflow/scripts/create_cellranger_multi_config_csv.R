@@ -9,7 +9,7 @@ library(tidyverse)
 library(cli)
 
 pool_id <- snakemake@wildcards[["pool_id"]]
-sample_sheet <- snakemake@input[["sample_sheet"]]
+pool_sheet <- snakemake@input[["pool_sheet"]]
 
 cellranger_fastq_dirs <- enframe(
   snakemake@input[["fq1"]],
@@ -43,8 +43,8 @@ cellranger_fastq_dirs <- enframe(
   ) |>
   distinct()
 
-all_samples_libraries_table <- read_tsv(
-  sample_sheet,
+libraries_table <- read_tsv(
+  pool_sheet,
   col_types = cols(.default = col_character())
 ) |>
   filter(

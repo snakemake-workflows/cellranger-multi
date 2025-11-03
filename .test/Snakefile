@@ -23,7 +23,7 @@ rule test_without_cellranger:
     input:
         expand(
             "results/input/{pool_id}.cell_ranger_multi_config.csv",
-            pool_id=test_cellranger_multi_workflow.sample_sheet["id"].unique(),
+            pool_id=test_cellranger_multi_workflow.pool_sheet["id"].unique(),
         ),
 
 

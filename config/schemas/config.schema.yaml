@@ -1,7 +1,7 @@
 $schema: "https://json-schema.org/draft/2020-12/schema"
 description: main configuration schema for the workflow
 properties:
-  sample_sheet:
+  pool_sheet:
     type: string
     description: path to sample sheet TSV file
   multi_config_csv_sections:
@@ -9,5 +9,5 @@ properties:
     description: configuration options for the multi config csv file
 
 required:
-  - sample_sheet
+  - pool_sheet
   - multi_config_csv_sections

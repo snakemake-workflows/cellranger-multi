@@ -31,22 +31,28 @@ rule follow_pedantic_cell_ranger_naming_scheme:
 # -----------------------------------------------------
 rule create_cellranger_multi_config_csv:
     input:
-        sample_sheet=lookup(within=config, dpath="sample_sheet"),
+        pool_sheet=lookup(within=config, dpath="pool_sheet"),
         fq1=lambda wc: get_sample_fastqs(wc, "R1"),
         fq2=lambda wc: get_sample_fastqs(wc, "R2"),
-        # use the sample_sheet as an existing dummy placeholder, in case no
+        # use the pool_sheet as an existing dummy placeholder, in case no
         # feature reference file is specified for this analysis
         feature_reference=lookup(
             within=config,
             dpath="multi_config_csv_sections/feature/reference",
-            default=lookup(within=config, dpath="sample_sheet"),
+            default=lookup(within=config, dpath="pool_sheet"),
         ),
-        # use the sample_sheet as an existing dummy placeholder, in case no
+        # use the pool_sheet as an existing dummy placeholder, in case no
         # multiplexing TSV file is specified for this analysis
-        multiplexing=lookup(
-            within=config,
-            dpath="multi_config_csv_sections/multiplexing",
-            default=lookup(within=config, dpath="sample_sheet"),
+        multiplexing=branch(
+            lookup(
+                within=config,
+                dpath="multi_config_csv_sections/multiplexing/activate",
+            ),
+            lookup(
+                within=config,
+                dpath="multi_config_csv_sections/multiplexing/tsv",
+            ),
+            None
         ),
     output:
         multi_config_csv="results/input/{pool_id}.cell_ranger_multi_config.csv",
