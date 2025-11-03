@@ -6,6 +6,9 @@ rlang::global_entrace()
 
 library(tidyverse)
 
+pool_id <- snakemake@wildcards[["pool_id"]]
+sample_sheet <- snakemake@input[["sample_sheet"]]
+
 cellranger_fastq_dirs <- enframe(
   snakemake@input[["fq1"]],
   name = NULL,
@@ -15,17 +18,17 @@ cellranger_fastq_dirs <- enframe(
     filename,
     c(
       "results/input/",
-      snakemake@wildcards[["pool_id"]],
+      pool_id,
       "_",
       feature_types = "[^/]+",
       "/",
-      snakemake@wildcards[["pool_id"]],
+      pool_id,
       "_.+_R1_001.fastq.gz"
     ),
     cols_remove = FALSE
   ) |>
   add_column(
-    id = snakemake@wildcards[["pool_id"]]
+    id = pool_id
   ) |>
   mutate(
     fastqs = normalizePath(dirname(filename)),
@@ -39,11 +42,11 @@ cellranger_fastq_dirs <- enframe(
   distinct()
 
 all_samples_libraries_table <- read_tsv(
-  snakemake@input[["sample_sheet"]],
+  sample_sheet,
   col_types = cols(.default = col_character())
 ) |>
   filter(
-    id == snakemake@wildcards[["pool_id"]]
+    id == pool_id
   ) |>
   left_join(
     cellranger_fastq_dirs,
@@ -268,8 +271,10 @@ n_samples <- all_samples_libraries_table |>
   pull(n)
 
 if (n_samples > 1) {
+  multiplexing_sheet <- snakemake@input[["multiplexing"]]
+
   multiplexing_barcodes <- read_tsv(
-    snakemake@input[["multiplexing"]],
+    multiplexing_sheet,
     col_types = cols(.default = col_character())
   )
 
@@ -279,8 +284,29 @@ if (n_samples > 1) {
     append = TRUE
   )
 
+  pool_samples <- all_samples_libraries_table |>
+    pull(sample) |>
+    distinct()
+
+  multiplexing_barcodes_filtered <- multiplexing_barcodes |>
+    filter(sample_id %in% pool_samples)
+
+  if (!setequal(pool_samples, multiplexing_barcodes_filtered$sample_id)) {
+    missing_in_multiplexing <- setdiff(
+      pool_samples,
+      multiplexing_barcodes_filtered$sample_id
+    )
+
+    cli::cli_abort(c(
+      "Samples specified in barcode multiplexing TSV file must match samples from the sample sheet.",
+      "i" = "This occurred for pool id {.var pool_id} in file {.var sample_sheet}.",
+      "x" = "File {.var multiplexing_sheet} ",
+      " " = "does not specify a barcode for sample{?s} {.var missing_in_multiplexing}."
+    ))
+  }
+
   write_csv(
-    multiplexing_barcodes,
+    multiplexing_barcodes_filtered,
     file = snakemake@output[["multi_config_csv"]],
     append = TRUE,
     col_names = TRUE
