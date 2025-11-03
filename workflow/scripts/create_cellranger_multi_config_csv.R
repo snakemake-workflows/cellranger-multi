@@ -2,9 +2,11 @@ log <- file(snakemake@log[[1]], open = "wt")
 sink(log)
 sink(log, type = "message")
 
+library(rlang)
 rlang::global_entrace()
 
 library(tidyverse)
+library(cli)
 
 pool_id <- snakemake@wildcards[["pool_id"]]
 sample_sheet <- snakemake@input[["sample_sheet"]]
