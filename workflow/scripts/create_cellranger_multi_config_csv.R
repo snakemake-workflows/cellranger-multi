@@ -286,7 +286,7 @@ if (n_samples > 1) {
 
   pool_samples <- all_samples_libraries_table |>
     pull(sample) |>
-    distinct()
+    unique()
 
   multiplexing_barcodes_filtered <- multiplexing_barcodes |>
     filter(sample_id %in% pool_samples)
