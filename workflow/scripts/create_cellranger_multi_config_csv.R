@@ -262,12 +262,10 @@ write_csv(
 )
 
 # parsing for the samples section is different, so we write without the helper
-
 if (
   snakemake@params[["multi_config_csv_sections"]][["multiplexing"]][[
     "activate"
-  ]] ==
-    "true"
+  ]]
 ) {
   multiplexing_sheet <- snakemake@input[["multiplexing"]]
 
@@ -287,7 +285,7 @@ if (
     )
 
     write_csv(
-      multiplexing_barcodes_filtered |> select(-id),
+      multiplexing_barcodes |> select(-id),
       file = snakemake@output[["multi_config_csv"]],
       append = TRUE,
       col_names = TRUE
