@@ -4,7 +4,7 @@ pool_sheet: "config/pools.tsv"
 # This entry specifies all of the global multi config CSV file options, so
 # all those that are not set per sample in the pool_sheet specified above.
 # Or to put it in terms of the sections of the resulting multi config csv
-# file, the pool_sheet defines the `[libraries]` sectian (and the optional
+# file, the pool_sheet defines the `[libraries]` section (and the optional
 # `[samples]` section), and the entry below defines the other (optional)
 # sections.
 #
