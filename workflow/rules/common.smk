@@ -74,7 +74,7 @@ def determine_final_output(wildcards):
         ].unique()
 
         # request multiplexing output, if any has been done
-        if len(samples) > 1:
+        if config["multi_config_csv_sections"]["multiplexing"]["activate"]:
             final_output.extend(
                 expand(
                     [
