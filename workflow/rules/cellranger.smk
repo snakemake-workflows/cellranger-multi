@@ -49,7 +49,7 @@ rule create_cellranger_multi_config_csv:
                 dpath="multi_config_csv_sections/multiplexing/tsv",
                 default=None,
             ),
-            None
+            None,
         ),
     output:
         multi_config_csv="results/input/{pool_id}.cell_ranger_multi_config.csv",

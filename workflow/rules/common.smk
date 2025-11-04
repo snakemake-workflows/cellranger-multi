@@ -36,16 +36,20 @@ def determine_final_output(wildcards):
 
     if config["multi_config_csv_sections"]["multiplexing"]["activate"]:
         # read pool sheet
-        multiplexing_sheet = (
-            pd.read_csv(config["multi_config_csv_sections"]["multiplexing"]["tsv"], sep="\t", dtype=str)
+        multiplexing_sheet = pd.read_csv(
+            config["multi_config_csv_sections"]["multiplexing"]["tsv"],
+            sep="\t",
+            dtype=str,
         )
         validate(multiplexing_sheet, schema="../schemas/multiplexing_sheet.schema.yaml")
 
     for pool in ALL_IDS:
 
-        samples = [ pool ]
+        samples = [pool]
         if config["multi_config_csv_sections"]["multiplexing"]["activate"]:
-            samples = multiplexing_sheet.loc[multiplexing_sheet["id"] == pool, "sample_id"].unique()
+            samples = multiplexing_sheet.loc[
+                multiplexing_sheet["id"] == pool, "sample_id"
+            ].unique()
 
         # request per-sample summaries, which are the only consistent per-sample
         # output of cellranger  (independent of assay types)
