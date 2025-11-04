@@ -3,7 +3,7 @@ description: entries for the sample sheet
 properties:
   id:
     type: string
-    description: sample name/identifier
+    description: sample pool identifier
   lane_number:
     type: string
     description: number of the lane that files originate from. If multiple lanes per sample exist, please provide one sample sheet line per lane, with a read1 and read2 entry each. Will default to a dummy value of "1", if none is provided in the sample sheet.
