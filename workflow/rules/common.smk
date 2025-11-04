@@ -52,6 +52,8 @@ def determine_final_output(wildcards):
             samples = multiplexing_sheet.loc[
                 multiplexing_sheet["id"] == pool, "sample_id"
             ].unique()
+            if len(samples) == 0:
+                samples = [ pool ]
 
         # request per-sample summaries, which are the only consistent per-sample
         # output of cellranger  (independent of assay types)
