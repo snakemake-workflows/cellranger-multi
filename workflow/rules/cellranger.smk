@@ -85,7 +85,7 @@ rule cellranger_multi_run:
         "logs/cellranger/multi/multi_run_{pool_id}.log",
     conda:
         "../envs/cellranger.yaml"
-    threads: 8
+    threads: 16
     resources:
         mem_mb=lambda wc, threads: threads * 4000,
     params:
