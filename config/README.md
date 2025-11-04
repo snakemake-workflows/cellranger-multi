@@ -35,30 +35,26 @@ You can then delete the respective file and directory under `.snakemake/conda/` 
 
 ### Input data
 
-#### sample sheet TSV
+#### pool sheet TSV
 
 The sample sheet configures all the possible [columns for the `[libraries]` section of the multi config CSV file](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/inputs/cr-multi-config-csv-opts#libraries):
 
-| sample   | id     | feature_types   | read1                                                     | read2                                                     | lane_number |
-| -------- | ------ | --------------- | --------------------------------------------------------- | --------------------------------------------------------- | ----------- |
-| sample_1 | pool_1 | Gene Expression | ../data/sample1_gex/sample1_gex.bwa.L001.read1.fastq.gz   | ../data/sample1_gex/sample1_gex.bwa.L001.read2.fastq.gz   |           1 |
-| sample_1 | pool_1 | VDJ-T           | ../data/sample1_vdjt/sample1_vdjt.bwa.L003.read1.fastq.gz | ../data/sample1_vdjt/sample1_vdjt.bwa.L003.read2.fastq.gz |           1 |
-| sample_2 | pool_1 | Gene Expression | ../data/sample2_gex/sample2_gex.bwa.L001.read1.fastq.gz   | ../data/sample2_gex/sample2_gex.bwa.L001.read2.fastq.gz   |           1 |
-| sample_2 | pool_1 | Gene Expression | ../data/sample2_gex/sample2_gex.bwa.L002.read1.fastq.gz   | ../data/sample2_gex/sample2_gex.bwa.L002.read2.fastq.gz   |           2 |
+| id     | feature_types   | read1                                                     | read2                                                     | lane_number |
+| ------ | --------------- | --------------------------------------------------------- | --------------------------------------------------------- | ----------- |
+| pool_1 | Gene Expression | ../data/pool1_gex/sample1_gex.bwa.L001.read1.fastq.gz   | ../data/pool1_gex/sample1_gex.bwa.L001.read2.fastq.gz   |           1 |
+| pool_1 | Gene Expression | ../data/pool1_gex/pool1_gex.bwa.L002.read1.fastq.gz   | ../data/pool1_gex/pool1_gex.bwa.L002.read2.fastq.gz   |           2 |
+| pool_1 | VDJ-T           | ../data/pool1_vdjt/pool1_vdjt.bwa.L003.read1.fastq.gz | ../data/pool1_vdjt/pool1_vdjt.bwa.L003.read2.fastq.gz |           1 |
 
 For more details on these columns, refer to the [10X documentation for the `[libraries]` section of the multi config CSV file](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/inputs/cr-multi-config-csv-opts#libraries).
 We also provide specific subsection links wherever available.
 
 These are **required columns**:
 
-* `sample` is an arbitrary name assigned to represent one biological sample.
-  The same name should be used across all lanes used and all assays performed for that sample, grouping all sequencing data generated from that biological sample.
 * `id` is an arbitrary name assigned to represent one pool of samples.
   One multi config CSV file per `id` value will be created by the workflow, and each `id` will be processed separately, so that the workflow can parallelize as much as possible.
-  If you used just one sample to create your assay libraries (without any multiplexing), then the `id` can just be identical to `sample`.
-  If you used multiplexing barcodes to pool multiple samples, this id will group all of the samples that were pooled before preparing assay libraries.
+  If you used just one sample to create your assay libraries (without any multiplexing), then the `id` value used here can just be a sample name.
+  If you used multiplexing barcodes to pool multiple samples, this id groups all of the samples that were pooled before preparing assay libraries.
   For multiplexed experiments, you have to provide a [`multiplexing TSV` file (see below)](#multiplexing-tsv) that provides a barcode or id for each sample in a multiplexed pool.
-  As multiple samples were sequenced from the same pool, you will repeat each the same set of fastq files and lane number for each sample.
 * `feature_types` can be any of the [values listed in the `cellranger multi` documentation on multi config CSVs](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/inputs/cr-multi-config-csv-opts#feature-types).
   The only disallowed feature type is `VDJ`, as this results in auto-detection of the actual `VDJ-` feature type and thus to unpredictable folder names in the output.
 * `read1` and `read2` require file names with paths relative to the main workflow directory (the directory, where you run the `snakemake` command).
@@ -81,14 +77,22 @@ This file is only necessary if you used [multiplexing to pool multiple samples f
 You provide its relative path in the global `config/config.yaml` file under `multi_config_csv_sections: multiplexing:`.
 It specifies which sample used which `ocm_barcode_ids` (or `hashtag_ids` or `cmo_ids` or `probe_barcode_ids`).
 
-| sample_id | ocm_barcode_ids |
-| --------- | --------------- |
-| sample_1  | OB1\|OB2        |
-| sample_2  | OB3\|OB4        |
+| id     | sample_id | ocm_barcode_ids |
+| ------ | --------- | --------------- |
+| pool_1 | sample_1  | OB1\|OB2        |
+| pool_1 | sample_2  | OB3\|OB4        |
 
-The `sample_id` column is required in every multiplexing TSV file.
-The entries in this column need to match the entries in the `sample` column of the [sample sheet TSV file](#sample-sheet-tsv).
-Which barcode column to use (`ocm_barcode_ids`, `hashtag_ids`, `cmo_ids`,  or `probe_barcode_ids`) depends on your multiplexing setup.
+These are **required columns**:
+* `sample_id` is an arbitrary name assigned to represent one biological sample that was sequenced with a known set of barcodes.
+* `id` is an arbitrary name assigned to represent one pool of samples.
+  It needs to match an `id` from the [pool sheet TSV file](#pool-sheet-tsv).
+  A pool can contain one or more samples.
+* One of the following columns, depending on the barcode type used for the multiplexing setup:
+  * `ocm_barcode_ids`
+  * `hashtag_ids`
+  * `cmo_ids`
+  * `probe_barcode_ids`
+
 You can read the [cellranger documentation on multiplexing setups](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/running-pipelines/cr-3p-multi) to determine which column to use.
 In addition, the [samples section of the multi config csv file documentation](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/inputs/cr-multi-config-csv-opts#samples) explains which values you can use there and which additional columns may be available.
 
@@ -98,5 +102,5 @@ In addition, the [samples section of the multi config csv file documentation](ht
 All global configuration settings for the whole analysis are specified in the `config/config.yaml` file.
 This file is extensively commented to explain how to set which options.
 You can delete any options you don't need, or set them to an empty string (`""`).
-The only required sections are those for the feature types present in the `feature_types` column of the sample sheet.
+The only required sections are those for the feature types present in the `feature_types` column of the sample sheet and the flag whether `multiplexing` should be `activated`.
 And the only required entry for a required section is usually the `reference:` path or file specification.
