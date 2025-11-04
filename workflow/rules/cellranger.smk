@@ -37,7 +37,7 @@ rule create_cellranger_multi_config_csv:
         feature_reference=lookup(
             within=config,
             dpath="multi_config_csv_sections/feature/reference",
-            default=None,
+            default=[],
         ),
         multiplexing=branch(
             lookup(
@@ -47,9 +47,9 @@ rule create_cellranger_multi_config_csv:
             lookup(
                 within=config,
                 dpath="multi_config_csv_sections/multiplexing/tsv",
-                default=None,
+                default=[],
             ),
-            None,
+            [],
         ),
     output:
         multi_config_csv="results/input/{pool_id}.cell_ranger_multi_config.csv",
@@ -76,7 +76,7 @@ rule cellranger_multi_run:
         reference=lookup(
             within=config,
             dpath="multi_config_csv_sections/gene-expression/reference",
-            default=None,
+            default=[],
         ),
     output:
         "results/cellranger/{pool_id}/outs/config.csv",
