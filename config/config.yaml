@@ -102,10 +102,10 @@ multi_config_csv_sections:
     # them in the `config/` directory and provide the relative path here:
     # Note: only uncomment the below line with an existing folder specified.
     # Otherwise, the workflow will error with a MissingInputException.
-    #    reference: "config/feature_barcode_reference.csv"
+    #    reference: "config/refdata-cellranger-vdj-GRCh38-alts-ensembl-5.0.0"
     r1-length: ""
     r2-length: ""
-    min-cripsr-umi: ""
+    min-crispr-umi: ""
 
   # Options for the [antigen-specificity] section.
   # These will only be copied into the multi config CSV file if any samples in
