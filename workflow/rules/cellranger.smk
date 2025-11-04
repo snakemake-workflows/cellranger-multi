@@ -122,7 +122,7 @@ rule cellranger_multi_files_summaries:
         "../envs/bash_coreutils.yaml"
     threads: 1
     script:
-        "../scripts/check_cellranger_outputs.bash"
+        "../scripts/check_cellranger_outputs.sh"
 
 
 # multiplexing outputs, according to:
@@ -145,7 +145,7 @@ rule cellranger_multi_files_multiplexing_global:
         "../envs/bash_coreutils.yaml"
     threads: 1
     script:
-        "../scripts/check_cellranger_outputs.bash"
+        "../scripts/check_cellranger_outputs.sh"
 
 
 rule cellranger_multi_files_multiplexing_per_sample:
@@ -159,7 +159,7 @@ rule cellranger_multi_files_multiplexing_per_sample:
         "../envs/bash_coreutils.yaml"
     threads: 1
     script:
-        "../scripts/check_cellranger_outputs.bash"
+        "../scripts/check_cellranger_outputs.sh"
 
 
 rule cellranger_multi_files_multiplexing_antibody_global:
@@ -173,7 +173,7 @@ rule cellranger_multi_files_multiplexing_antibody_global:
         "../envs/bash_coreutils.yaml"
     threads: 1
     script:
-        "../scripts/check_cellranger_outputs.bash"
+        "../scripts/check_cellranger_outputs.sh"
 
 
 rule cellranger_multi_files_multiplexing_crispr_global:
@@ -196,7 +196,7 @@ rule cellranger_multi_files_multiplexing_crispr_global:
         "../envs/bash_coreutils.yaml"
     threads: 1
     script:
-        "../scripts/check_cellranger_outputs.bash"
+        "../scripts/check_cellranger_outputs.sh"
 
 
 # "Gene Expression" output files
@@ -219,7 +219,7 @@ rule cellranger_multi_files_gene_expression_global:
         "../envs/bash_coreutils.yaml"
     threads: 1
     script:
-        "../scripts/check_cellranger_outputs.bash"
+        "../scripts/check_cellranger_outputs.sh"
 
 
 rule cellranger_multi_files_gene_expression_per_sample:
@@ -240,7 +240,7 @@ rule cellranger_multi_files_gene_expression_per_sample:
         "../envs/bash_coreutils.yaml"
     threads: 1
     script:
-        "../scripts/check_cellranger_outputs.bash"
+        "../scripts/check_cellranger_outputs.sh"
 
 
 # VDJ output files
@@ -258,7 +258,7 @@ rule cellranger_multi_files_vdj_reference:
         "../envs/bash_coreutils.yaml"
     threads: 1
     script:
-        "../scripts/check_cellranger_outputs.bash"
+        "../scripts/check_cellranger_outputs.sh"
 
 
 rule cellranger_multi_files_vdj_global:
@@ -279,7 +279,7 @@ rule cellranger_multi_files_vdj_global:
         "../envs/bash_coreutils.yaml"
     threads: 1
     script:
-        "../scripts/check_cellranger_outputs.bash"
+        "../scripts/check_cellranger_outputs.sh"
 
 
 rule cellranger_multi_files_vdj_per_sample:
@@ -310,4 +310,4 @@ rule cellranger_multi_files_vdj_per_sample:
         "../envs/bash_coreutils.yaml"
     threads: 1
     script:
-        "../scripts/check_cellranger_outputs.bash"
+        "../scripts/check_cellranger_outputs.sh"
