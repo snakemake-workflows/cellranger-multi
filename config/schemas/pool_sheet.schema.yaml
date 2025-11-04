@@ -1,7 +1,7 @@
 $schema: "https://json-schema.org/draft/2020-12/schema"
 description: entries for the sample sheet
 properties:
-  sample:
+  id:
     type: string
     description: sample name/identifier
   lane_number:
@@ -18,7 +18,7 @@ properties:
     description: path and name of fastq.gz files, read 2 (optional)
 
 required:
-  - sample
+  - id
   - feature_types
   - read1
   - read2

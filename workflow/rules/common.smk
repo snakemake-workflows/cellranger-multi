@@ -5,13 +5,12 @@ import math
 from snakemake.utils import validate
 
 
-# read sample sheet
+# read pool sheet
 pool_sheet = (
     pd.read_csv(config["pool_sheet"], sep="\t", dtype=str)
-    .set_index("sample", drop=False)
+    .set_index("id", drop=False)
     .sort_index()
 )
-
 
 # validate sample sheet and config file
 validate(pool_sheet, schema="../../config/schemas/pool_sheet.schema.yaml")
@@ -23,7 +22,7 @@ ALL_IDS = pool_sheet["id"].unique()
 
 
 wildcard_constraints:
-    sample="|".join(pool_sheet["sample"]),
+    pool_id="|".join(pool_sheet["id"]),
     feature_types="|".join(pool_sheet["feature_types"].replace(" ", "_")),
 
 
@@ -35,9 +34,17 @@ def determine_final_output(wildcards):
         pool_id=ALL_IDS,
     )
 
+    if config["multi_config_csv_sections"]["multiplexing"]["activate"]:
+        # read pool sheet
+        multiplexing_sheet = (
+            pd.read_csv(config["multi_config_csv_sections"]["multiplexing"]["tsv"], sep="\t", dtype=str)
+        )
+
     for pool in ALL_IDS:
 
-        samples = pool_sheet.loc[pool_sheet["id"] == pool, "sample"].unique()
+        samples = [ pool ]
+        if config["multi_config_csv_sections"]["multiplexing"]["activate"]:
+            samples = multiplexing_sheet.loc[multiplexing_sheet["id"] == pool, "sample_id"].unique()
 
         # request per-sample summaries, which are the only consistent per-sample
         # output of cellranger  (independent of assay types)
