@@ -13,8 +13,8 @@ pool_sheet = (
 )
 
 # validate sample sheet and config file
-validate(pool_sheet, schema="../../config/schemas/pool_sheet.schema.yaml")
-validate(config, schema="../../config/schemas/config.schema.yaml")
+validate(pool_sheet, schema="../schemas/pool_sheet.schema.yaml")
+validate(config, schema="../schemas/config.schema.yaml")
 
 # set global variables
 
@@ -39,7 +39,7 @@ def determine_final_output(wildcards):
         multiplexing_sheet = (
             pd.read_csv(config["multi_config_csv_sections"]["multiplexing"]["tsv"], sep="\t", dtype=str)
         )
-        validate(multiplexing_sheet, schema="../../config/schemas/multiplexing_sheet.schema.yaml")
+        validate(multiplexing_sheet, schema="../schemas/multiplexing_sheet.schema.yaml")
 
     for pool in ALL_IDS:
 
