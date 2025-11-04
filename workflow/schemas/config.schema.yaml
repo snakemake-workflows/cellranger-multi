@@ -22,8 +22,8 @@ properties:
           tsv:
             type: string
             description: TSV file matching barcodes to samples for each multiplexed pool
-      required:
-        - activate
+        required:
+          - activate
       vdj:
         type: object
         description: configuration options for VDJ feature_types
@@ -33,8 +33,8 @@ properties:
       antigen-specificity:
         type: object
         description: configuration options for the [antigen-specificty] section
-  required:
-    - multiplexing
+    required:
+      - multiplexing
 
 required:
   - pool_sheet
