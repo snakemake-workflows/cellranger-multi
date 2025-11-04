@@ -39,6 +39,7 @@ def determine_final_output(wildcards):
         multiplexing_sheet = (
             pd.read_csv(config["multi_config_csv_sections"]["multiplexing"]["tsv"], sep="\t", dtype=str)
         )
+        validate(multiplexing_sheet, schema="../../config/schemas/multiplexing_sheet.schema.yaml")
 
     for pool in ALL_IDS:
 
