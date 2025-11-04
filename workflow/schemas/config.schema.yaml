@@ -32,7 +32,7 @@ properties:
         description: configuration options for the [feature] section
       antigen-specificity:
         type: object
-        description: configuration options for the [antigen-specificty] section
+        description: configuration options for the [antigen-specificity] section
     required:
       - multiplexing
 
