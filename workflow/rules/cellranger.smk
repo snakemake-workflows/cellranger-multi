@@ -34,15 +34,11 @@ rule create_cellranger_multi_config_csv:
         pool_sheet=lookup(within=config, dpath="pool_sheet"),
         fq1=lambda wc: get_sample_fastqs(wc, "R1"),
         fq2=lambda wc: get_sample_fastqs(wc, "R2"),
-        # use the pool_sheet as an existing dummy placeholder, in case no
-        # feature reference file is specified for this analysis
         feature_reference=lookup(
             within=config,
             dpath="multi_config_csv_sections/feature/reference",
-            default=lookup(within=config, dpath="pool_sheet"),
+            default=None,
         ),
-        # use the pool_sheet as an existing dummy placeholder, in case no
-        # multiplexing TSV file is specified for this analysis
         multiplexing=branch(
             lookup(
                 within=config,
@@ -51,6 +47,7 @@ rule create_cellranger_multi_config_csv:
             lookup(
                 within=config,
                 dpath="multi_config_csv_sections/multiplexing/tsv",
+                default=None,
             ),
             None
         ),
@@ -76,12 +73,10 @@ rule cellranger_multi_run:
         multi_config_csv="results/input/{pool_id}.cell_ranger_multi_config.csv",
         fq1=lambda wc: get_sample_fastqs(wc, "R1"),
         fq2=lambda wc: get_sample_fastqs(wc, "R2"),
-        # use the multi_config_csv as an existing dummy placeholder, in case no
-        # reference is needed here (if no Gene Expression samples present)
         reference=lookup(
             within=config,
             dpath="multi_config_csv_sections/gene-expression/reference",
-            default="results/input/{pool_id}.cell_ranger_multi_config.csv",
+            default=None,
         ),
     output:
         "results/cellranger/{pool_id}/outs/config.csv",
