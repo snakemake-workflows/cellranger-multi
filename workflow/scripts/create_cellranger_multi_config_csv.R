@@ -279,8 +279,7 @@ if (
       id == pool_id
     )
 
-  if n_distinct(multiplexing_barcodes) >= 1 {
-
+  if (n_distinct(multiplexing_barcodes) >= 1) {
     write_lines(
       c("", "[samples]"),
       file = snakemake@output[["multi_config_csv"]],
