@@ -1,5 +1,5 @@
 $schema: "https://json-schema.org/draft/2020-12/schema"
-description: entries for the sample sheet
+description: entries for the pool sheet
 properties:
   id:
     type: string
