@@ -26,8 +26,8 @@ properties:
 required:
   - id
   - sample_id
-  - anyOf:
-      - ocm_barcode_ids
-      - hashtag_ids
-      - cmo_ids
-      - probe_barcode_ids
+anyOf:
+  - required: [ocm_barcode_ids]
+  - required: [hashtag_ids]
+  - required: [cmo_ids]
+  - required: [probe_barcode_ids]
