@@ -27,7 +27,7 @@ required:
   - id
   - sample_id
   - anyOf:
-    - ocm_barcode_ids
-    - hashtag_ids
-    - cmo_ids
-    - probe_barcode_ids
+      - ocm_barcode_ids
+      - hashtag_ids
+      - cmo_ids
+      - probe_barcode_ids

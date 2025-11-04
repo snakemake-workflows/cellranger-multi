@@ -1,7 +1,6 @@
 $schema: "https://json-schema.org/draft/2020-12/schema"
 description: main configuration schema for the workflow
 properties:
-
   pool_sheet:
     type: string
     description: path to sample sheet TSV file
@@ -24,7 +23,7 @@ properties:
             type: string
             description: TSV file matching barcodes to samples for each multiplexed pool
       required:
-        - activate      
+        - activate
       vdj:
         type: object
         description: configuration options for VDJ feature_types
