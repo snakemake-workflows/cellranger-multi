@@ -4,6 +4,6 @@ multi_config_csv_sections:
   gene-expression:
     reference: "resources/refdata/"
     create-bam: "true"
-  
+
   multiplexing:
     activate: false

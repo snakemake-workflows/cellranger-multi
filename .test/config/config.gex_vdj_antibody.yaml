@@ -12,7 +12,7 @@ multi_config_csv_sections:
     tenx-cloud-token-path: ""
     cell-annotation-model: ""
     expect-cells: "10000"
-  
+
   multiplexing:
     activate: false
 

@@ -12,7 +12,7 @@ multi_config_csv_sections:
   vdj:
     reference: "resources/refdata/"
     inner-enrichment-primers: ""
-  
+
   multiplexing:
     activate: false
 
