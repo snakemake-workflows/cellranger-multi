@@ -12,9 +12,20 @@ pool_sheet = (
     .sort_index()
 )
 
-# validate sample sheet and config file
+# validate pool sheet and config file
 validate(pool_sheet, schema="../schemas/pool_sheet.schema.yaml")
 validate(config, schema="../schemas/config.schema.yaml")
+
+# load and validate multiplexing sheet if activated
+if config["multi_config_csv_sections"]["multiplexing"]["activate"]:
+    # read pool sheet
+    multiplexing_sheet = pd.read_csv(
+        config["multi_config_csv_sections"]["multiplexing"]["tsv"],
+        sep="\t",
+        dtype=str,
+    )
+    validate(multiplexing_sheet, schema="../schemas/multiplexing_sheet.schema.yaml")
+
 
 # set global variables
 
@@ -33,15 +44,6 @@ def determine_final_output(wildcards):
         "results/cellranger/{pool_id}/outs/config.csv",
         pool_id=ALL_IDS,
     )
-
-    if config["multi_config_csv_sections"]["multiplexing"]["activate"]:
-        # read pool sheet
-        multiplexing_sheet = pd.read_csv(
-            config["multi_config_csv_sections"]["multiplexing"]["tsv"],
-            sep="\t",
-            dtype=str,
-        )
-        validate(multiplexing_sheet, schema="../schemas/multiplexing_sheet.schema.yaml")
 
     for pool in ALL_IDS:
 
