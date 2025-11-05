@@ -5,9 +5,9 @@
 [![run with conda](http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda)](https://docs.conda.io/en/latest/)
 [![workflow catalog](https://img.shields.io/badge/Snakemake%20workflow%20catalog-darkgreen)](https://snakemake.github.io/snakemake-workflow-catalog/docs/workflows/snakemake-workflows/cellranger-multi)
 
-A Snakemake workflow for counting single cell RNAseq (scRNA-seq) data with Cell Ranger (Cell Ranger licensing requires a manual download of the software). 
+A Snakemake workflow for counting single cell RNA-seq (scRNA-seq) data with Cell Ranger (Cell Ranger licensing requires a manual download of the software). 
 
-- [Snakemake workflow: `cellranger-multi`](#snakemake-workflow-name)
+- [Snakemake workflow: `cellranger-multi`](#snakemake-workflow-cellranger-multi)
   - [Usage](#usage)
   - [Deployment options](#deployment-options)
   - [Authors](#authors)
