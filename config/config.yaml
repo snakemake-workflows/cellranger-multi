@@ -102,7 +102,7 @@ multi_config_csv_sections:
     # them in the `config/` directory and provide the relative path here:
     # Note: only uncomment the below line with an existing folder specified.
     # Otherwise, the workflow will error with a MissingInputException.
-    #    reference: "config/example_feature_reference.csv"
+    #    reference: "/absolute/path/to/config/example_feature_reference.csv"
     r1-length: ""
     r2-length: ""
     min-crispr-umi: ""
