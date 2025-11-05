@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-( # ensure all of the
+( pwd
   any_missing=0
   echo "Will check files: ${snakemake_output[@]}"
   for f in "${snakemake_output[@]}"; do
