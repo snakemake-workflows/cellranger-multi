@@ -45,8 +45,5 @@ onerror:
 # -----------------------------------------------------
 rule all:
     input:
-        expand(
-            "results/cellranger/{sample}/outs/metrics_summary.csv",
-            sample=sample_sheet["sample"].unique(),
-        ),
+        determine_final_output,
     default_target: True

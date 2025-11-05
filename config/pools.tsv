@@ -1,0 +1,9 @@
+id	feature_types	read1	read2	lane_number	subsample_rate
+pool_1	Gene Expression	../data/sample_1_gex/sample_1_gex.lane1.read1.fastq.gz	../data/sample_1_gex/sample_1_gex.lane1.read2.fastq.gz	1	
+pool_1	Gene Expression	../data/sample_1_gex/sample_1_gex.lane2.read1.fastq.gz	../data/sample_1_gex/sample_1_gex.lane2.read2.fastq.gz	2	
+pool_1	VDJ-T	../data/sample_1_vdjt/sample_1_vdjt.lane1.read1.fastq.gz	../data/sample_1_vdjt/sample_1_vdjt.lane1.read2.fastq.gz	1	
+pool_1	Antigen Capture	../data/sample_1_antigen_capture/sample_1_antigen_capture.lane1.read1.fastq.gz	../data/sample_1_antigen_capture/sample_1_antigen_capture.lane1.read2.fastq.gz	1	
+pool_2	Gene Expression	../datapool_2_gexpool_2_gex.lane1.read1.fastq.gz	../datapool_2_gexpool_2_gex.lane1.read2.fastq.gz	1	
+pool_2	Gene Expression	../datapool_2_gexpool_2_gex.lane2.read1.fastq.gz	../datapool_2_gexpool_2_gex.lane2.read2.fastq.gz	2	
+pool_2	CRISPR Guide Capture	../datapool_2_crispr_guide_capturepool_2_crispr_guide_capture.lane1.read1.fastq.gz	../datapool_2_crispr_guide_capturepool_2_crispr_guide_capture.lane1.read2.fastq.gz	1	
+pool_2	Antibody Capture	../datapool_2_antibody_capturepool_2_antibody_capture.lane1.read1.fastq.gz	../datapool_2_antibody_capturepool_2_antibody_capture.lane1.read2.fastq.gz	1	

@@ -1,0 +1,33 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+description: entries for the multiplexing sheet
+properties:
+  id:
+    type: string
+    description: sample pool identifier
+  sample_id:
+    type: string
+    description: name of an individual sample within a sample pool
+  description:
+    type: string
+    description: longer description of the sample
+  ocm_barcode_ids:
+    type: string
+    description: OCM barcode IDs used for multiplexing
+  hashtag_ids:
+    type: string
+    description: hashtag IDs used for multiplexing
+  cmo_ids:
+    type: string
+    description: Cell Multiplexing oligo IDs used for multiplexing
+  probe_barcode_ids:
+    type: string
+    description: Fixed RNA Probe Barcode IDs, Antibody Multiplexing Barcode IDs, and CRISPR Multiplexing Barcode IDs used for multiplexing
+
+required:
+  - id
+  - sample_id
+anyOf:
+  - required: [ocm_barcode_ids]
+  - required: [hashtag_ids]
+  - required: [cmo_ids]
+  - required: [probe_barcode_ids]

@@ -2,9 +2,14 @@ log <- file(snakemake@log[[1]], open = "wt")
 sink(log)
 sink(log, type = "message")
 
+library(rlang)
 rlang::global_entrace()
 
 library(tidyverse)
+library(cli)
+
+pool_id <- snakemake@wildcards[["pool_id"]]
+pool_sheet <- snakemake@input[["pool_sheet"]]
 
 cellranger_fastq_dirs <- enframe(
   snakemake@input[["fq1"]],
@@ -15,42 +20,42 @@ cellranger_fastq_dirs <- enframe(
     filename,
     c(
       "results/input/",
-      snakemake@wildcards[["sample"]],
+      pool_id,
       "_",
       feature_types = "[^/]+",
       "/",
-      snakemake@wildcards[["sample"]],
+      pool_id,
       "_.+_R1_001.fastq.gz"
     ),
     cols_remove = FALSE
   ) |>
   add_column(
-    sample = snakemake@wildcards[["sample"]]
+    id = pool_id
   ) |>
   mutate(
     fastqs = normalizePath(dirname(filename)),
     feature_types = str_replace(feature_types, "_", " ")
   ) |>
   select(
-    sample,
+    id,
     feature_types,
     fastqs
   ) |>
   distinct()
 
 libraries_table <- read_tsv(
-  snakemake@input[["sample_sheet"]],
+  pool_sheet,
   col_types = cols(.default = col_character())
 ) |>
   filter(
-    sample == snakemake@wildcards[["sample"]]
+    id == pool_id
   ) |>
   left_join(
     cellranger_fastq_dirs,
-    by = c("sample", "feature_types")
+    by = c("id", "feature_types")
   ) |>
   rename(
-    fastq_id = sample
+    fastq_id = id
   ) |>
   bind_rows(
     # ensure the lane_number column exists
@@ -68,6 +73,7 @@ libraries_table <- read_tsv(
     ),
     .by = any_of(
       c(
+        "sample",
         "fastq_id",
         "fastqs",
         "feature_types",
@@ -80,6 +86,7 @@ libraries_table <- read_tsv(
   select(
     any_of(
       c(
+        "sample",
         "fastq_id",
         "fastqs",
         "feature_types",
@@ -97,7 +104,9 @@ libraries_table <- read_tsv(
     )
   )
 
-specified_feature_types <- libraries_table |> pull(feature_types)
+
+specified_feature_types <- libraries_table |>
+  pull(feature_types)
 
 # Only start writing anything after we have done the libraries parsing.
 # Otherwise, we need to debug the sample sheet, anyways.
@@ -251,3 +260,35 @@ write_csv(
   append = TRUE,
   col_names = TRUE
 )
+
+# parsing for the samples section is different, so we write without the helper
+if (
+  snakemake@params[["multi_config_csv_sections"]][["multiplexing"]][[
+    "activate"
+  ]]
+) {
+  multiplexing_sheet <- snakemake@input[["multiplexing"]]
+
+  multiplexing_barcodes <- read_tsv(
+    multiplexing_sheet,
+    col_types = cols(.default = col_character())
+  ) |>
+    filter(
+      id == pool_id
+    )
+
+  if (n_distinct(multiplexing_barcodes) >= 1) {
+    write_lines(
+      c("", "[samples]"),
+      file = snakemake@output[["multi_config_csv"]],
+      append = TRUE
+    )
+
+    write_csv(
+      multiplexing_barcodes |> select(-id),
+      file = snakemake@output[["multi_config_csv"]],
+      append = TRUE,
+      col_names = TRUE
+    )
+  }
+}

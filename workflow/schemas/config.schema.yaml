@@ -1,0 +1,41 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+description: main configuration schema for the workflow
+properties:
+  pool_sheet:
+    type: string
+    description: path to sample sheet TSV file
+
+  multi_config_csv_sections:
+    type: object
+    description: configuration options for the multi config csv file
+    properties:
+      gene-expression:
+        type: object
+        description: configuration options for feature_type Gene Expression
+      multiplexing:
+        type: object
+        description: configuration options for multiplexing setups
+        properties:
+          activate:
+            type: boolean
+            description: indicate, whether a multiplexing pool setup was used
+          tsv:
+            type: string
+            description: TSV file matching barcodes to samples for each multiplexed pool
+        required:
+          - activate
+      vdj:
+        type: object
+        description: configuration options for VDJ feature_types
+      feature:
+        type: object
+        description: configuration options for the [feature] section
+      antigen-specificity:
+        type: object
+        description: configuration options for the [antigen-specificity] section
+    required:
+      - multiplexing
+
+required:
+  - pool_sheet
+  - multi_config_csv_sections
