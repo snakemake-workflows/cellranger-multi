@@ -1,5 +1,75 @@
 # Changelog
 
+## [2.0.0](https://github.com/snakemake-workflows/cellranger-multi/compare/v1.0.1...v2.0.0) (2025-11-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* now really bump major version
+
+### Features
+
+* double-check that multiplexing TSV specifies barcodes for all samples in a pool and otherwise provide useful error message ([fc334ad](https://github.com/snakemake-workflows/cellranger-multi/commit/fc334ad1fb839af33f8a18f1464a4d680492c223))
+
+
+### Bug Fixes
+
+* adjust expected files to example run (removed some files that are listed in cellranger multi documentation, and added three that I didn't see anywhere there, but that got generated) ([e04008d](https://github.com/snakemake-workflows/cellranger-multi/commit/e04008d8afcb0afd51b49ab2bd225cbbcf52e4b6))
+* adjust files and tests to allow for multiplexing setup and configuration ([fa65baa](https://github.com/snakemake-workflows/cellranger-multi/commit/fa65baa95f3934b5e732c069c6eb92a9c60a3b61))
+* adjust multi config csv creation to account for multiplexing ([a0b1ca6](https://github.com/snakemake-workflows/cellranger-multi/commit/a0b1ca62db61fa4535754ca7db0cf6ead682095c))
+* allow for non-existent output directory before first cellranger multi run ([2f26c90](https://github.com/snakemake-workflows/cellranger-multi/commit/2f26c902e733d4dcf1df2e889928d2c4e9e80264))
+* also cover Antigen Capture output in multiplexing ([71f9d02](https://github.com/snakemake-workflows/cellranger-multi/commit/71f9d024789bddeb23c05640600c243cce75f771))
+* also remove cloupe file from final output ([7e8616f](https://github.com/snakemake-workflows/cellranger-multi/commit/7e8616fcd85dbc98303d92b71e5e5c01240e3a3f))
+* also use the correctly named bash script with .sh suffix ([f19244e](https://github.com/snakemake-workflows/cellranger-multi/commit/f19244e2bb49dc5e752b4ee5b4f193e18e6400de))
+* anyOf required syntax for multiplexing_sheet.schema.yaml ([44265a7](https://github.com/snakemake-workflows/cellranger-multi/commit/44265a75efed364e221dfe9442b49bfcd21164be))
+* bugs in bash script for file existence check and touch, apply suggestions by coderabbitai ([dd35c50](https://github.com/snakemake-workflows/cellranger-multi/commit/dd35c504b9bb69e2a46d8f5b534c90f00f7e524c))
+* catch case where pool id is not present in multiplexing TSV file ([ce1426d](https://github.com/snakemake-workflows/cellranger-multi/commit/ce1426daab9cc0dd39c7f173ed6da561c4485460))
+* check for file existence before touching files in cellranger output check rules ([28adf06](https://github.com/snakemake-workflows/cellranger-multi/commit/28adf062fce3defa94f2f753bb517ea643550edd))
+* cloupe just doesn't get created (maybe it's part of secondary analyses?) ([714972d](https://github.com/snakemake-workflows/cellranger-multi/commit/714972d1351294fb745eafbd62d277ed8a069426))
+* coderabbitai nitpicks ([97b3a22](https://github.com/snakemake-workflows/cellranger-multi/commit/97b3a22e8c2004ba72af314e3a38b647f5a3fbc7))
+* debug overhauled multi condig CSV script ([a54ff65](https://github.com/snakemake-workflows/cellranger-multi/commit/a54ff655b6244316acd222ba0d16fb1b87b5c2a6))
+* default lookups to None, instead of using dummy input files ([11dc7ff](https://github.com/snakemake-workflows/cellranger-multi/commit/11dc7ffe2f9c89dcba3521b3ba063616d07f0c93))
+* disable telemetry during cellranger installation ([2bed667](https://github.com/snakemake-workflows/cellranger-multi/commit/2bed6677a30330230aafa633efd17772583f8e44))
+* example pools.tsv still had sample column ([1177848](https://github.com/snakemake-workflows/cellranger-multi/commit/117784813322c087a93f8e94115c98e38758cc87))
+* explicitly load used packages, to fail early if not available ([edadfe4](https://github.com/snakemake-workflows/cellranger-multi/commit/edadfe4c0106e5232a1e05da112ef606ecc7f6a9))
+* first batch of dryrun fixes ([f090230](https://github.com/snakemake-workflows/cellranger-multi/commit/f090230fbbdfa0d92c5046c452b4b2be290af92f))
+* handle case of a single sample for a pool ID ([fd6db2e](https://github.com/snakemake-workflows/cellranger-multi/commit/fd6db2e6bcb958f1231dfa9868d35d36fa9ba85a))
+* improve pool_sheet schema wording ([066ceeb](https://github.com/snakemake-workflows/cellranger-multi/commit/066ceeb5430f1f834f2936ab24c4feb9c9532928))
+* include and validate multiplexing_sheet schema ([aee4e1a](https://github.com/snakemake-workflows/cellranger-multi/commit/aee4e1aee796ce110c965e5233b580ee8f6b1acd))
+* include multiplexing sheet handling ([bb121cc](https://github.com/snakemake-workflows/cellranger-multi/commit/bb121cc3c53d47a1e4944b4912b0d4efcfff23b1))
+* indentation of config.schema.yaml ([7626f88](https://github.com/snakemake-workflows/cellranger-multi/commit/7626f8893b96260311679571e4fe6272448a34f4))
+* initial dryrun fixes done ([ce35b5a](https://github.com/snakemake-workflows/cellranger-multi/commit/ce35b5afab1adf03ec3d395f160460079ea2c5fb))
+* initial file setup for Gene Expression and VDJ data, not yet handled in final rule input request ([04adb4f](https://github.com/snakemake-workflows/cellranger-multi/commit/04adb4ffc34e007f569945cb254190c332573f89))
+* initial setup to determine final output dynamically ([5751e4a](https://github.com/snakemake-workflows/cellranger-multi/commit/5751e4aa18642b54e25b1039dd7ec04c3bb11d01))
+* load and validate multiplexing sheet outside of input function (globally) ([ae4a29a](https://github.com/snakemake-workflows/cellranger-multi/commit/ae4a29a60405ed0257417fccc5b7670c85ee6272))
+* make all cellranger output check rules explicitly update() output files, to avoid deletion ([0581fee](https://github.com/snakemake-workflows/cellranger-multi/commit/0581fee6043a9fd7d1a4f8226accb2f3bd47eb11))
+* make pool_samples extraction work ([cee3ffc](https://github.com/snakemake-workflows/cellranger-multi/commit/cee3ffc2f5c4f9c5acbdb0d95286c7f30a930115))
+* more testing fixes ([ae79478](https://github.com/snakemake-workflows/cellranger-multi/commit/ae79478650be3009a909a6bfd8e5793c006a8323))
+* move schemas into workflow directory ([8cb7b63](https://github.com/snakemake-workflows/cellranger-multi/commit/8cb7b63bccc684af1eb63649989dc5c9e53e1fc0))
+* name arguments in branch() function ([1b77dd4](https://github.com/snakemake-workflows/cellranger-multi/commit/1b77dd43a5192b4ed5df66920760e9dc20160c38))
+* now really bump major version ([d85d1d2](https://github.com/snakemake-workflows/cellranger-multi/commit/d85d1d24084f0ca0bd96c8d20740550b6d87399d))
+* proper snakemake object usage in R ([3331e2a](https://github.com/snakemake-workflows/cellranger-multi/commit/3331e2a01c796ff73f9e908d92ec73c717668141))
+* provide conda environment for every rule (use coreutils, which provides the used touch command) ([2e143e2](https://github.com/snakemake-workflows/cellranger-multi/commit/2e143e244237cbc7772315e59568493f8b77c548))
+* R syntax ([c519b68](https://github.com/snakemake-workflows/cellranger-multi/commit/c519b681f1e148d12bc536d4b72bb8cac3c7d0de))
+* rename bash script to expected .sh suffix ([18cd495](https://github.com/snakemake-workflows/cellranger-multi/commit/18cd495eab018023d4be311c27178bc4663dbb72))
+* rename example samples.tsv to pools.tsv ([9a2d996](https://github.com/snakemake-workflows/cellranger-multi/commit/9a2d996653200147d2c4e7615d6c2e3ee1a22930))
+* switch back to proper CSV placeholder for feature: reference: path ([0c6e6d3](https://github.com/snakemake-workflows/cellranger-multi/commit/0c6e6d35d13b5aaeadb960a86c3a60c0e50b97c6))
+* switch to specifying samples in multiplexing TSV file, rename samples.tsv files to pools.tsv ([67c1f9c](https://github.com/snakemake-workflows/cellranger-multi/commit/67c1f9cd2285eed71a69c96f1733cb8cdbacdc42))
+* switch to using `pool_sheet` instead of `sample_sheet` everywhere in the code ([1b439e8](https://github.com/snakemake-workflows/cellranger-multi/commit/1b439e8d452933309104f8d3b593780471153b0f))
+* try tracking main out_dir instead of cellranger's `outs/` subdirectory in cellranger_multi_run ([ef91bcc](https://github.com/snakemake-workflows/cellranger-multi/commit/ef91bccb5272eef36c225a5504c8dc9644e3296d))
+* typo ([2625eab](https://github.com/snakemake-workflows/cellranger-multi/commit/2625eabd2413195055643b9bfb4c00414a75ffda))
+* typo in multiplexing.tsv header ([f4bca14](https://github.com/snakemake-workflows/cellranger-multi/commit/f4bca143f6ec280dc418ae5d53cc44c4b3fe7efb))
+* update config.schema.yaml ([55371d8](https://github.com/snakemake-workflows/cellranger-multi/commit/55371d8e269a428280e7c98ed28fc24e2f4fe781))
+* use empty list instead of None for optional input ([d1a8719](https://github.com/snakemake-workflows/cellranger-multi/commit/d1a87194699ce5979bf64ea636b0cc48f20cf163))
+* wildcard constraint for vdj_type ([c82a68b](https://github.com/snakemake-workflows/cellranger-multi/commit/c82a68b9414b60cb6efe21aae309c91f328ebe08))
+
+
+### Performance Improvements
+
+* increase default threads for cellranger multi to 16 ([0367ac6](https://github.com/snakemake-workflows/cellranger-multi/commit/0367ac61a4d54c9e26a1f17d183b3402ce8b29ab))
+* make `no-secondary: "true"` the default in config/config.yaml ([94be12d](https://github.com/snakemake-workflows/cellranger-multi/commit/94be12d45733c0ecda0c4c9060fc6ce5582daf87))
+* make everything except cellranger multi a localrule ([fda1a9e](https://github.com/snakemake-workflows/cellranger-multi/commit/fda1a9e12084a4124c2d75d936e7fe2176692d32))
+
 ## [1.0.1](https://github.com/snakemake-workflows/cellranger-multi/compare/v1.0.0...v1.0.1) (2025-10-28)
 
 
