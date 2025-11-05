@@ -44,12 +44,12 @@ rule create_cellranger_multi_config_csv:
                 within=config,
                 dpath="multi_config_csv_sections/multiplexing/activate",
             ),
-            lookup(
+            then=lookup(
                 within=config,
                 dpath="multi_config_csv_sections/multiplexing/tsv",
                 default=[],
             ),
-            [],
+            otherwise=[],
         ),
     output:
         multi_config_csv="results/input/{pool_id}.cell_ranger_multi_config.csv",
