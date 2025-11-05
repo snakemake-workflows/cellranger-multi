@@ -3,7 +3,7 @@
 ( # keep everything logged
   any_missing=0
   echo "Checking these cellranger output files:"
-  echo "${snakemake_output[@]}"
+  echo "${snakemake_output[*]}"
   for f in "${snakemake_output[@]}"
   do
     if [ ! -e "$f" ]

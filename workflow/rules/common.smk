@@ -18,7 +18,6 @@ validate(config, schema="../schemas/config.schema.yaml")
 
 # load and validate multiplexing sheet if activated
 if config["multi_config_csv_sections"]["multiplexing"]["activate"]:
-    # read pool sheet
     multiplexing_sheet = pd.read_csv(
         config["multi_config_csv_sections"]["multiplexing"]["tsv"],
         sep="\t",
