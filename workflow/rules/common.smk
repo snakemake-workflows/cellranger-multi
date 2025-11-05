@@ -79,7 +79,6 @@ def determine_final_output(wildcards):
                 expand(
                     [
                         "results/cellranger/{pool_id}/outs/multi/count/feature_reference.csv",
-                        "results/cellranger/{pool_id}/outs/multi/count/raw_cloupe.cloupe",
                         "results/cellranger/{pool_id}/outs/multi/multiplexing_analysis/assignment_confidence_table.csv",
                         "results/cellranger/{pool_id}/outs/multi/multiplexing_analysis/cells_per_tag.json",
                         "results/cellranger/{pool_id}/outs/multi/multiplexing_analysis/tag_calls_per_cell.csv",
