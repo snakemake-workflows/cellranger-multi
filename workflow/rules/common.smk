@@ -35,6 +35,7 @@ ALL_IDS = pool_sheet["id"].unique()
 wildcard_constraints:
     pool_id="|".join(pool_sheet["id"]),
     feature_types="|".join(pool_sheet["feature_types"].replace(" ", "_")),
+    vdj_type="|".join(["vdj_b", "vdj_t", "vdj_t_gd"]),
 
 
 def determine_final_output(wildcards):
