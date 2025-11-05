@@ -4,14 +4,18 @@
   pwd
   any_missing=0
   echo "Will check files: ${snakemake_output[@]}"
-  for f in "${snakemake_output[@]}"; do
+  for f in "${snakemake_output[@]}"
+  do
     echo "Now checking file: $f"
-    if [ ! -e "$f" ]; then
+    ls -lh $f
+    if [ ! -e "$f" ]
+    then
       any_missing=1
       echo "Missing expected cellranger multi output: $f"
     fi
   done;
-  if [ "$any_missing" -eq 1 ]; then
+  if [ "$any_missing" -eq 1 ]
+  then
     exit 1
   fi
   # if all exist, ensure timestamp of output is newer than the input
