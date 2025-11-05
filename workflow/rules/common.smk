@@ -52,6 +52,9 @@ def determine_final_output(wildcards):
             samples = multiplexing_sheet.loc[
                 multiplexing_sheet["id"] == pool, "sample_id"
             ].unique()
+            # for non-multiplexed pools in a mixed setup, use pool_id as the
+            # sample_id (these pools won't have entries in the multiplexing
+            # sheet, while other pools will)
             if len(samples) == 0:
                 samples = [pool]
 
