@@ -139,7 +139,6 @@ rule cellranger_multi_files_multiplexing_global:
         csv_copy="results/cellranger/{pool_id}/outs/config.csv",
     output:
         update("results/cellranger/{pool_id}/outs/multi/count/feature_reference.csv"),
-        update("results/cellranger/{pool_id}/outs/multi/count/raw_cloupe.cloupe"),
         update(
             "results/cellranger/{pool_id}/outs/multi/multiplexing_analysis/assignment_confidence_table.csv"
         ),
