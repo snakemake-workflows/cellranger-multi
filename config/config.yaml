@@ -43,7 +43,7 @@ multi_config_csv_sections:
     expect-cells: ""
     force-cells: ""
     include-introns: ""
-    no-secondary: ""
+    no-secondary: "true"
     check-library-compatibility: ""
     emptydrops-minimum-umis: ""
     # The following three gene-expression options are only applicable for
