@@ -10,7 +10,6 @@ CONDA_LIB="${CONDA_PREFIX}/lib"
 mkdir -p ${CONDA_LIB}
 
 MAIN_DIR=$( pwd )
-echo $MAIN_DIR
 
 # install cellranger
 cd ${CONDA_LIB}
@@ -27,5 +26,4 @@ cellranger telemetry disable all
 # check that the cellranger executable is available and works
 cellranger testrun --id=tiny
 
-cellranger --version >${MAIN_DIR}/logs/cellranger_version.txt
-echo ${CONDA_PREFIX} >${MAIN_DIR}/logs/cellranger_conda_env.txt
+echo ${CONDA_BIN}/cellranger >${MAIN_DIR}/logs/cellranger/cellranger_conda_bin.txt
