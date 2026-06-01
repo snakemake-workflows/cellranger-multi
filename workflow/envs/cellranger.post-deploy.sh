@@ -19,9 +19,7 @@ CELLRANGER_DIR=$( ls -d cellranger* )
 ln -s ${CONDA_LIB}/${CELLRANGER_DIR}/cellranger ${CONDA_BIN}/cellranger
 
 # disable telemetry, as this seems to hang the testrun for a very long time
-cellranger telemetry disable upload
-cellranger telemetry disable update
-cellranger telemetry disable all
+cellranger telemetry disable
 
 # check that the cellranger executable is available and works
 cellranger testrun --id=tiny
