@@ -22,6 +22,6 @@ ln -s ${CONDA_LIB}/${CELLRANGER_DIR}/cellranger ${CONDA_BIN}/cellranger
 cellranger telemetry disable
 
 # check that the cellranger executable is available and works
-cellranger testrun --id=tiny
+cellranger testrun --id=tiny --localmem=8
 
 echo ${CONDA_BIN}/cellranger >${MAIN_DIR}/logs/cellranger/cellranger_conda_bin.txt
