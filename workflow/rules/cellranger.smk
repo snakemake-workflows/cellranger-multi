@@ -82,7 +82,7 @@ rule cellranger_multi_run:
         "<results>/cellranger/{pool_id}/outs/config.csv",
         out_dir=directory("<results>/cellranger/{pool_id}/"),
     log:
-        "<logs>/cellranger/multi/multi_run_{pool_id}.log",
+        "<logs>/cellranger_multi/multi_run_{pool_id}.log",
     conda:
         "../envs/cellranger.yaml"
     threads: 16
@@ -121,7 +121,7 @@ rule cellranger_multi_files_summaries:
             labels={"sample": "{sample_id}"},
         ),
     log:
-        "<logs>/cellranger/multi/summary_files/summaries_{pool_id}_{sample_id}.log",
+        "<logs>/cellranger_multi/summary_files/summaries_{pool_id}_{sample_id}.log",
     localrule: True
     conda:
         "../envs/bash_coreutils.yaml"
@@ -139,7 +139,7 @@ rule cellranger_multi_files_multiplexing_global:
         csv_copy="<results>/cellranger/{pool_id}/outs/config.csv",
     output:
         update(
-            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>feature_reference.csv"
+            "<results>/cellranger/{pool_id}/outs/<multi><count>feature_reference.csv"
         ),
         update(
             "<results>/cellranger/{pool_id}/outs/multi/multiplexing_analysis/assignment_confidence_table.csv"
@@ -154,7 +154,7 @@ rule cellranger_multi_files_multiplexing_global:
             "<results>/cellranger/{pool_id}/outs/multi/multiplexing_analysis/tag_calls_summary.csv"
         ),
     log:
-        "<logs>/cellranger/multi/multiplexing_files/multiplexing_global_{pool_id}.log",
+        "<logs>/cellranger_multi/multiplexing_files/multiplexing_global_{pool_id}.log",
     localrule: True
     conda:
         "../envs/bash_coreutils.yaml"
@@ -171,7 +171,7 @@ rule cellranger_multi_files_multiplexing_per_sample:
             "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/count/feature_reference.csv"
         ),
     log:
-        "<logs>/cellranger/multi/multiplexing_files/multiplexing_per_sample_{pool_id}_{sample_id}.log",
+        "<logs>/cellranger_multi/multiplexing_files/multiplexing_per_sample_{pool_id}_{sample_id}.log",
     localrule: True
     conda:
         "../envs/bash_coreutils.yaml"
@@ -185,10 +185,10 @@ rule cellranger_multi_files_multiplexing_antibody_global:
         csv_copy="<results>/cellranger/{pool_id}/outs/config.csv",
     output:
         update(
-            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>antibody_analysis/aggregate_barcodes.csv"
+            "<results>/cellranger/{pool_id}/outs/<multi><count>antibody_analysis/aggregate_barcodes.csv"
         ),
     log:
-        "<logs>/cellranger/multi/multiplexing_files/multiplexing_antibody_global_{pool_id}.log",
+        "<logs>/cellranger_multi/multiplexing_files/multiplexing_antibody_global_{pool_id}.log",
     localrule: True
     conda:
         "../envs/bash_coreutils.yaml"
@@ -202,37 +202,37 @@ rule cellranger_multi_files_multiplexing_crispr_global:
         csv_copy="<results>/cellranger/{pool_id}/outs/config.csv",
     output:
         update(
-            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>crispr_analysis/cells_per_protospacer.json"
+            "<results>/cellranger/{pool_id}/outs/<multi><count>crispr_analysis/cells_per_protospacer.json"
         ),
         update(
-            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>crispr_analysis/feature_reference.csv"
+            "<results>/cellranger/{pool_id}/outs/<multi><count>crispr_analysis/feature_reference.csv"
         ),
         update(
-            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>crispr_analysis/perturbation_effects_by_feature"
+            "<results>/cellranger/{pool_id}/outs/<multi><count>crispr_analysis/perturbation_effects_by_feature"
         ),
         update(
-            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>crispr_analysis/perturbation_effects_by_target"
+            "<results>/cellranger/{pool_id}/outs/<multi><count>crispr_analysis/perturbation_effects_by_target"
         ),
         update(
-            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>crispr_analysis/perturbation_efficiencies_by_feature.csv"
+            "<results>/cellranger/{pool_id}/outs/<multi><count>crispr_analysis/perturbation_efficiencies_by_feature.csv"
         ),
         update(
-            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>crispr_analysis/perturbation_efficiencies_by_target.csv"
+            "<results>/cellranger/{pool_id}/outs/<multi><count>crispr_analysis/perturbation_efficiencies_by_target.csv"
         ),
         update(
-            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>crispr_analysis/protospacer_calls_per_cell.csv"
+            "<results>/cellranger/{pool_id}/outs/<multi><count>crispr_analysis/protospacer_calls_per_cell.csv"
         ),
         update(
-            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>crispr_analysis/protospacer_calls_summary.csv"
+            "<results>/cellranger/{pool_id}/outs/<multi><count>crispr_analysis/protospacer_calls_summary.csv"
         ),
         update(
-            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>crispr_analysis/protospacer_umi_thresholds.csv"
+            "<results>/cellranger/{pool_id}/outs/<multi><count>crispr_analysis/protospacer_umi_thresholds.csv"
         ),
         update(
-            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>crispr_analysis/protospacer_umi_thresholds.json"
+            "<results>/cellranger/{pool_id}/outs/<multi><count>crispr_analysis/protospacer_umi_thresholds.json"
         ),
     log:
-        "<logs>/cellranger/multi/multiplexing_files/multiplexing_crispr_global_{pool_id}.log",
+        "<logs>/cellranger_multi/multiplexing_files/multiplexing_crispr_global_{pool_id}.log",
     localrule: True
     conda:
         "../envs/bash_coreutils.yaml"
@@ -249,28 +249,28 @@ rule cellranger_multi_files_gene_expression_global:
         csv_copy="<results>/cellranger/{pool_id}/outs/config.csv",
     output:
         update(
-            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>raw_molecule_info.h5"
+            "<results>/cellranger/{pool_id}/outs/<multi><count>raw_molecule_info.h5"
         ),
         update(
-            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>raw_feature_bc_matrix/barcodes.tsv.gz"
+            "<results>/cellranger/{pool_id}/outs/<multi><count>raw_feature_bc_matrix/barcodes.tsv.gz"
         ),
         update(
-            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>raw_feature_bc_matrix/features.tsv.gz"
+            "<results>/cellranger/{pool_id}/outs/<multi><count>raw_feature_bc_matrix/features.tsv.gz"
         ),
         update(
-            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>raw_feature_bc_matrix/matrix.mtx.gz"
+            "<results>/cellranger/{pool_id}/outs/<multi><count>raw_feature_bc_matrix/matrix.mtx.gz"
         ),
         update(
-            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>raw_feature_bc_matrix.h5"
+            "<results>/cellranger/{pool_id}/outs/<multi><count>raw_feature_bc_matrix.h5"
         ),
         update(
-            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>unassigned_alignments.bam"
+            "<results>/cellranger/{pool_id}/outs/<multi><count>unassigned_alignments.bam"
         ),
         update(
-            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>unassigned_alignments.bam.bai"
+            "<results>/cellranger/{pool_id}/outs/<multi><count>unassigned_alignments.bam.bai"
         ),
     log:
-        "<logs>/cellranger/multi/gene_expression_files/gex_global_{pool_id}.log",
+        "<logs>/cellranger_multi/gene_expression_files/gex_global_{pool_id}.log",
     localrule: True
     conda:
         "../envs/bash_coreutils.yaml"
@@ -308,7 +308,7 @@ rule cellranger_multi_files_gene_expression_per_sample:
             "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/count/sample_molecule_info.h5"
         ),
     log:
-        "<logs>/cellranger/multi/gene_expression_files/gex_per_sample_{pool_id}_{sample_id}.log",
+        "<logs>/cellranger_multi/gene_expression_files/gex_per_sample_{pool_id}_{sample_id}.log",
     localrule: True
     conda:
         "../envs/bash_coreutils.yaml"
@@ -327,7 +327,7 @@ rule cellranger_multi_files_vdj_reference:
         update("<results>/cellranger/{pool_id}/outs/vdj_reference/reference.json"),
         update("<results>/cellranger/{pool_id}/outs/vdj_reference/fasta/regions.fa"),
     log:
-        "<logs>/cellranger/multi/vdj_reference_files_{pool_id}.log",
+        "<logs>/cellranger_multi/vdj_reference_files_{pool_id}.log",
     localrule: True
     conda:
         "../envs/bash_coreutils.yaml"
@@ -359,7 +359,7 @@ rule cellranger_multi_files_vdj_global:
         ),
         update("<results>/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig.fastq"),
     log:
-        "<logs>/cellranger/multi/{vdj_type}_files/{vdj_type}_global_{pool_id}.log",
+        "<logs>/cellranger_multi/{vdj_type}_files/{vdj_type}_global_{pool_id}.log",
     localrule: True
     conda:
         "../envs/bash_coreutils.yaml"
@@ -427,7 +427,7 @@ rule cellranger_multi_files_vdj_per_sample:
             "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/{vdj_type}/vloupe.vloupe"
         ),
     log:
-        "<logs>/cellranger/multi/{vdj_type}_files/{vdj_type}_per_sample_{pool_id}_{sample_id}.log",
+        "<logs>/cellranger_multi/{vdj_type}_files/{vdj_type}_per_sample_{pool_id}_{sample_id}.log",
     localrule: True
     conda:
         "../envs/bash_coreutils.yaml"
