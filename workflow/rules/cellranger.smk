@@ -282,28 +282,28 @@ rule cellranger_multi_files_gene_expression_per_sample:
         csv_copy="<results>/cellranger/{pool_id}/outs/config.csv",
     output:
         update(
-            "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/count/sample_filtered_barcodes.csv"
+            "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/<count>sample_filtered_barcodes.csv"
         ),
         update(
-            "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/count/sample_alignments.bam"
+            "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/<count>sample_alignments.bam"
         ),
         update(
-            "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/count/sample_alignments.bam.bai"
+            "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/<count>sample_alignments.bam.bai"
         ),
         update(
-            "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/count/sample_filtered_feature_bc_matrix/barcodes.tsv.gz"
+            "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/<count>sample_filtered_feature_bc_matrix/barcodes.tsv.gz"
         ),
         update(
-            "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/count/sample_filtered_feature_bc_matrix/features.tsv.gz"
+            "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/<count>sample_filtered_feature_bc_matrix/features.tsv.gz"
         ),
         update(
-            "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/count/sample_filtered_feature_bc_matrix/matrix.mtx.gz"
+            "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/<count>sample_filtered_feature_bc_matrix/matrix.mtx.gz"
         ),
         update(
-            "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/count/sample_filtered_feature_bc_matrix.h5"
+            "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/<count>sample_filtered_feature_bc_matrix.h5"
         ),
         update(
-            "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/count/sample_molecule_info.h5"
+            "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/<count>sample_molecule_info.h5"
         ),
     log:
         "<logs>/cellranger_multi/gene_expression_files/gex_per_sample_{pool_id}_{sample_id}.log",
