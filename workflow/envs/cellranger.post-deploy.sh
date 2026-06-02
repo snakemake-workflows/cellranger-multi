@@ -24,4 +24,7 @@ cellranger telemetry disable
 # check that the cellranger executable is available and works
 cellranger testrun --id=tiny --localmem=8
 
-echo ${CONDA_BIN}/cellranger >${MAIN_DIR}/logs/cellranger/cellranger_conda_bin.txt
+echo "# DO NOT DELETE, NEEDED FOR CELLRANGER VERSION TRACKING" >${MAIN_DIR}/logs/cellranger/cellranger_conda_bin.txt
+echo "# The workflow will automatically overwrite this, if necessary, but if you" >>${MAIN_DIR}/logs/cellranger/cellranger_conda_bin.txt
+echo "# delete this manually, you might end up with a wrong cellranger version reported." >>${MAIN_DIR}/logs/cellranger/cellranger_conda_bin.txt
+echo ${CONDA_BIN}/cellranger >>${MAIN_DIR}/logs/cellranger/cellranger_conda_bin.txt
