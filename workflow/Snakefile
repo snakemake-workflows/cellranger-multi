@@ -44,6 +44,6 @@ onerror:
 # target rules
 # -----------------------------------------------------
 rule all:
+    default_target: True
     input:
         determine_final_output,
-    default_target: True

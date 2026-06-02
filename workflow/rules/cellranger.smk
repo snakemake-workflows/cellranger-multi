@@ -11,9 +11,9 @@ rule follow_pedantic_cell_ranger_naming_scheme:
         fq2="results/input/{pool_id}_{feature_type}/{pool_id}_S1_L00{lane_number}_R2_001.fastq.gz",
     log:
         "logs/input/{pool_id}_{feature_type}/{pool_id}_{feature_type}_S1_L00{lane_number}_001.log",
+    localrule: True
     conda:
         "../envs/bash_coreutils.yaml"
-    localrule: True
     params:
         fq1=lambda wc, input, output: path.relpath(
             str(input.fq1), start=path.dirname(output.fq1)
@@ -55,9 +55,9 @@ rule create_cellranger_multi_config_csv:
         multi_config_csv="results/input/{pool_id}.cell_ranger_multi_config.csv",
     log:
         "logs/input/{pool_id}.cell_ranger_multi_config.log",
+    localrule: True
     conda:
         "../envs/tidyverse.yaml"
-    localrule: True
     params:
         multi_config_csv_sections=lookup(
             within=config, dpath="multi_config_csv_sections"
@@ -122,9 +122,9 @@ rule cellranger_multi_files_summaries:
         ),
     log:
         "logs/cellranger/multi/summary_files/summaries_{pool_id}_{sample_id}.log",
+    localrule: True
     conda:
         "../envs/bash_coreutils.yaml"
-    localrule: True
     threads: 1
     script:
         "../scripts/check_cellranger_outputs.sh"
@@ -153,9 +153,9 @@ rule cellranger_multi_files_multiplexing_global:
         ),
     log:
         "logs/cellranger/multi/multiplexing_files/multiplexing_global_{pool_id}.log",
+    localrule: True
     conda:
         "../envs/bash_coreutils.yaml"
-    localrule: True
     threads: 1
     script:
         "../scripts/check_cellranger_outputs.sh"
@@ -170,9 +170,9 @@ rule cellranger_multi_files_multiplexing_per_sample:
         ),
     log:
         "logs/cellranger/multi/multiplexing_files/multiplexing_per_sample_{pool_id}_{sample_id}.log",
+    localrule: True
     conda:
         "../envs/bash_coreutils.yaml"
-    localrule: True
     threads: 1
     script:
         "../scripts/check_cellranger_outputs.sh"
@@ -187,9 +187,9 @@ rule cellranger_multi_files_multiplexing_antibody_global:
         ),
     log:
         "logs/cellranger/multi/multiplexing_files/multiplexing_antibody_global_{pool_id}.log",
+    localrule: True
     conda:
         "../envs/bash_coreutils.yaml"
-    localrule: True
     threads: 1
     script:
         "../scripts/check_cellranger_outputs.sh"
@@ -231,9 +231,9 @@ rule cellranger_multi_files_multiplexing_crispr_global:
         ),
     log:
         "logs/cellranger/multi/multiplexing_files/multiplexing_crispr_global_{pool_id}.log",
+    localrule: True
     conda:
         "../envs/bash_coreutils.yaml"
-    localrule: True
     threads: 1
     script:
         "../scripts/check_cellranger_outputs.sh"
@@ -265,9 +265,9 @@ rule cellranger_multi_files_gene_expression_global:
         ),
     log:
         "logs/cellranger/multi/gene_expression_files/gex_global_{pool_id}.log",
+    localrule: True
     conda:
         "../envs/bash_coreutils.yaml"
-    localrule: True
     threads: 1
     script:
         "../scripts/check_cellranger_outputs.sh"
@@ -303,9 +303,9 @@ rule cellranger_multi_files_gene_expression_per_sample:
         ),
     log:
         "logs/cellranger/multi/gene_expression_files/gex_per_sample_{pool_id}_{sample_id}.log",
+    localrule: True
     conda:
         "../envs/bash_coreutils.yaml"
-    localrule: True
     threads: 1
     script:
         "../scripts/check_cellranger_outputs.sh"
@@ -322,9 +322,9 @@ rule cellranger_multi_files_vdj_reference:
         update("results/cellranger/{pool_id}/outs/vdj_reference/fasta/regions.fa"),
     log:
         "logs/cellranger/multi/vdj_reference_files_{pool_id}.log",
+    localrule: True
     conda:
         "../envs/bash_coreutils.yaml"
-    localrule: True
     threads: 1
     script:
         "../scripts/check_cellranger_outputs.sh"
@@ -352,9 +352,9 @@ rule cellranger_multi_files_vdj_global:
         update("results/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig.fastq"),
     log:
         "logs/cellranger/multi/{vdj_type}_files/{vdj_type}_global_{pool_id}.log",
+    localrule: True
     conda:
         "../envs/bash_coreutils.yaml"
-    localrule: True
     threads: 1
     script:
         "../scripts/check_cellranger_outputs.sh"
@@ -420,9 +420,9 @@ rule cellranger_multi_files_vdj_per_sample:
         ),
     log:
         "logs/cellranger/multi/{vdj_type}_files/{vdj_type}_per_sample_{pool_id}_{sample_id}.log",
+    localrule: True
     conda:
         "../envs/bash_coreutils.yaml"
-    localrule: True
     threads: 1
     script:
         "../scripts/check_cellranger_outputs.sh"
