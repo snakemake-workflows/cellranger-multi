@@ -14,9 +14,9 @@ use rule * from test_cellranger_multi_workflow
 
 
 rule testing_all:
+    default_target: True
     input:
         rules.all.input,
-    default_target: True
 
 
 rule test_without_cellranger:
