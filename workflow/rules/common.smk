@@ -66,6 +66,8 @@ if CELLRANGER_VERSION != TARBALL_VERSION:
     )
 print(f"Using cellranger version: {CELLRANGER_VERSION}")
 
+pathvars:
+    cr_v_spec_multi="multi/count/" if CELLRANGER_VERSION < Version("10.0.0") else ""
 
 # read pool sheet
 pool_sheet = (
@@ -143,7 +145,7 @@ def determine_final_output(wildcards):
             final_output.extend(
                 expand(
                     [
-                        "<results>/cellranger/{pool_id}/outs/multi/count/feature_reference.csv",
+                        "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>feature_reference.csv",
                         "<results>/cellranger/{pool_id}/outs/multi/multiplexing_analysis/assignment_confidence_table.csv",
                         "<results>/cellranger/{pool_id}/outs/multi/multiplexing_analysis/cells_per_tag.json",
                         "<results>/cellranger/{pool_id}/outs/multi/multiplexing_analysis/tag_calls_per_cell.csv",
@@ -161,7 +163,7 @@ def determine_final_output(wildcards):
                 final_output.extend(
                     expand(
                         [
-                            "<results>/cellranger/{pool_id}/outs/multi/count/antibody_analysis/aggregate_barcodes.csv",
+                            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>antibody_analysis/aggregate_barcodes.csv",
                         ],
                         pool_id=pool,
                     )
@@ -170,16 +172,16 @@ def determine_final_output(wildcards):
                 final_output.extend(
                     expand(
                         [
-                            "<results>/cellranger/{pool_id}/outs/multi/count/crispr_analysis/cells_per_protospacer.json",
-                            "<results>/cellranger/{pool_id}/outs/multi/count/crispr_analysis/feature_reference.csv",
-                            "<results>/cellranger/{pool_id}/outs/multi/count/crispr_analysis/perturbation_effects_by_feature",
-                            "<results>/cellranger/{pool_id}/outs/multi/count/crispr_analysis/perturbation_effects_by_target",
-                            "<results>/cellranger/{pool_id}/outs/multi/count/crispr_analysis/perturbation_efficiencies_by_feature.csv",
-                            "<results>/cellranger/{pool_id}/outs/multi/count/crispr_analysis/perturbation_efficiencies_by_target.csv",
-                            "<results>/cellranger/{pool_id}/outs/multi/count/crispr_analysis/protospacer_calls_per_cell.csv",
-                            "<results>/cellranger/{pool_id}/outs/multi/count/crispr_analysis/protospacer_calls_summary.csv",
-                            "<results>/cellranger/{pool_id}/outs/multi/count/crispr_analysis/protospacer_umi_thresholds.csv",
-                            "<results>/cellranger/{pool_id}/outs/multi/count/crispr_analysis/protospacer_umi_thresholds.json",
+                            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>crispr_analysis/cells_per_protospacer.json",
+                            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>crispr_analysis/feature_reference.csv",
+                            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>crispr_analysis/perturbation_effects_by_feature",
+                            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>crispr_analysis/perturbation_effects_by_target",
+                            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>crispr_analysis/perturbation_efficiencies_by_feature.csv",
+                            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>crispr_analysis/perturbation_efficiencies_by_target.csv",
+                            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>crispr_analysis/protospacer_calls_per_cell.csv",
+                            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>crispr_analysis/protospacer_calls_summary.csv",
+                            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>crispr_analysis/protospacer_umi_thresholds.csv",
+                            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>crispr_analysis/protospacer_umi_thresholds.json",
                         ],
                         pool_id=pool,
                     )
@@ -191,13 +193,13 @@ def determine_final_output(wildcards):
                 final_output.extend(
                     expand(
                         [
-                            "<results>/cellranger/{pool_id}/outs/multi/count/raw_molecule_info.h5",
-                            "<results>/cellranger/{pool_id}/outs/multi/count/raw_feature_bc_matrix/barcodes.tsv.gz",
-                            "<results>/cellranger/{pool_id}/outs/multi/count/raw_feature_bc_matrix/features.tsv.gz",
-                            "<results>/cellranger/{pool_id}/outs/multi/count/raw_feature_bc_matrix/matrix.mtx.gz",
-                            "<results>/cellranger/{pool_id}/outs/multi/count/raw_feature_bc_matrix.h5",
-                            "<results>/cellranger/{pool_id}/outs/multi/count/unassigned_alignments.bam",
-                            "<results>/cellranger/{pool_id}/outs/multi/count/unassigned_alignments.bam.bai",
+                            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>raw_molecule_info.h5",
+                            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>raw_feature_bc_matrix/barcodes.tsv.gz",
+                            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>raw_feature_bc_matrix/features.tsv.gz",
+                            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>raw_feature_bc_matrix/matrix.mtx.gz",
+                            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>raw_feature_bc_matrix.h5",
+                            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>unassigned_alignments.bam",
+                            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>unassigned_alignments.bam.bai",
                             "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/count/sample_filtered_barcodes.csv",
                             "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/count/sample_alignments.bam",
                             "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/count/sample_alignments.bam.bai",
