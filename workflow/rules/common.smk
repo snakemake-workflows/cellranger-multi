@@ -66,8 +66,10 @@ if CELLRANGER_VERSION != TARBALL_VERSION:
     )
 print(f"Using cellranger version: {CELLRANGER_VERSION}")
 
+
 pathvars:
-    cr_v_spec_multi="multi/count/" if CELLRANGER_VERSION < Version("10.0.0") else ""
+    cr_v_spec_multi="multi/count/" if CELLRANGER_VERSION < Version("10.0.0") else "",
+
 
 # read pool sheet
 pool_sheet = (

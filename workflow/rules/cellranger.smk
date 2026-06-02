@@ -138,7 +138,9 @@ rule cellranger_multi_files_multiplexing_global:
     input:
         csv_copy="<results>/cellranger/{pool_id}/outs/config.csv",
     output:
-        update("<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>feature_reference.csv"),
+        update(
+            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>feature_reference.csv"
+        ),
         update(
             "<results>/cellranger/{pool_id}/outs/multi/multiplexing_analysis/assignment_confidence_table.csv"
         ),
@@ -246,7 +248,9 @@ rule cellranger_multi_files_gene_expression_global:
     input:
         csv_copy="<results>/cellranger/{pool_id}/outs/config.csv",
     output:
-        update("<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>raw_molecule_info.h5"),
+        update(
+            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>raw_molecule_info.h5"
+        ),
         update(
             "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>raw_feature_bc_matrix/barcodes.tsv.gz"
         ),
@@ -256,7 +260,9 @@ rule cellranger_multi_files_gene_expression_global:
         update(
             "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>raw_feature_bc_matrix/matrix.mtx.gz"
         ),
-        update("<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>raw_feature_bc_matrix.h5"),
+        update(
+            "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>raw_feature_bc_matrix.h5"
+        ),
         update(
             "<results>/cellranger/{pool_id}/outs/<cr_v_spec_multi>unassigned_alignments.bam"
         ),
@@ -344,7 +350,9 @@ rule cellranger_multi_files_vdj_global:
             "<results>/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig_annotations.json"
         ),
         update("<results>/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig.bam"),
-        update("<results>/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig.bam.bai"),
+        update(
+            "<results>/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig.bam.bai"
+        ),
         update("<results>/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig.fasta"),
         update(
             "<results>/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig.fasta.fai"
