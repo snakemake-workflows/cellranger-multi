@@ -19,7 +19,7 @@ cellranger_fastq_dirs <- enframe(
   separate_wider_regex(
     filename,
     c(
-      "results/input/",
+      ".+/input/",
       pool_id,
       "_",
       feature_types = "[^/]+",

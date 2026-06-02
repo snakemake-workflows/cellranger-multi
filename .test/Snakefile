@@ -22,7 +22,7 @@ rule testing_all:
 rule test_without_cellranger:
     input:
         expand(
-            "results/input/{pool_id}.cell_ranger_multi_config.csv",
+            "<results>/input/{pool_id}.cell_ranger_multi_config.csv",
             pool_id=test_cellranger_multi_workflow.pool_sheet["id"].unique(),
         ),
 
@@ -44,7 +44,7 @@ rule download_gex_vdj_antibody_test_data:
             ],
         ),
     log:
-        "logs/data/download_pbmc_example_data.log",
+        "<logs>/data/download_pbmc_example_data.log",
     shell:
         "( cd data/; "
         "  wget https://cf.10xgenomics.com/samples/cell-exp/3.0.0/pbmc_1k_v3/pbmc_1k_v3_fastqs.tar; "
