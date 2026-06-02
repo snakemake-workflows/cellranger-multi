@@ -29,7 +29,7 @@ jobs:
       - name: Lint workflow
         uses: snakemake/snakemake-github-action@v2
         env:
-          CELLRANGER_TARBALL: /some/imaginary/path/to/cellranger-1.1.1
+          CELLRANGER_TARBALL: /some/imaginary/path/to/cellranger-1.1.1.tar.gz
         with:
           directory: .
           snakefile: workflow/Snakefile
@@ -45,10 +45,11 @@ jobs:
 
       - name: Test gex_vdj_antibody workflow dryrun
         uses: snakemake/snakemake-github-action@v2
+        env:
+          CELLRANGER_TARBALL: /some/imaginary/path/to/cellranger-1.1.1.tar.gz
         with:
           directory: .test/
           snakefile: .test/Snakefile
-          stagein: 'export CELLRANGER_TARBALL="fake_this_absolute_path"'
           args: >
             --configfile .test/config/config.gex_vdj_antibody.yaml
             --sdm conda --conda-cleanup-pkgs cache --all-temp
@@ -57,10 +58,11 @@ jobs:
 
       - name: Test tcr_multiplex workflow dryrun
         uses: snakemake/snakemake-github-action@v2
+        env:
+          CELLRANGER_TARBALL: /some/imaginary/path/to/cellranger-1.1.1.tar.gz
         with:
           directory: .test/
           snakefile: .test/Snakefile
-          stagein: 'export CELLRANGER_TARBALL="fake_this_absolute_path"'
           args: >
             --configfile .test/config/config.tcr_multiplex.yaml
             --sdm conda --conda-cleanup-pkgs cache --all-temp
@@ -69,10 +71,11 @@ jobs:
 
       - name: Test bcr_antigen workflow dryrun
         uses: snakemake/snakemake-github-action@v2
+        env:
+          CELLRANGER_TARBALL: /some/imaginary/path/to/cellranger-1.1.1.tar.gz
         with:
           directory: .test/
           snakefile: .test/Snakefile
-          stagein: 'export CELLRANGER_TARBALL="fake_this_absolute_path"'
           args: >
             --configfile .test/config/config.bcr_antigen.yaml
             --sdm conda --conda-cleanup-pkgs cache --all-temp
@@ -81,10 +84,11 @@ jobs:
 
       - name: Test no_lane_sample workflow dryrun
         uses: snakemake/snakemake-github-action@v2
+        env:
+          CELLRANGER_TARBALL: /some/imaginary/path/to/cellranger-1.1.1.tar.gz
         with:
           directory: .test/
           snakefile: .test/Snakefile
-          stagein: 'export CELLRANGER_TARBALL="fake_this_absolute_path"'
           args: >
             --configfile .test/config/config.no_lane.yaml
             --sdm conda --conda-cleanup-pkgs cache --all-temp
@@ -93,10 +97,11 @@ jobs:
 
       - name: Test gex_vdj_antibody workflow without cellranger
         uses: snakemake/snakemake-github-action@v2
+        env:
+          CELLRANGER_TARBALL: /some/imaginary/path/to/cellranger-1.1.1.tar.gz
         with:
           directory: .test/
           snakefile: .test/Snakefile
-          stagein: 'export CELLRANGER_TARBALL="fake_this_absolute_path"'
           args: >
             test_without_cellranger
             --configfile .test/config/config.gex_vdj_antibody.yaml
@@ -105,10 +110,11 @@ jobs:
 
       - name: Test tcr_multiplex workflow without cellranger
         uses: snakemake/snakemake-github-action@v2
+        env:
+          CELLRANGER_TARBALL: /some/imaginary/path/to/cellranger-1.1.1.tar.gz
         with:
           directory: .test/
           snakefile: .test/Snakefile
-          stagein: 'export CELLRANGER_TARBALL="fake_this_absolute_path"'
           args: >
             test_without_cellranger
             --configfile .test/config/config.tcr_multiplex.yaml
@@ -117,10 +123,11 @@ jobs:
 
       - name: Test bcr_antigen workflow without cellranger
         uses: snakemake/snakemake-github-action@v2
+        env:
+          CELLRANGER_TARBALL: /some/imaginary/path/to/cellranger-1.1.1.tar.gz
         with:
           directory: .test/
           snakefile: .test/Snakefile
-          stagein: 'export CELLRANGER_TARBALL="fake_this_absolute_path"'
           args: >
             test_without_cellranger
             --configfile .test/config/config.bcr_antigen.yaml
@@ -129,10 +136,11 @@ jobs:
 
       - name: Test no_lane_sample workflow without cellranger
         uses: snakemake/snakemake-github-action@v2
+        env:
+          CELLRANGER_TARBALL: /some/imaginary/path/to/cellranger-1.1.1.tar.gz
         with:
           directory: .test/
           snakefile: .test/Snakefile
-          stagein: 'export CELLRANGER_TARBALL="fake_this_absolute_path"'
           args: >
             test_without_cellranger
             --configfile .test/config/config.no_lane.yaml
@@ -141,10 +149,11 @@ jobs:
 
       - name: Test no_lane_sample workflow without cellranger, report
         uses: snakemake/snakemake-github-action@v2
+        env:
+          CELLRANGER_TARBALL: /some/imaginary/path/to/cellranger-1.1.1.tar.gz
         with:
           directory: .test/
           snakefile: .test/Snakefile
-          stagein: 'export CELLRANGER_TARBALL="fake_this_absolute_path"'
           args: >
             test_without_cellranger
             --configfile .test/config/config.no_lane.yaml
