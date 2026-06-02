@@ -59,7 +59,7 @@ jobs:
       - name: Test tcr_multiplex workflow dryrun
         uses: snakemake/snakemake-github-action@v2
         env:
-          CELLRANGER_TARBALL: /some/imaginary/path/to/cellranger-1.1.1.tar.gz
+          CELLRANGER_TARBALL: /some/imaginary/path/to/cellranger-10.1.1.tar.gz
         with:
           directory: .test/
           snakefile: .test/Snakefile
@@ -72,7 +72,7 @@ jobs:
       - name: Test bcr_antigen workflow dryrun
         uses: snakemake/snakemake-github-action@v2
         env:
-          CELLRANGER_TARBALL: /some/imaginary/path/to/cellranger-1.1.1.tar.gz
+          CELLRANGER_TARBALL: /some/imaginary/path/to/cellranger-10.1.1.tar.gz
         with:
           directory: .test/
           snakefile: .test/Snakefile
@@ -98,7 +98,7 @@ jobs:
       - name: Test gex_vdj_antibody workflow without cellranger
         uses: snakemake/snakemake-github-action@v2
         env:
-          CELLRANGER_TARBALL: /some/imaginary/path/to/cellranger-1.1.1.tar.gz
+          CELLRANGER_TARBALL: /some/imaginary/path/to/cellranger-10.1.1.tar.gz
         with:
           directory: .test/
           snakefile: .test/Snakefile
@@ -150,7 +150,7 @@ jobs:
       - name: Test no_lane_sample workflow without cellranger, report
         uses: snakemake/snakemake-github-action@v2
         env:
-          CELLRANGER_TARBALL: /some/imaginary/path/to/cellranger-1.1.1.tar.gz
+          CELLRANGER_TARBALL: /some/imaginary/path/to/cellranger-10.1.1.tar.gz
         with:
           directory: .test/
           snakefile: .test/Snakefile
