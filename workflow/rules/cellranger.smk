@@ -248,9 +248,7 @@ rule cellranger_multi_files_gene_expression_global:
     input:
         csv_copy="<results>/cellranger/{pool_id}/outs/config.csv",
     output:
-        update(
-            "<results>/cellranger/{pool_id}/outs/<multi><count>raw_molecule_info.h5"
-        ),
+        update("<results>/cellranger/{pool_id}/outs/<multi><count>raw_molecule_info.h5"),
         update(
             "<results>/cellranger/{pool_id}/outs/<multi><count>raw_feature_bc_matrix/barcodes.tsv.gz"
         ),
