@@ -9,7 +9,7 @@ from snakemake.shell import shell
 
 CELLRANGER_TARBALL = os.environ["CELLRANGER_TARBALL"]
 TARBALL_VERSION = Version(
-    CELLRANGER_TARBALL.split("/cellranger-")[-1].replace(".tar.gz", "")
+    CELLRANGER_TARBALL.split("cellranger-")[-1].replace(".tar.gz", "")
 )
 
 try:
