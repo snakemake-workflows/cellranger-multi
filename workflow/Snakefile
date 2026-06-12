@@ -44,9 +44,9 @@ onerror:
 # target rules
 # -----------------------------------------------------
 rule all:
+    default_target: True
     input:
         "results/all_done.txt",
-    default_target: True
 
 
 rule collect_all:
@@ -55,6 +55,6 @@ rule collect_all:
     output:
         "results/all_done.txt",
     log:
-        "logs/collect_all.log"
+        "logs/collect_all.log",
     shell:
         "touch results/all_done.txt >{log} 2&>1"
