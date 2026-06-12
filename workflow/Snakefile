@@ -56,5 +56,7 @@ rule collect_all:
         "results/all_done.txt",
     log:
         "logs/collect_all.log",
+    conda:
+        "bash_coreutils.yaml"
     shell:
         "touch results/all_done.txt >{log} 2&>1"
