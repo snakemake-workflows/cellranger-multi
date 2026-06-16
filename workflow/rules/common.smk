@@ -69,9 +69,8 @@ print(f"Using cellranger version: {CELLRANGER_VERSION}")
 
 pathvars:
     # pathvars dependent on cellranger version used
-    multi="multi/" if CELLRANGER_VERSION < Version("10.0.0") else "",
-    count="count/" if CELLRANGER_VERSION < Version("10.0.0") else "",
-
+    multi=branch(CELLRANGER_VERSION < Version("10.0.0"), "multi", "m/"),
+    count=branch(CELLRANGER_VERSION < Version("10.0.0"), "count", "c/"),
 
 # read pool sheet
 pool_sheet = (
