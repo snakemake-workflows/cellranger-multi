@@ -154,16 +154,19 @@ def determine_final_output(wildcards):
                         "<results>/cellranger/{pool_id}/outs/multi/multiplexing_analysis/cells_per_tag.json",
                         "<results>/cellranger/{pool_id}/outs/multi/multiplexing_analysis/tag_calls_per_cell.csv",
                         "<results>/cellranger/{pool_id}/outs/multi/multiplexing_analysis/tag_calls_summary.csv",
-                        (
-                            "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/count/feature_reference.csv"
-                            if CELLRANGER_VERSION < Version("10.0.0")
-                            else ""
-                        ),
                     ],
                     pool_id=pool,
                     sample_id=samples,
                 )
             )
+            if CELLRANGER_VERSION < Version("10.0.0"):
+                final_output.extend(
+                    expand(
+                        "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/count/feature_reference.csv",
+                        pool_id=pool,
+                        sample_id=samples,
+                    )
+                )
             if (
                 "Antibody Capture" in feature_types
                 or "Antigen Capture" in feature_types
