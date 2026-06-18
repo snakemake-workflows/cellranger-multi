@@ -115,9 +115,9 @@ rule cellranger_multi_files_summaries:
             update(
                 "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/web_summary.html"
             ),
-            caption="../report/cellranger_count.rst",
+            caption="../report/cellranger_multi_web.rst",
             category="cellranger",
-            subcategory="count report",
+            subcategory="per-sample reports",
             labels={"sample": "{sample_id}"},
         ),
     log:
