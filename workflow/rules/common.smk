@@ -138,6 +138,19 @@ def determine_final_output(wildcards):
                 sample_id=samples,
             )
         )
+        # request per-pool summaries, which only CELLRANGER >= 10.0.0 produces
+        if CELLRANGER_VERSION >= Version("10.0.0"):
+            final_output.extend(
+                expand(
+                    [
+                        "<results>/cellranger/{pool_id}/outs/qc_sample_metrics.csv",
+                        "<results>/cellranger/{pool_id}/outs/qc_library_metrics.csv",
+                        "<results>/cellranger/{pool_id}/outs/qc_report.html",
+                    ],
+                    pool_id=pool,
+                )
+            )
+
 
         # handle feature_types defined for this pool of samples
         feature_types = pool_sheet.loc[
