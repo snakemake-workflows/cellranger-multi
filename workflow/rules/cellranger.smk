@@ -172,16 +172,16 @@ rule cellranger_multi_files_multiplexing_global:
             "<results>/cellranger/{pool_id}/outs/<multi><count>feature_reference.csv"
         ),
         update(
-            "<results>/cellranger/{pool_id}/outs/multi/multiplexing_analysis/assignment_confidence_table.csv"
+            "<results>/cellranger/{pool_id}/outs/<multi>multiplexing_analysis/assignment_confidence_table.csv"
         ),
         update(
-            "<results>/cellranger/{pool_id}/outs/multi/multiplexing_analysis/cells_per_tag.json"
+            "<results>/cellranger/{pool_id}/outs/<multi>multiplexing_analysis/cells_per_tag.json"
         ),
         update(
-            "<results>/cellranger/{pool_id}/outs/multi/multiplexing_analysis/tag_calls_per_cell.csv"
+            "<results>/cellranger/{pool_id}/outs/<multi>multiplexing_analysis/tag_calls_per_cell.csv"
         ),
         update(
-            "<results>/cellranger/{pool_id}/outs/multi/multiplexing_analysis/tag_calls_summary.csv"
+            "<results>/cellranger/{pool_id}/outs/<multi>multiplexing_analysis/tag_calls_summary.csv"
         ),
     log:
         "<logs>/cellranger_multi/multiplexing_files/multiplexing_global_{pool_id}.log",
@@ -408,23 +408,23 @@ rule cellranger_multi_files_vdj_global:
         csv_copy="<results>/cellranger/{pool_id}/outs/config.csv",
     output:
         update(
-            "<results>/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig_annotations.bed"
+            "<results>/cellranger/{pool_id}/outs/<multi>{vdj_type}/all_contig_annotations.bed"
         ),
         update(
-            "<results>/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig_annotations.csv"
+            "<results>/cellranger/{pool_id}/outs/<multi>{vdj_type}/all_contig_annotations.csv"
         ),
         update(
-            "<results>/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig_annotations.json"
+            "<results>/cellranger/{pool_id}/outs/<multi>{vdj_type}/all_contig_annotations.json"
         ),
-        update("<results>/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig.bam"),
+        update("<results>/cellranger/{pool_id}/outs/<multi>{vdj_type}/all_contig.bam"),
         update(
-            "<results>/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig.bam.bai"
+            "<results>/cellranger/{pool_id}/outs/<multi>{vdj_type}/all_contig.bam.bai"
         ),
-        update("<results>/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig.fasta"),
+        update("<results>/cellranger/{pool_id}/outs/<multi>{vdj_type}/all_contig.fasta"),
         update(
-            "<results>/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig.fasta.fai"
+            "<results>/cellranger/{pool_id}/outs/<multi>{vdj_type}/all_contig.fasta.fai"
         ),
-        update("<results>/cellranger/{pool_id}/outs/multi/{vdj_type}/all_contig.fastq"),
+        update("<results>/cellranger/{pool_id}/outs/<multi>{vdj_type}/all_contig.fastq"),
     log:
         "<logs>/cellranger_multi/{vdj_type}_files/{vdj_type}_global_{pool_id}.log",
     localrule: True
