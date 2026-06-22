@@ -135,7 +135,6 @@ def determine_final_output(wildcards):
             )
         )
 
-
     for pool in ALL_IDS:
 
         samples = [pool]
