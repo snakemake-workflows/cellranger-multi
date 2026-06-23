@@ -113,28 +113,6 @@ def determine_final_output(wildcards):
         pool_id=ALL_IDS,
     )
 
-    # request per-pool summaries and collections, which only CELLRANGER >= 10.0.0 produces
-    if CELLRANGER_VERSION >= Version("10.0.0"):
-        final_output.extend(
-            expand(
-                [
-                    "<results>/cellranger/{pool_id}/outs/qc_sample_metrics.csv",
-                    "<results>/cellranger/{pool_id}/outs/qc_library_metrics.csv",
-                    "<results>/cellranger/{pool_id}/outs/qc_report.html",
-                    "<results>/cellranger/{pool_id}/outs/filtered_feature_bc_matrix.h5",
-                    "<results>/cellranger/{pool_id}/outs/raw_feature_bc_matrix.h5",
-                    "<results>/cellranger/{pool_id}/outs/raw_molecule_info.h5",
-                    "<results>/cellranger/{pool_id}/outs/filtered_feature_bc_matrix/barcodes.tsv.gz",
-                    "<results>/cellranger/{pool_id}/outs/filtered_feature_bc_matrix/features.tsv.gz",
-                    "<results>/cellranger/{pool_id}/outs/filtered_feature_bc_matrix/matrix.mtx.gz",
-                    "<results>/cellranger/{pool_id}/outs/raw_feature_bc_matrix/barcodes.tsv.gz",
-                    "<results>/cellranger/{pool_id}/outs/raw_feature_bc_matrix/features.tsv.gz",
-                    "<results>/cellranger/{pool_id}/outs/raw_feature_bc_matrix/matrix.mtx.gz",
-                ],
-                pool_id=pool,
-            )
-        )
-
     for pool in ALL_IDS:
 
         samples = [pool]
@@ -222,6 +200,9 @@ def determine_final_output(wildcards):
 
         for ft in feature_types:
 
+            # VDJ-only analyses are possible, so we only want to produce these
+            # outputs if "Gene Expression" is among the feature types, see:
+            # https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/running-pipelines/cr-5p-multi#vdj-only
             if ft == "Gene Expression":
                 final_output.extend(
                     expand(
@@ -246,6 +227,29 @@ def determine_final_output(wildcards):
                         sample_id=samples,
                     )
                 )
+                # request per-pool summaries and collections, which only
+                # CELLRANGER >= 10.0.0 produces
+                if CELLRANGER_VERSION >= Version("10.0.0"):
+                    final_output.extend(
+                        expand(
+                            [
+                                "<results>/cellranger/{pool_id}/outs/qc_sample_metrics.csv",
+                                "<results>/cellranger/{pool_id}/outs/qc_library_metrics.csv",
+                                "<results>/cellranger/{pool_id}/outs/qc_report.html",
+                                "<results>/cellranger/{pool_id}/outs/filtered_feature_bc_matrix.h5",
+                                "<results>/cellranger/{pool_id}/outs/raw_feature_bc_matrix.h5",
+                                "<results>/cellranger/{pool_id}/outs/raw_molecule_info.h5",
+                                "<results>/cellranger/{pool_id}/outs/filtered_feature_bc_matrix/barcodes.tsv.gz",
+                                "<results>/cellranger/{pool_id}/outs/filtered_feature_bc_matrix/features.tsv.gz",
+                                "<results>/cellranger/{pool_id}/outs/filtered_feature_bc_matrix/matrix.mtx.gz",
+                                "<results>/cellranger/{pool_id}/outs/raw_feature_bc_matrix/barcodes.tsv.gz",
+                                "<results>/cellranger/{pool_id}/outs/raw_feature_bc_matrix/features.tsv.gz",
+                                "<results>/cellranger/{pool_id}/outs/raw_feature_bc_matrix/matrix.mtx.gz",
+                            ],
+                            pool_id=pool,
+                        )
+                    )
+
 
             if ft in ["VDJ-B", "VDJ-T", "VDJ-T-GD"]:
                 final_output.extend(
