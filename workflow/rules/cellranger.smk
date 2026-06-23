@@ -309,7 +309,6 @@ rule cellranger_multi_files_gene_expression_global_sample_collections:
         csv_copy="<results>/cellranger/{pool_id}/outs/config.csv",
     output:
         update("<results>/cellranger/{pool_id}/outs/filtered_feature_bc_matrix.h5"),
-        update("<results>/cellranger/{pool_id}/outs/raw_feature_bc_matrix.h5"),
         update(
             "<results>/cellranger/{pool_id}/outs/filtered_feature_bc_matrix/barcodes.tsv.gz"
         ),
@@ -318,15 +317,6 @@ rule cellranger_multi_files_gene_expression_global_sample_collections:
         ),
         update(
             "<results>/cellranger/{pool_id}/outs/filtered_feature_bc_matrix/matrix.mtx.gz"
-        ),
-        update(
-            "<results>/cellranger/{pool_id}/outs/raw_feature_bc_matrix/barcodes.tsv.gz"
-        ),
-        update(
-            "<results>/cellranger/{pool_id}/outs/raw_feature_bc_matrix/features.tsv.gz"
-        ),
-        update(
-            "<results>/cellranger/{pool_id}/outs/raw_feature_bc_matrix/matrix.mtx.gz"
         ),
     log:
         "<logs>/cellranger_multi/gene_expression_files/gex_global_{pool_id}_sample_collections.log",
