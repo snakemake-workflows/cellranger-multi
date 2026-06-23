@@ -310,7 +310,6 @@ rule cellranger_multi_files_gene_expression_global_sample_collections:
     output:
         update("<results>/cellranger/{pool_id}/outs/filtered_feature_bc_matrix.h5"),
         update("<results>/cellranger/{pool_id}/outs/raw_feature_bc_matrix.h5"),
-        update("<results>/cellranger/{pool_id}/outs/raw_molecule_info.h5"),
         update(
             "<results>/cellranger/{pool_id}/outs/filtered_feature_bc_matrix/barcodes.tsv.gz"
         ),
