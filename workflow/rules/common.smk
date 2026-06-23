@@ -227,8 +227,8 @@ def determine_final_output(wildcards):
                         sample_id=samples,
                     )
                 )
-                # request per-pool summaries and collections, which only
-                # CELLRANGER >= 10.0.0 produces
+                # request per-pool summaries, collections and per-sample
+                # outputs, which only CELLRANGER >= 10.0.0 produces
                 if CELLRANGER_VERSION >= Version("10.0.0"):
                     final_output.extend(
                         expand(
@@ -245,8 +245,13 @@ def determine_final_output(wildcards):
                                 "<results>/cellranger/{pool_id}/outs/raw_feature_bc_matrix/barcodes.tsv.gz",
                                 "<results>/cellranger/{pool_id}/outs/raw_feature_bc_matrix/features.tsv.gz",
                                 "<results>/cellranger/{pool_id}/outs/raw_feature_bc_matrix/matrix.mtx.gz",
-                            ],
+                                "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/sample_raw_feature_bc_matrix.h5",
+                                "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/sample_raw_feature_bc_matrix/barcodes.tsv.gz",
+                                "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/sample_raw_feature_bc_matrix/features.tsv.gz",
+                                "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/sample_raw_feature_bc_matrix/matrix.mtx.gz",
+                             ],
                             pool_id=pool,
+                            sample_id=samples,
                         )
                     )
 
