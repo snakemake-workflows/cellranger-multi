@@ -249,12 +249,11 @@ def determine_final_output(wildcards):
                                 "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/sample_raw_feature_bc_matrix/barcodes.tsv.gz",
                                 "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/sample_raw_feature_bc_matrix/features.tsv.gz",
                                 "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/sample_raw_feature_bc_matrix/matrix.mtx.gz",
-                             ],
+                            ],
                             pool_id=pool,
                             sample_id=samples,
                         )
                     )
-
 
             if ft in ["VDJ-B", "VDJ-T", "VDJ-T-GD"]:
                 final_output.extend(
