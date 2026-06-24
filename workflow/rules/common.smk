@@ -280,7 +280,6 @@ def determine_final_output(wildcards):
                     )
                 )
 
-
     return final_output
 
 
