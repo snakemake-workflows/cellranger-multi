@@ -159,44 +159,6 @@ def determine_final_output(wildcards):
                     sample_id=samples,
                 )
             )
-            if CELLRANGER_VERSION < Version("10.0.0"):
-                final_output.extend(
-                    expand(
-                        "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/count/feature_reference.csv",
-                        pool_id=pool,
-                        sample_id=samples,
-                    )
-                )
-            if (
-                "Antibody Capture" in feature_types
-                or "Antigen Capture" in feature_types
-            ):
-                final_output.extend(
-                    expand(
-                        [
-                            "<results>/cellranger/{pool_id}/outs/<multi><count>antibody_analysis/aggregate_barcodes.csv",
-                        ],
-                        pool_id=pool,
-                    )
-                )
-            if "CRISPR Guide Capture" in feature_types:
-                final_output.extend(
-                    expand(
-                        [
-                            "<results>/cellranger/{pool_id}/outs/<multi><count>crispr_analysis/cells_per_protospacer.json",
-                            "<results>/cellranger/{pool_id}/outs/<multi><count>crispr_analysis/feature_reference.csv",
-                            "<results>/cellranger/{pool_id}/outs/<multi><count>crispr_analysis/perturbation_effects_by_feature",
-                            "<results>/cellranger/{pool_id}/outs/<multi><count>crispr_analysis/perturbation_effects_by_target",
-                            "<results>/cellranger/{pool_id}/outs/<multi><count>crispr_analysis/perturbation_efficiencies_by_feature.csv",
-                            "<results>/cellranger/{pool_id}/outs/<multi><count>crispr_analysis/perturbation_efficiencies_by_target.csv",
-                            "<results>/cellranger/{pool_id}/outs/<multi><count>crispr_analysis/protospacer_calls_per_cell.csv",
-                            "<results>/cellranger/{pool_id}/outs/<multi><count>crispr_analysis/protospacer_calls_summary.csv",
-                            "<results>/cellranger/{pool_id}/outs/<multi><count>crispr_analysis/protospacer_umi_thresholds.csv",
-                            "<results>/cellranger/{pool_id}/outs/<multi><count>crispr_analysis/protospacer_umi_thresholds.json",
-                        ],
-                        pool_id=pool,
-                    )
-                )
 
         for ft in feature_types:
 
@@ -288,6 +250,36 @@ def determine_final_output(wildcards):
                         sample_id=samples,
                     )
                 )
+            if ft in ["Antibody Capture", "Antigen Capture"]:
+                final_output.extend(
+                    expand(
+                        [
+                            "<results>/cellranger/{pool_id}/outs/<multi><count>feature_reference.csv",
+                            "<results>/cellranger/{pool_id}/outs/<multi><count>antibody_analysis/aggregate_barcodes.csv",
+                        ],
+                        pool_id=pool,
+                    )
+                )
+            if ft == "CRISPR Guide Capture":
+                final_output.extend(
+                    expand(
+                        [
+                            "<results>/cellranger/{pool_id}/outs/<multi><count>feature_reference.csv",
+                            "<results>/cellranger/{pool_id}/outs/<multi><count>crispr_analysis/cells_per_protospacer.json",
+                            "<results>/cellranger/{pool_id}/outs/<multi><count>crispr_analysis/feature_reference.csv",
+                            "<results>/cellranger/{pool_id}/outs/<multi><count>crispr_analysis/perturbation_effects_by_feature",
+                            "<results>/cellranger/{pool_id}/outs/<multi><count>crispr_analysis/perturbation_effects_by_target",
+                            "<results>/cellranger/{pool_id}/outs/<multi><count>crispr_analysis/perturbation_efficiencies_by_feature.csv",
+                            "<results>/cellranger/{pool_id}/outs/<multi><count>crispr_analysis/perturbation_efficiencies_by_target.csv",
+                            "<results>/cellranger/{pool_id}/outs/<multi><count>crispr_analysis/protospacer_calls_per_cell.csv",
+                            "<results>/cellranger/{pool_id}/outs/<multi><count>crispr_analysis/protospacer_calls_summary.csv",
+                            "<results>/cellranger/{pool_id}/outs/<multi><count>crispr_analysis/protospacer_umi_thresholds.csv",
+                            "<results>/cellranger/{pool_id}/outs/<multi><count>crispr_analysis/protospacer_umi_thresholds.json",
+                        ],
+                        pool_id=pool,
+                    )
+                )
+
 
     return final_output
 
