@@ -88,7 +88,7 @@ rule cellranger_multi_run:
     resources:
         mem_mb=lambda wc, threads: threads * 4000,
     params:
-        out_dir=lambda wc, output: output["csv"].replace("/outs/config.csv", ""),
+        out_dir=lambda wc, output: output["csv"].replace("outs/config.csv", ""),
         mem_gb=lambda wc, resources: math.floor(resources.mem_mb / 1000),
     shell:
         "(rm -rf {params.out_dir}; "
