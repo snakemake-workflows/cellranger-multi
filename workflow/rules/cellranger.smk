@@ -79,8 +79,7 @@ rule cellranger_multi_run:
             default=[],
         ),
     output:
-        "<results>/cellranger/{pool_id}/outs/config.csv",
-        out_dir=directory("<results>/cellranger/{pool_id}/"),
+        csv="<results>/cellranger/{pool_id}/outs/config.csv",
     log:
         "<logs>/cellranger_multi/multi_run_{pool_id}.log",
     conda:
@@ -89,12 +88,13 @@ rule cellranger_multi_run:
     resources:
         mem_mb=lambda wc, threads: threads * 4000,
     params:
+        out_dir=lambda wc, output: output["csv"].replace("/outs/config.csv", ""),
         mem_gb=lambda wc, resources: math.floor(resources.mem_mb / 1000),
     shell:
-        "(rm -rf {output.out_dir}; "
+        "(rm -rf {params.out_dir}; "
         " cellranger multi "
         "  --id={wildcards.pool_id} "
-        "  --output-dir={output.out_dir} "
+        "  --output-dir={params.out_dir} "
         "  --csv={input.multi_config_csv} "
         "  --localcores={threads} "
         "  --localmem={params.mem_gb}; "
