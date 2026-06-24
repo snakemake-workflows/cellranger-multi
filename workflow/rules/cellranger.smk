@@ -158,6 +158,30 @@ rule cellranger_multi_wc_cellranger_10:
         "../scripts/check_cellranger_outputs.sh"
 
 
+# `feature_reference.csv` is produced by a bunch of modes, at least:
+# * multiplexing (config["multiplexing"]["activate"] == True)
+# * Antigen Capture (Feature Type)
+# * Antibody Capture (Feature Type)
+# * CRISPR Guide Capture (Feature Type)
+# We track it in a separate rule, to allow for it to be tracked for all these
+# analysis types, without causing ambiguity between rules.
+rule cellranger_multi_feature_reference:
+    input:
+        csv_copy="<results>/cellranger/{pool_id}/outs/config.csv",
+    output:
+        update(
+            "<results>/cellranger/{pool_id}/outs/<multi><count>feature_reference.csv"
+        ),
+    log:
+        "<logs>/cellranger_multi/feature_reference_{pool_id}.log",
+    localrule: True
+    conda:
+        "../envs/bash_coreutils.yaml"
+    threads: 1
+    script:
+        "../scripts/check_cellranger_outputs.sh"
+
+
 # multiplexing outputs, according to:
 # https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/outputs/cr-3p-outputs-cellplex
 
@@ -166,9 +190,6 @@ rule cellranger_multi_files_multiplexing_global:
     input:
         csv_copy="<results>/cellranger/{pool_id}/outs/config.csv",
     output:
-        update(
-            "<results>/cellranger/{pool_id}/outs/<multi><count>feature_reference.csv"
-        ),
         update(
             "<results>/cellranger/{pool_id}/outs/<multi>multiplexing_analysis/assignment_confidence_table.csv"
         ),
