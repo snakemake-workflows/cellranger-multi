@@ -24,14 +24,14 @@ except FileNotFoundError:
     print(
         "No existing cellranger version found.\n"
         "Will install from $CELLRANGER_TARBALL in the environment variable:\n"
-        f"{CELLRANGER_TARBALL}"
+        f"{CELLRANGER_TARBALL}\n"
     )
     CELLRANGER_VERSION = TARBALL_VERSION
 else:
     # The file exists, but let's see if someone manually deleted the conda
     # environment.
     print(
-        f"Found an existing cellranger installation, will use that version unless the environment definition or the post-deploy script changed."
+        f"Found an existing cellranger installation, will use that version unless the environment definition or the post-deploy script changed.\n"
     )
     with open(previous_cellranger_install) as file:
         for line in file:
@@ -46,7 +46,7 @@ else:
         print(
             "Existing cellranger installation was removed manually.\n"
             "Will reinstall from $CELLRANGER_TARBALL in the environment variable:\n"
-            f"{CELLRANGER_TARBALL}"
+            f"{CELLRANGER_TARBALL}\n"
         )
         CELLRANGER_VERSION = TARBALL_VERSION
     else:
@@ -64,9 +64,9 @@ if CELLRANGER_VERSION != TARBALL_VERSION:
         f"Warning: $CELLRANGER_TARBALL ({CELLRANGER_TARBALL}) defines version\n"
         f"'{TARBALL_VERSION}', which is different from the existing one being used.\n"
         f"If you want to use the defined version '{TARBALL_VERSION}', remove the\n"
-        "following log file and rerun:\n"
-        f"{log_file_path}\n"
-        f"Removing the log and rerunning with cellranger version '{TARBALL_VERSION}'\n"
+        "previously installed conda environment directory and rerun:\n"
+        f"{cellranger_bin.replace("/bin/cellranger", "")}\n"
+        f"Removing the environment and rerunning with cellranger version '{TARBALL_VERSION}'\n"
         "will rerun cellranger multi, the most compute expensive step.\n"
     )
 print(f"Using cellranger version: {CELLRANGER_VERSION}")
