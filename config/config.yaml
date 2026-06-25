@@ -82,6 +82,9 @@ multi_config_csv_sections:
     # Note: only uncomment the below line with an existing folder specified.
     # Otherwise, the workflow will error with a MissingInputException.
     #    reference: "/absolute/path/to/ref_data/folder/refdata-cellranger-vdj-GRCh38-alts-ensembl-7.1.0/"
+    # Alternatively, you can uncomment the following entry, which will run the
+    # analysis in "denovo" mode, which does not require a reference:
+    #    denovo: ""
     inner-enrichment-primers: ""
     r1-length: ""
     r2-length: ""

@@ -129,7 +129,7 @@ parse_and_write_section_if_required <- function(
       mutate(
         value = unlist(value)
       ) |>
-      filter(value != "") # remove any empty entries, to keep csv succinct
+      filter((name != "denovo") & (value != "")) # remove any empty entries, to keep csv succinct, but keep "denovo" entry, as this is used as a flag without value
     write_lines(
       str_c("[", section_heading, "]"),
       file = snakemake@output[["multi_config_csv"]],
