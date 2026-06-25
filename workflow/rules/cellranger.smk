@@ -234,7 +234,7 @@ rule cellranger_multi_files_antibody_antigen_per_sample:
         csv_copy="<results>/cellranger/{pool_id}/outs/config.csv",
     output:
         update(
-            "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/aggregate_barcodes.csv"
+            "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/<count>aggregate_barcodes.csv"
         ),
     log:
         "<logs>/cellranger_multi/antibody_antigen_per_sample_{pool_id}_{sample_id}.log",
