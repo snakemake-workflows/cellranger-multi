@@ -229,15 +229,15 @@ rule cellranger_multi_files_multiplexing_per_sample:
         "../scripts/check_cellranger_outputs.sh"
 
 
-rule cellranger_multi_files_multiplexing_antibody_global:
+rule cellranger_multi_files_antibody_antigen_per_sample:
     input:
         csv_copy="<results>/cellranger/{pool_id}/outs/config.csv",
     output:
         update(
-            "<results>/cellranger/{pool_id}/outs/<multi><count>antibody_analysis/aggregate_barcodes.csv"
+            "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/aggregate_barcodes.csv"
         ),
     log:
-        "<logs>/cellranger_multi/multiplexing_files/multiplexing_antibody_global_{pool_id}.log",
+        "<logs>/cellranger_multi/antibody_antigen_per_sample_{pool_id}_{sample_id}.log",
     localrule: True
     conda:
         "../envs/bash_coreutils.yaml"

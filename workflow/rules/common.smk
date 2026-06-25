@@ -255,9 +255,10 @@ def determine_final_output(wildcards):
                     expand(
                         [
                             "<results>/cellranger/{pool_id}/outs/<multi><count>feature_reference.csv",
-                            "<results>/cellranger/{pool_id}/outs/<multi><count>antibody_analysis/aggregate_barcodes.csv",
+                            "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/aggregate_barcodes.csv"
                         ],
                         pool_id=pool,
+                        sample_id=samples,
                     )
                 )
             if ft == "CRISPR Guide Capture":
