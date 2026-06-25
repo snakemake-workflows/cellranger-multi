@@ -10,7 +10,7 @@ multi_config_csv_sections:
     expect-cells: ""
 
   vdj:
-    reference: "resources/refdata/"
+    denovo: ""
     inner-enrichment-primers: ""
 
   feature:
