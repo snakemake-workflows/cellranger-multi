@@ -229,6 +229,26 @@ rule cellranger_multi_files_antibody_antigen_per_sample:
         "../scripts/check_cellranger_outputs.sh"
 
 
+rule cellranger_multi_files_antigen_specificity_per_sample:
+    input:
+        csv_copy="<results>/cellranger/{pool_id}/outs/config.csv",
+    output:
+        update(
+            "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/antigen_analysis/antigen_specificity_scores.csv",
+        ),
+        update(
+            "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/antigen_analysis/per_barcode.csv",
+        ),
+    log:
+        "<logs>/cellranger_multi/antigen_specificity_per_sample_{pool_id}_{sample_id}.log",
+    localrule: True
+    conda:
+        "../envs/bash_coreutils.yaml"
+    threads: 1
+    script:
+        "../scripts/check_cellranger_outputs.sh"
+
+
 rule cellranger_multi_files_multiplexing_crispr_global:
     input:
         csv_copy="<results>/cellranger/{pool_id}/outs/config.csv",

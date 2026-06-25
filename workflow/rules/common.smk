@@ -261,6 +261,21 @@ def determine_final_output(wildcards):
                         sample_id=samples,
                     )
                 )
+            if ft == "Antigen Capture":
+                final_output.extend(
+                    expand(
+                        [
+                            # This file is not documented under outputs, but only in this section:
+                            # https://www.10xgenomics.com/support/software/cell-ranger/latest/algorithms-overview/cr-5p-antigen-algorithm
+                            "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/antigen_analysis/antigen_specificity_scores.csv",
+                            # This file is not documented anywhere that I could find, but it appears
+                            # alongside the antigen_specificity_scores.csv
+                            "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/antigen_analysis/per_barcode.csv",
+                        ],
+                        pool_id=pool,
+                        sample_id=samples,
+                    )
+                )
             if ft == "CRISPR Guide Capture":
                 final_output.extend(
                     expand(
