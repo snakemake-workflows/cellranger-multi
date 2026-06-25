@@ -60,12 +60,14 @@ else:
         )
 
 if CELLRANGER_VERSION != TARBALL_VERSION:
+    cellranger_env_base = cellranger_bin.replace("bin/cellranger", "").rstrip("/")
     print(
         f"Warning: $CELLRANGER_TARBALL ({CELLRANGER_TARBALL}) defines version\n"
         f"'{TARBALL_VERSION}', which is different from the existing one being used.\n"
         f"If you want to use the defined version '{TARBALL_VERSION}', remove the\n"
-        "previously installed conda environment directory and rerun:\n"
-        f"{cellranger_bin.replace("/bin/cellranger", "")}\n"
+        "previously installed conda environment directory and files and rerun:\n"
+        f"rm -r {cellranger_env_base}\n"
+        f"rm {cellranger_env_base}.yaml {cellranger_env_base}.post-deploy.sh {cellranger_env_base}.env_setup_done\n"
         f"Removing the environment and rerunning with cellranger version '{TARBALL_VERSION}'\n"
         "will rerun cellranger multi, the most compute expensive step.\n"
     )
