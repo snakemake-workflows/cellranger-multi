@@ -212,23 +212,6 @@ rule cellranger_multi_files_multiplexing_global:
         "../scripts/check_cellranger_outputs.sh"
 
 
-rule cellranger_multi_files_multiplexing_per_sample:
-    input:
-        csv_copy="<results>/cellranger/{pool_id}/outs/config.csv",
-    output:
-        update(
-            "<results>/cellranger/{pool_id}/outs/per_sample_outs/{sample_id}/count/feature_reference.csv"
-        ),
-    log:
-        "<logs>/cellranger_multi/multiplexing_files/multiplexing_per_sample_{pool_id}_{sample_id}.log",
-    localrule: True
-    conda:
-        "../envs/bash_coreutils.yaml"
-    threads: 1
-    script:
-        "../scripts/check_cellranger_outputs.sh"
-
-
 rule cellranger_multi_files_antibody_antigen_per_sample:
     input:
         csv_copy="<results>/cellranger/{pool_id}/outs/config.csv",
