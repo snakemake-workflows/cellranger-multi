@@ -62,7 +62,12 @@ else:
 if CELLRANGER_VERSION != TARBALL_VERSION:
     print(
         f"Warning: $CELLRANGER_TARBALL ({CELLRANGER_TARBALL}) defines version\n"
-        f"'{TARBALL_VERSION}', which is different from the existing one being used."
+        f"'{TARBALL_VERSION}', which is different from the existing one being used.\n"
+        f"If you want to use the defined version '{TARBALL_VERSION}', remove the\n"
+        "following log file and rerun:\n"
+        f"{log_file_path}\n"
+        f"Removing the log and rerunning with cellranger version '{TARBALL_VERSION}'\n"
+        "will rerun cellranger multi, the most compute expensive step.\n"
     )
 print(f"Using cellranger version: {CELLRANGER_VERSION}")
 
