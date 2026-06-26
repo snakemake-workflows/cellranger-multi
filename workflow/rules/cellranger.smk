@@ -90,6 +90,7 @@ rule cellranger_multi_run:
     params:
         out_dir=lambda wc, output: output["csv"].replace("outs/config.csv", ""),
         mem_gb=lambda wc, resources: math.floor(resources.mem_mb / 1000),
+        cellranger_version=CELLRANGER_VERSION, # track version changes to retrigger cellranger_multi_run upon newly installed cellranger version
     shell:
         "(rm -rf {params.out_dir}; "
         " cellranger multi "
