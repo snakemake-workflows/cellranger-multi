@@ -10,7 +10,7 @@ The workflow is built using [snakemake](https://snakemake.readthedocs.io/en/stab
 1. Link in files to a new file name that follows cellranger requirements.
 2. Create a per-sample cellranger multi config CSV sheet.
 3. Run `cellranger multi`, parallelizing over biological samples.
-4. Create a snakemake report with the a Web Summary per sample pool and per biological sample.
+4. Create a snakemake report with a Web Summary per sample pool and per biological sample.
 
 Please note that the workflow tracks [all the output files for the main `cellranger multi` functionality, except those from secondary analyses](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/outputs/cr-outputs-overview).
 If you do change the `no-secondary: "true"` setting to `"false"`, the workflow will run secondary analyses and produce respective output, just without tracking any of those secondary analysis output files.
