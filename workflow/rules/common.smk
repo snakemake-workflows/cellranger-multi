@@ -2,6 +2,7 @@
 import pandas as pd
 from os import path
 import math
+import os
 from packaging.version import Version
 from pathlib import Path
 from snakemake.utils import validate
