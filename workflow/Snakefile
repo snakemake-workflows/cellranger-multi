@@ -60,4 +60,4 @@ rule collect_all:
     conda:
         "envs/bash_coreutils.yaml"
     shell:
-        "touch results/all_done.txt >{log} 2&>1"
+        "touch results/all_done.txt >{log} 2>&1"
