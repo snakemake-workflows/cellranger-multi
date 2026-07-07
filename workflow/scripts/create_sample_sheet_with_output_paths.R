@@ -39,7 +39,7 @@ samples <- enframe(
     per_sample_counts_path
   )
 
-write_csv(
+write_tsv(
   samples,
-  file = snakemake@output[["sample_sheet"]],
+  file = snakemake@output[["sample_sheet"]]
 )
