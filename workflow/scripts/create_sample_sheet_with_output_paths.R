@@ -7,6 +7,8 @@ rlang::global_entrace()
 
 library(tidyverse)
 
+save.image(file="samples.RData")
+
 samples <- enframe(
     unlist(snakemake@input),
     name = NULL,
