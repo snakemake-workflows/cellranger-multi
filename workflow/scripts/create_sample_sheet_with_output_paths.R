@@ -6,7 +6,8 @@ library(rlang)
 rlang::global_entrace()
 
 library(tidyverse)
-library(cli)
+
+print(snakemake@input)
 
 samples <- enframe(
     snakemake@input,
