@@ -11,7 +11,9 @@ samples <- enframe(
     unlist(snakemake@input),
     name = NULL,
     value = "per_sample_counts_path",
-  ) |>
+  )
+print(samples)
+# |>
   filter(
     str_detect(
       per_sample_counts_path,
