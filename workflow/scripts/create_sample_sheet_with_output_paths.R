@@ -7,10 +7,8 @@ rlang::global_entrace()
 
 library(tidyverse)
 
-print(unlist(snakemake@input))
-
 samples <- enframe(
-    snakemake@input,
+    unlist(snakemake@input),
     name = NULL,
     value = "per_sample_counts_path",
   ) |>
