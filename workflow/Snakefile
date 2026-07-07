@@ -58,6 +58,6 @@ rule collect_all_sample_sheet:
         "logs/collect_all_sample_sheet.log",
     localrule: True
     conda:
-        "../envs/tidyverse.yaml"
+        "envs/tidyverse.yaml"
     script:
         "scripts/create_sample_sheet_with_output_paths.R"
