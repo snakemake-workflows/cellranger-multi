@@ -46,18 +46,18 @@ onerror:
 rule all:
     default_target: True
     input:
-        "results/all_done.txt",
+        "results/sample_sheet.tsv",
 
 
-rule collect_all:
+rule collect_all_sample_sheet:
     input:
         determine_final_output,
     output:
-        "results/all_done.txt",
+        sample_sheet="results/sample_sheet.tsv",
     log:
-        "logs/collect_all.log",
+        "logs/collect_all_sample_sheet.log",
     localrule: True
     conda:
-        "envs/bash_coreutils.yaml"
-    shell:
-        "touch results/all_done.txt >{log} 2>&1"
+        "../envs/tidyverse.yaml"
+    script:
+        "scripts/create_sample_sheet_with_output_paths.R"
