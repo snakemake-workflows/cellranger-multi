@@ -49,6 +49,9 @@ rule all:
         "results/sample_sheet.tsv",
 
 
+# We collect the final results here, so they are not collected in the `default_target` rule, as
+# this seems to interfere with the pathvars upon module import, see:
+# https://github.com/snakemake/snakemake/pull/4218
 rule collect_all_sample_sheet:
     input:
         determine_final_output,
