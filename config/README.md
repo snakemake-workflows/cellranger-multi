@@ -1,6 +1,7 @@
 ## Workflow overview
 
 This workflow is a best-practice snakemake workflow for systematically running `cellranger multi` on one or more samples.
+It has predictable output file paths that can be used for integrated downstream processing of results within a modularised analysis workflow.
 See the [10X documentation for choosing a pipeline](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/running-pipelines/cr-choosing-a-pipeline) to see whether this is the preprocessing you need.
 If your assay setup suggests `cellranger count`, have a look at the [standardised workflow for `cellranger count` instead](https://snakemake.github.io/snakemake-workflow-catalog/docs/workflows/snakemake-workflows/cellranger-count).
 
@@ -9,7 +10,11 @@ The workflow is built using [snakemake](https://snakemake.readthedocs.io/en/stab
 1. Link in files to a new file name that follows cellranger requirements.
 2. Create a per-sample cellranger multi config CSV sheet.
 3. Run `cellranger multi`, parallelizing over biological samples.
-4. Create a snakemake report with the a Web Summary per biological sample.
+4. Create a snakemake report with a Web Summary per sample pool and per biological sample.
+
+Please note that the workflow tracks [all the output files for the main `cellranger multi` functionality, except those from secondary analyses](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/outputs/cr-outputs-overview).
+If you do change the `no-secondary: "true"` setting to `"false"`, the workflow will run secondary analyses and produce respective output, just without tracking any of those secondary analysis output files.
+Thus, you cannot automatically parse secondary analyses' output files in a single modularised workflow.
 
 ## Running the workflow
 
@@ -18,9 +23,12 @@ The workflow is built using [snakemake](https://snakemake.readthedocs.io/en/stab
 As a pre-requisite for running the workflow, you need to download the `*.tar.gz` file with the Cell Ranger executable from the Cell Ranger Download center:
 https://www.10xgenomics.com/support/software/cell-ranger/downloads
 
+We recommend `cellranger >= 10.0.0`, as outputs and outputs paths have changed from this version onwards.
+The workflow has also been tested with Cell Ranger version `9.0.1` at the time of writing (to ensure backward compatibility), but future testing will only occur with newer versions, so backward compatibility might break at some point.
+
 Afterwards, set the environment variable `CELLRANGER_TARBALL` to the full path of this executable, for example:
 ```{bash}
-export CELLRANGER_TARBALL="/absolute/path/to/cellranger-8.1.1.tar.gz"
+export CELLRANGER_TARBALL="/absolute/path/to/cellranger-10.0.0.tar.gz"
 ```
 To make this a permanently set environment variable for your user on the respective system, add the (adapted) line from above to your `~/.bashrc` file and make sure this file is always loaded.
 
@@ -28,7 +36,9 @@ With this environment variable set, the workflow will automatically install `cel
 So once your specific analysis has created this conda environment, the cellranger version will stay at the version specified at that time.
 
 Should you ever want to update the cellranger version for an analysis, you will have to update the `CELLRANGER_TARBALL` environment variable and delete the conda environment, to ensure that it gets re-generated.
-The conda environments are stored in the hidden `.snakemake/conda/` folder.
+With a newly set `CELLRANGER_TARBALL`, a dryrun of the workflow will indicate which files and folders to remove, to delete the cellranger conda environment.
+
+And if you want to go hunting for the conda environment yourself, it is stored in the hidden `.snakemake/conda/` folder.
 You can usually identify the exact conda environment used by a rule from the `.snakemake/logs/` files or the respective cluster system log files.
 Search for the execution of the respective rule (`cellranger_multi`) and then look for `Activating conda environment:` right below.
 You can then delete the respective file and directory under `.snakemake/conda/` and rerun the workflow.

@@ -9,6 +9,8 @@ mkdir -p ${CONDA_BIN}
 CONDA_LIB="${CONDA_PREFIX}/lib"
 mkdir -p ${CONDA_LIB}
 
+MAIN_DIR=$( pwd )
+
 # install cellranger
 cd ${CONDA_LIB}
 tar xzf ${CELLRANGER_TARBALL}
@@ -16,10 +18,15 @@ CELLRANGER_DIR=$( ls -d cellranger* )
 
 ln -s ${CONDA_LIB}/${CELLRANGER_DIR}/cellranger ${CONDA_BIN}/cellranger
 
-# disable telemetry, as this seems to hang the testrun for a very long time
-cellranger telemetry disable upload
-cellranger telemetry disable update
-cellranger telemetry disable all
+# disable telemetry
+cellranger telemetry disable
 
 # check that the cellranger executable is available and works
-cellranger testrun --id=tiny
+cellranger testrun --id=tiny --localmem=8
+
+# ensure a fresh install in an unused workflow has the necessary directory available
+mkdir -p "${MAIN_DIR}/logs/cellranger_multi"
+echo "# DO NOT DELETE, NEEDED FOR CELLRANGER VERSION TRACKING" >${MAIN_DIR}/logs/cellranger_multi/cellranger_conda_bin.txt
+echo "# The workflow will automatically overwrite this, if necessary, but if you" >>${MAIN_DIR}/logs/cellranger_multi/cellranger_conda_bin.txt
+echo "# delete this manually, you might end up with a wrong cellranger version reported." >>${MAIN_DIR}/logs/cellranger_multi/cellranger_conda_bin.txt
+echo ${CONDA_BIN}/cellranger >>${MAIN_DIR}/logs/cellranger_multi/cellranger_conda_bin.txt
