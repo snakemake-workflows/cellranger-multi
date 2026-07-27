@@ -1,5 +1,67 @@
 # Changelog
 
+## [2.1.0](https://github.com/snakemake-workflows/cellranger-multi/compare/v2.0.0...v2.1.0) (2026-07-27)
+
+
+### Features
+
+* add functinal parsing of cellranger version ([2f76d3e](https://github.com/snakemake-workflows/cellranger-multi/commit/2f76d3e00bce30f07e1233fff0de15f622f3ca00))
+* add newly added QC files, if run with CELLRANGER &gt;= 10.0.0 ([d844773](https://github.com/snakemake-workflows/cellranger-multi/commit/d8447732534e3e3112f96980ebfe696ad16bd6b2))
+* create sample sheet with per-sample count output path relative from a sibling directory ([8980b3e](https://github.com/snakemake-workflows/cellranger-multi/commit/8980b3e09b6ab7dd23309b96bd76c89f76267a1d))
+* try to record installed version of cellranger, to be able to detect this for determining where outputs end up ([2836d36](https://github.com/snakemake-workflows/cellranger-multi/commit/2836d3604d89519eb88e06d78c64ec2b066a1a5a))
+* use cellranger version specific pathvar ([b703b70](https://github.com/snakemake-workflows/cellranger-multi/commit/b703b704cb010805b19907e24c95605d9d497455))
+* use pathvars for results and logs ([a1dc237](https://github.com/snakemake-workflows/cellranger-multi/commit/a1dc237cff728a0676719e3e136fec8b2da74ddb))
+
+
+### Bug Fixes
+
+* add &lt;count&gt; pathvar to aggregate_barcodes.csv path, according to docs: ([123bea0](https://github.com/snakemake-workflows/cellranger-multi/commit/123bea0909d223bf63c9e55114c43bc55fe02219))
+* add reasonable default memory restriction of 8 GB for cellranger testrun in cellranger post-deploy script (otherwise hangs indefinitely...) ([6e0c7c0](https://github.com/snakemake-workflows/cellranger-multi/commit/6e0c7c057e6f4185aaf83921bb1a2853cca4f4b4))
+* add some more cellranger 10 and above specific gene expression per-sample outputs ([01dc071](https://github.com/snakemake-workflows/cellranger-multi/commit/01dc071c226d1c4efa9d1860d2deb2af48b8eda3))
+* also use dynamic `<count>` pathvar in per_sample_outputs subfolders ([9df66a4](https://github.com/snakemake-workflows/cellranger-multi/commit/9df66a406c70326099bfafaa7c4f97d7455239ed))
+* avoid empty string in requested inputs ([9927dbc](https://github.com/snakemake-workflows/cellranger-multi/commit/9927dbcf81820e09ff9826d9b506e22eee78698b))
+* branch() defaults to empty list from empty string entry given, so use ternary expression again ([32c5643](https://github.com/snakemake-workflows/cellranger-multi/commit/32c56431727f77bbba6fe3e871ce20e162ede3cb))
+* correctly handle Antibody/Antigen/CRISPR Guide Capture under features, also request feature_reference.csv as output for them ([bca1508](https://github.com/snakemake-workflows/cellranger-multi/commit/bca15081b4332d351d862b9ddf0bbaccc9240f0d))
+* create dummy rule all with non-function (file) input, to work around pathvar bug ([7d1071d](https://github.com/snakemake-workflows/cellranger-multi/commit/7d1071df8725d2125ff6f8d1a32197f0628d3221))
+* create logs directory in post-deploy script, if it does not yet exist ([f1a26e9](https://github.com/snakemake-workflows/cellranger-multi/commit/f1a26e966b4b805f16bee22bbb9edfc9ebdbd4c5))
+* denovo check logic in multi config csv generation and add test case ([fcc3a66](https://github.com/snakemake-workflows/cellranger-multi/commit/fcc3a664efe6836cfbf15bf955da3e4fe4f69fd4))
+* don't track cellranger multi out_dir via output, but construct it in params ([a308490](https://github.com/snakemake-workflows/cellranger-multi/commit/a3084909c7f9c74ba77a09cfeb3fd2f25343648c))
+* explain how to get the workflow to use a different cellranger version. ([81cd578](https://github.com/snakemake-workflows/cellranger-multi/commit/81cd5783243bd588b37cae233271607bb346a91f))
+* further improve cellranger version handling instructions ([fd86776](https://github.com/snakemake-workflows/cellranger-multi/commit/fd86776c42c51850980de8472a04fe041affd768))
+* further improve instructions to change cellranger version used, try working aroung lint ([630afa8](https://github.com/snakemake-workflows/cellranger-multi/commit/630afa88cd315784dec6d825510a69474662082e))
+* handle newly added "denovo" option for cellranger multi vdj analyses ([18af9c0](https://github.com/snakemake-workflows/cellranger-multi/commit/18af9c06ebc64c82a7b12b1fc014910c23f683d9))
+* import os where needed ([42777e4](https://github.com/snakemake-workflows/cellranger-multi/commit/42777e4aba1172ff56a1d4fead8c334aa812e19d))
+* just record the conda binary location ([5cc8e23](https://github.com/snakemake-workflows/cellranger-multi/commit/5cc8e239d48e57500d647f069bdcd336114039a3))
+* lint ([aafd59a](https://github.com/snakemake-workflows/cellranger-multi/commit/aafd59abbe3cf9e79ea49198b53f05309c068754))
+* mark collect_all rule as localrule ([58ffc19](https://github.com/snakemake-workflows/cellranger-multi/commit/58ffc191c5bf30a11fe05d3ef65a1fecf6476a75))
+* only request Gene Expression specific output if that Feature Type is requested ([ae5c861](https://github.com/snakemake-workflows/cellranger-multi/commit/ae5c86149a52937d493cee6d0dc02282acaa0dff))
+* path to conda env in dummy collect_all rule ([5dcc020](https://github.com/snakemake-workflows/cellranger-multi/commit/5dcc0209babfacbbce9d73af9f22ae2cb14e7afd))
+* redirection typo ([172fbed](https://github.com/snakemake-workflows/cellranger-multi/commit/172fbed45351873e1fd87acb2f063a7efbe45e75))
+* relative env path ([886c59e](https://github.com/snakemake-workflows/cellranger-multi/commit/886c59e92dc6606ecaa27993500dbb82ee528510))
+* remove debugging code, remove offending trailing comma ([2533128](https://github.com/snakemake-workflows/cellranger-multi/commit/2533128e8838a1b4871195f01efe9ff575895fc4))
+* remove inadvertent doublet from newer rule ([e08da64](https://github.com/snakemake-workflows/cellranger-multi/commit/e08da645af0e1293ad1cd61f07fdd0730420fea6))
+* remove more doublets ([668ac69](https://github.com/snakemake-workflows/cellranger-multi/commit/668ac6976a29f426e0932cea66f59cb03ccb72e5))
+* remove redundant final output ([1d177f2](https://github.com/snakemake-workflows/cellranger-multi/commit/1d177f220366ba8e8278bc376e6d52df924307eb))
+* remove unuse tracking rule for per-sample feature_reference.csv in multiplexing analysis ([20eada9](https://github.com/snakemake-workflows/cellranger-multi/commit/20eada928d76d4be0930277de18cc2de60bac525))
+* remove unused cli library loading, add debugging print statement ([67dc898](https://github.com/snakemake-workflows/cellranger-multi/commit/67dc8983dcf1b1aafceb8dc4f26de11eb9565657))
+* replace remaining `multi/` occurrences with `<multi>` pathvar, after checking `results/` of actual cellranger multi runs with multiplexing and vdj configs ([73ab2bf](https://github.com/snakemake-workflows/cellranger-multi/commit/73ab2bf78ea2e9a4419c6f0830c1efac7147071b))
+* retrigger rule cellranger_multi_run via params entry that contains CELLRANGER_VERSION ([69a5cde](https://github.com/snakemake-workflows/cellranger-multi/commit/69a5cde674a94b22195a58629b87db5e7b7da33a))
+* simplify disabling of telemetry in cellranger post-deploy script ([24f8b98](https://github.com/snakemake-workflows/cellranger-multi/commit/24f8b982b6606ffab9a43bcd73ff758faac7a643))
+* testing status badge in README.md ([13c5b88](https://github.com/snakemake-workflows/cellranger-multi/commit/13c5b88219f4f01f9fcf548897926bd3c24b6dd4))
+* testing status badge in README.md ([ebcb580](https://github.com/snakemake-workflows/cellranger-multi/commit/ebcb58071f4fc7d87bffd48d7fdf59411d6cfa0c))
+* track aggregate_barcodes.csv in per_sample_outs folder according to docs (and run with cellranger &gt;= 10.0.0) ([9d14503](https://github.com/snakemake-workflows/cellranger-multi/commit/9d14503b16e137edb6df1bca105635a27f806ccb))
+* track and request antigen specificity output, which is not documented under outputs ([369a959](https://github.com/snakemake-workflows/cellranger-multi/commit/369a959a61586f089d46df8ea594c06dd06f7fa5))
+* track and request per-pool summaries if CELLRANGER &gt;= 10.0.0 ([289b3e0](https://github.com/snakemake-workflows/cellranger-multi/commit/289b3e06617c612d56d71cfcfadb61cc5844f548))
+* track feature_reference.csv in separate rule to always track it and avoid ambiguous rules ([48251f7](https://github.com/snakemake-workflows/cellranger-multi/commit/48251f7faaaf2bcece901b91f0123cbfc8335e70))
+* try making CELLRANGER_VERSION representable for params tracking by turning it into a str() ([fd189db](https://github.com/snakemake-workflows/cellranger-multi/commit/fd189db1b01b6a39beca12c7133f572a7f72a1a9))
+* try unlist ([68fe84a](https://github.com/snakemake-workflows/cellranger-multi/commit/68fe84a7ab440f9a2d618481b515fbfc7f89232d))
+* typo in rule name ([50d2d71](https://github.com/snakemake-workflows/cellranger-multi/commit/50d2d716feb1a54c983f7131e83d39e96c150a8b))
+* use branch() instead of ternary expression -- it works ([1a035c7](https://github.com/snakemake-workflows/cellranger-multi/commit/1a035c771d39d81cb4f057f6fdcd4117d335c840))
+* use cellranger_multi as logs folder, use separate pathvars for multi/ and count/ ([e93c976](https://github.com/snakemake-workflows/cellranger-multi/commit/e93c976b4d2fec078574b68682035dcb8dfd70c7))
+* use unlist before enframe ([d46c9b2](https://github.com/snakemake-workflows/cellranger-multi/commit/d46c9b2e2f1e115df07268a30423e7d27cd9a5c6))
+* wording ([70fc642](https://github.com/snakemake-workflows/cellranger-multi/commit/70fc642f1a2bc6881bf6ea832cb1232058fe5332))
+* write sample_sheet to tsv-file ([a3bb531](https://github.com/snakemake-workflows/cellranger-multi/commit/a3bb531e9061d3d514f7d23953ddee6bda97be5f))
+
 ## [2.0.0](https://github.com/snakemake-workflows/cellranger-multi/compare/v1.0.1...v2.0.0) (2025-11-05)
 
 
